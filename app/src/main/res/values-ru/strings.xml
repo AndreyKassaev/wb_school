@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">school</string>
+    <string name="appbar_item_events">Встречи</string>
+    <string name="appbar_item_communities">Сообщества</string>
+    <string name="bottomappbar_item_more">Ещё</string>
+    <string name="topappbar_title_profile">Профиль</string>
+    <string name="morescreen_my_events">Мои встречи</string>
+    <string name="my_events_tabitem_planned">Запланировано</string>
+    <string name="my_events_tabitem_passed">Уже прошли</string>
+    <string name="homework">ДЗ</string>
+    <string name="homework_one">ДЗ 1</string>
+    <string name="homework_two">ДЗ 2</string>
+    <string name="events_tabitem_all">Все встречи</string>
+    <string name="events_tabitem_active">Активные</string>
+</resources>

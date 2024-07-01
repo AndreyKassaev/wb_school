@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">school</string>
+    <string name="appbar_item_events">Events</string>
+    <string name="appbar_item_communities">Communities</string>
+    <string name="bottomappbar_item_more">More</string>
+    <string name="topappbar_title_profile">Profile</string>
+    <string name="morescreen_my_events">My Events</string>
+    <string name="my_events_tabitem_planned">Planned</string>
+    <string name="events_tabitem_all">All events</string>
+    <string name="events_tabitem_active">Active</string>
+    <string name="my_events_tabitem_passed">Already passed</string>
+    <string name="homework_one">Homework 1</string>
+    <string name="homework_two">Homework</string>
+    <string name="homework">"Homework "</string>
+</resources>
