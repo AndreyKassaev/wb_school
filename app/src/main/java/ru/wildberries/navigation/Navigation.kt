@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
@@ -25,6 +27,7 @@ import ru.wildberries.ui.screen.MoreScreen
 import ru.wildberries.ui.screen.MyEventsScreen
 import ru.wildberries.ui.screen.ProfileAccountScreen
 import ru.wildberries.ui.screen.SecondLessonScreen
+import ru.wildberries.ui.screen.SplashScreen
 
 @Composable
 fun Navigation() {
@@ -53,7 +56,7 @@ fun Navigation() {
         ){
             NavHost(
                 navController = navController,
-                startDestination = EventsRoute,
+                startDestination = SplashRoute,
             ){
                 composable<ProfileAccountRoute> { backStackEntry ->
                     ProfileAccountScreen(
@@ -116,6 +119,14 @@ fun Navigation() {
                         navController = navController
                     )
                 }
+                dialog<SplashRoute>(
+                    dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+                ) {
+                    SplashScreen(
+                        navController = navController,
+                        viewModel = viewModel
+                    )
+                }
             }
         }
     }
@@ -141,6 +152,9 @@ object EventsRoute
 
 @Serializable
 object CommunitiesRoute
+
+@Serializable
+object SplashRoute
 
 data class BottomNavigation(
     val eventsNavigate: () -> Unit,
