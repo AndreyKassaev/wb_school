@@ -12,4 +12,7 @@
     <string name="homework_one">Homework 1</string>
     <string name="homework_two">Homework</string>
     <string name="homework">"Homework "</string>
+    <string name="people">people</string>
+    <string name="community_events">"Community events"</string>
+    <string name="ill_go">"I'll go!"</string>
 </resources>

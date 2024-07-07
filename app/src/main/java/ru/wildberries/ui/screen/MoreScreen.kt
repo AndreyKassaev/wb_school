@@ -18,13 +18,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
 import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
 import ru.wildberries.ui.MainViewModel
+import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.UIKit.molecule.Profile
+import ru.wildberries.ui.UIKit.molecule.ProfileMode
 import ru.wildberries.ui.UIKit.organism.BottomAppBarItem
 import ru.wildberries.ui.UIKit.organism.TopBarArg
 import ru.wildberries.ui.theme.WBTheme
+import ru.wildberries.util.ActivityContext
 
 @Composable
 fun MoreScreen(
@@ -37,7 +41,7 @@ fun MoreScreen(
     LaunchedEffect(Unit) {
         viewModel.setTopAppBar(
             TopBarArg(
-                title = R.string.bottomappbar_item_more,
+                title = getString(ActivityContext.context, R.string.bottomappbar_item_more),
                 navigationIcon = null,
                 actionIcon = null,
             )
@@ -56,6 +60,10 @@ fun MoreScreen(
             content = {
                 Profile(
                     profileData = profileData,
+                    profileState = ProfileState.None,
+                    size = 100.dp,
+                    profileMode = ProfileMode.Row,
+                    onClick = {}
                 )
             },
             action = navigateToProfile

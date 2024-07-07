@@ -1,5 +1,7 @@
 package ru.wildberries.ui.UIKit.molecule
 
+import android.icu.text.DecimalFormat
+import android.icu.text.DecimalFormatSymbols
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,18 +16,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
+import ru.wildberries.R
 import ru.wildberries.domain.ProfileModel
 import ru.wildberries.ui.UIKit.atom.ProfileImage
 import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.theme.WBTheme
+import ru.wildberries.util.ActivityContext
+import java.util.Locale
 
 @Composable
 fun Profile(
     profileData: ProfileModel,
-    profileState: ProfileState = ProfileState.None,
-    size: Dp = 200.dp,
-    onClick: ()->Unit = {},
-    profileMode: ProfileMode = ProfileMode.Row
+    profileState: ProfileState,
+    size: Dp,
+    onClick: ()->Unit,
+    profileMode: ProfileMode
 ) {
     when (profileMode) {
         ProfileMode.Row -> {
@@ -35,7 +41,7 @@ fun Profile(
                 ProfileImage(
                     size = 50.dp,
                     profileState = profileState,
-                    image = profileData.image,
+                    imageUrl = profileData.imageUrl,
                     onClick = onClick
                 )
                 Column(
@@ -49,7 +55,7 @@ fun Profile(
                         color = WBTheme.colors.NeutralActive
                     )
                     Text(
-                        text = profileData.phoneNumber,
+                        text = phoneNumberFormatter(profileData.phoneNumber),
                         style = WBTheme.typography.metadata1,
                         color = WBTheme.colors.NeutralDisabled
                     )
@@ -60,7 +66,7 @@ fun Profile(
             ProfileImage(
                 size = size,
                 profileState = profileState,
-                image = profileData.image,
+                imageUrl = profileData.imageUrl,
                 onClick = onClick
             )
             Spacer(modifier = Modifier.height(20.dp))
@@ -72,7 +78,7 @@ fun Profile(
                 color = WBTheme.colors.NeutralActive
             )
             Text(
-                text = profileData.phoneNumber,
+                text = phoneNumberFormatter(profileData.phoneNumber),
                 style = WBTheme.typography.subHeading2.copy(
                     fontWeight = FontWeight.Medium
                 ),
@@ -91,10 +97,20 @@ enum class ProfileMode {
     showBackground = true
 )
 @Composable
-private fun Profile() {
+private fun ProfilePreview() {
     WBTheme{
         Profile(
-            profileData = ProfileModel()
+            profileData = ProfileModel.default,
+            profileState = ProfileState.None,
+            size = 200.dp,
+            onClick = {},
+            profileMode= ProfileMode.Row
         )
     }
+}
+
+fun phoneNumberFormatter(amount: Long): String {
+    val dec = DecimalFormat("###,###,##,##", DecimalFormatSymbols(Locale.ENGLISH))
+    val formattedNumber = dec.format(amount).replace(",", " ")
+    return "+7 $formattedNumber"
 }

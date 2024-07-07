@@ -31,9 +31,7 @@ import ru.wildberries.R
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun SearchBar(
-
-) {
+fun SearchBar() {
     val textFieldState = rememberTextFieldState()
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
@@ -93,5 +91,7 @@ fun SearchBar(
 )
 @Composable
 private fun SearchBarPreview() {
-    SearchBar()
+    WBTheme {
+        SearchBar()
+    }
 }
