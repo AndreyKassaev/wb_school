@@ -1,10 +1,21 @@
 package ru.wildberries.domain
 
-import ru.wildberries.R
+import java.util.UUID
 
 data class ProfileModel(
-    val image: Int = R.drawable.android,
-    val firstName: String = "FirstName",
-    val lastName: String = "LastName",
-    val phoneNumber: String = "+9 999 999-99-99"
-)
+    val id: String,
+    val firstName: String,
+    val lastName: String,
+    val imageUrl: String?,
+    val phoneNumber: Long
+){
+    companion object {
+        val default = ProfileModel(
+            id = UUID.randomUUID().toString(),
+            firstName = "FirstName",
+            lastName = "LastName",
+            imageUrl = "https://kassaev.com/media/night_sky.jpg",
+            phoneNumber = 79967370744
+        )
+    }
+}

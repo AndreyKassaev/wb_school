@@ -1,5 +1,6 @@
 package ru.wildberries.ui.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,8 +9,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -26,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
+import androidx.navigation.NavController
 import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
 import ru.wildberries.ui.MainViewModel
@@ -33,18 +36,19 @@ import ru.wildberries.ui.UIKit.molecule.EventCard
 import ru.wildberries.ui.UIKit.organism.BottomAppBarItem
 import ru.wildberries.ui.UIKit.organism.TopBarArg
 import ru.wildberries.ui.theme.WBTheme
+import ru.wildberries.util.ActivityContext
 
 @Composable
 fun MyEventsScreen(
     viewModel: MainViewModel,
-    navigateBack: () -> Unit,
+    navController: NavController
 ) {
     LaunchedEffect(Unit) {
         viewModel.setTopAppBar(
             TopBarArg(
-                title = R.string.morescreen_my_events,
+                title = getString(ActivityContext.context, R.string.morescreen_my_events),
                 navigationIcon = R.drawable.arrow_back,
-                navigationIconOnClick = navigateBack,
+                navigationIconOnClick = { navController.popBackStack() },
                 actionIcon = null,
             )
         )
@@ -115,7 +119,14 @@ fun MyEventsScreen(
                         myEventList.forEach { event ->
                             if (event.isActive){
                                 item {
-                                    EventCard(eventModel = event)
+                                    Surface(
+                                        modifier = Modifier
+                                            .clickable {
+                                                navController.navigate(event)
+                                            }
+                                    ) {
+                                        EventCard(eventModel = event)
+                                    }
                                     HorizontalDivider(
                                         color = WBTheme.colors.NeutralLine
                                     )
@@ -129,7 +140,14 @@ fun MyEventsScreen(
                         myEventList.forEach { event ->
                             if (!event.isActive){
                                 item {
-                                    EventCard(eventModel = event)
+                                    Surface(
+                                        modifier = Modifier
+                                            .clickable {
+                                                navController.navigate(event)
+                                            }
+                                    ) {
+                                        EventCard(eventModel = event)
+                                    }
                                     HorizontalDivider(
                                         color = WBTheme.colors.NeutralLine
                                     )
@@ -140,19 +158,6 @@ fun MyEventsScreen(
                 }
             }
         }
-    }
-}
-
-@Preview(
-    showBackground = true
-)
-@Composable
-private fun MyEventsScreenPreview() {
-    WBTheme{
-        MyEventsScreen(
-            viewModel = MainViewModel(MockRepositoryImpl()),
-            navigateBack = {}
-        )
     }
 }
 

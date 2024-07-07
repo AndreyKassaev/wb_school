@@ -24,11 +24,11 @@ class MainViewModel(
     private var _selectedBottomAppBarItem = MutableSharedFlow<BottomAppBarItem>()
     val selectedBottomAppBarItem = _selectedBottomAppBarItem.asSharedFlow()
 
-    private var _topAppBarArg by mutableStateOf(TopBarArg())
+    private var _topAppBarArg by mutableStateOf(TopBarArg.default)
     val topAppBarArg: TopBarArg
         get() = _topAppBarArg
 
-    private var _profileData by mutableStateOf(ProfileModel())
+    private var _profileData by mutableStateOf(ProfileModel.default)
     val profileData: ProfileModel
         get() = _profileData
 
@@ -37,6 +37,9 @@ class MainViewModel(
 
     private var _communityList = MutableStateFlow(emptyList<CommunityModel>())
     val communityList = _communityList.asStateFlow()
+
+    private var _eventVisitorList = MutableStateFlow(emptyList<ProfileModel>())
+    val eventVisitorList = _eventVisitorList.asStateFlow()
 
     fun setSelectedBottomAppBarItem(selectedBottomAppBarItem: BottomAppBarItem){
         viewModelScope.launch {
@@ -64,10 +67,19 @@ class MainViewModel(
         }
     }
 
+    private fun getEventVisitorList(){
+        viewModelScope.launch {
+            repository.getEventVisitorList().collect{ visitorList ->
+                _eventVisitorList.update { visitorList }
+            }
+        }
+    }
+
     init {
         getProfileData()
         getEventList()
         getCommunityList()
+        getEventVisitorList()
     }
 
     fun setTopAppBar(topBarArg: TopBarArg){

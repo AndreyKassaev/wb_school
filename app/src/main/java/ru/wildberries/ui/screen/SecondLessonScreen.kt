@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
 import ru.wildberries.R
-import ru.wildberries.domain.ProfileModel
 import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.ProfileImage
 import ru.wildberries.ui.UIKit.atom.ProfileState
@@ -19,6 +21,7 @@ import ru.wildberries.ui.UIKit.molecule.EventCardList
 import ru.wildberries.ui.UIKit.molecule.EventVisitorAvatarList
 import ru.wildberries.ui.UIKit.organism.BottomAppBarItem
 import ru.wildberries.ui.UIKit.organism.TopBarArg
+import ru.wildberries.util.ActivityContext
 
 @Composable
 fun SecondLessonScreen(
@@ -28,7 +31,7 @@ fun SecondLessonScreen(
     LaunchedEffect(Unit) {
         viewModel.setTopAppBar(
             TopBarArg(
-                title = R.string.homework_two,
+                title = getString(ActivityContext.context, R.string.homework_two),
                 navigationIcon = R.drawable.arrow_back,
                 navigationIconOnClick = navigateBack,
                 actionIcon = null,
@@ -36,6 +39,10 @@ fun SecondLessonScreen(
         )
         viewModel.setSelectedBottomAppBarItem(BottomAppBarItem.More)
     }
+
+    val eventList by viewModel.eventList.collectAsState()
+    val communityList by viewModel.communityList.collectAsState()
+
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth(),
@@ -43,17 +50,17 @@ fun SecondLessonScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
-            EventCardList()
+            EventCardList(eventList)
         }
 
         item {
             EventVisitorAvatarList(
-                eventVisitorList = (0..13).map { if (it % 2 == 0) ProfileModel() else ProfileModel(image = R.drawable.event_user_avatar) }
+                eventVisitorList = (0..13).map { viewModel.profileData }
             )
         }
 
         item {
-            CommunityCard()
+            CommunityCard(communityList.first())
         }
 
         item {
@@ -62,8 +69,19 @@ fun SecondLessonScreen(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                ProfileImage(profileState = ProfileState.Add)
-                ProfileImage(profileState = ProfileState.Edit)
+                ProfileImage(
+                    profileState = ProfileState.Add,
+                    imageUrl = null,
+                    size = 100.dp,
+                    onClick = {}
+
+                )
+                ProfileImage(
+                    profileState = ProfileState.Edit,
+                    imageUrl = null,
+                    size = 100.dp,
+                    onClick = {}
+                )
             }
         }
     }

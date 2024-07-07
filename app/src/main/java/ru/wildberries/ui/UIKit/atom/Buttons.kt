@@ -17,9 +17,11 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.contentcapture.ContentCaptureManager.Companion.isEnabled
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kotlinx.serialization.json.JsonNull.content
 import ru.wildberries.ui.theme.WBTheme
 
 @Immutable
@@ -33,7 +35,8 @@ object DisabledRippleTheme : RippleTheme {
 
 @Composable
 fun PrimaryButton(
-    content: @Composable () -> Unit = { DefaultButtonContent() },
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
     onClick: ()->Unit,
     isEnabled: Boolean = true
 ) {
@@ -43,7 +46,8 @@ fun PrimaryButton(
     CompositionLocalProvider(LocalRippleTheme provides DisabledRippleTheme) {
         Button(
             modifier = Modifier
-                .alpha(if (isEnabled) 1f else 0.5f),
+                .alpha(if (isEnabled) 1f else 0.5f)
+                .then(modifier),
             enabled = isEnabled,
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(
@@ -64,7 +68,8 @@ fun PrimaryButton(
 
 @Composable
 fun SecondaryButton(
-    content: @Composable () -> Unit = { DefaultButtonContent() },
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
     onClick: ()->Unit,
     isEnabled: Boolean = true
 ) {
@@ -75,7 +80,8 @@ fun SecondaryButton(
 
         OutlinedButton(
             modifier = Modifier
-                .alpha(if (isEnabled) 1f else 0.5f),
+                .alpha(if (isEnabled) 1f else 0.5f)
+                .then(modifier),
             enabled = isEnabled,
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(
@@ -102,7 +108,8 @@ fun SecondaryButton(
 }
 @Composable
 fun GhostButton(
-    content: @Composable () -> Unit = { DefaultButtonContent() },
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
     onClick: ()->Unit,
     isEnabled: Boolean = true
 ) {
@@ -113,7 +120,8 @@ fun GhostButton(
 
         TextButton(
             modifier = Modifier
-                .alpha(if (isEnabled) 1f else 0.5f),
+                .alpha(if (isEnabled) 1f else 0.5f)
+                .then(modifier),
             enabled = isEnabled,
             onClick = onClick,
             colors = ButtonDefaults.buttonColors(
@@ -130,12 +138,4 @@ fun GhostButton(
             content()
         }
     }
-}
-
-@Composable
-fun DefaultButtonContent() {
-    Text(
-        text = "text",
-        style = WBTheme.typography.subHeading2
-    )
 }

@@ -11,12 +11,14 @@ import ru.wildberries.domain.EventModel
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun EventCardList(modifier: Modifier = Modifier) {
+fun EventCardList(
+    eventList: List<EventModel>
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        repeat(5){ times ->
-            EventCard(if (times % 2 == 0) EventModel() else EventModel(isActive = false))
+        eventList.forEach { event ->
+            EventCard(event)
             HorizontalDivider(
                 color = WBTheme.colors.NeutralLine
             )

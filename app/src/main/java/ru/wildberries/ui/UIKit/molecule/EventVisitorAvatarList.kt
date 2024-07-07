@@ -38,7 +38,7 @@ fun EventVisitorAvatarList(
                             shape = RoundedCornerShape(16.dp)
                         )
                         .zIndex((index*(-1)).toFloat()),
-                    img = user.image
+                    imageUrl = user.imageUrl
                 )
             }
         }
@@ -59,6 +59,6 @@ fun EventVisitorAvatarList(
 @Composable
 private fun EventUserAvatarListPreview() {
     EventVisitorAvatarList(
-        eventVisitorList = (0..13).map { if (it % 2 == 0) ProfileModel() else ProfileModel(image = R.drawable.event_user_avatar) }
+        eventVisitorList = (0..13).map { ProfileModel.default }
     )
 }

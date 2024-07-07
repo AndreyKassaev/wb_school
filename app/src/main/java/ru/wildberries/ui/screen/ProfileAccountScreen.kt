@@ -8,19 +8,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
 import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
 import ru.wildberries.ui.MainViewModel
-import ru.wildberries.ui.UIKit.atom.ProfileImage
 import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.UIKit.atom.SecondaryButton
 import ru.wildberries.ui.UIKit.molecule.Profile
@@ -28,6 +26,7 @@ import ru.wildberries.ui.UIKit.molecule.ProfileMode
 import ru.wildberries.ui.UIKit.organism.BottomAppBarItem
 import ru.wildberries.ui.UIKit.organism.TopBarArg
 import ru.wildberries.ui.theme.WBTheme
+import ru.wildberries.util.ActivityContext
 
 @Composable
 fun ProfileAccountScreen(
@@ -37,7 +36,7 @@ fun ProfileAccountScreen(
     LaunchedEffect(Unit) {
         viewModel.setTopAppBar(
             TopBarArg(
-                title = R.string.topappbar_title_profile,
+                title = getString(ActivityContext.context, R.string.topappbar_title_profile),
                 navigationIcon = R.drawable.arrow_back,
                 navigationIconOnClick = navigateBack,
                 actionIcon = R.drawable.edit
@@ -56,7 +55,10 @@ fun ProfileAccountScreen(
     ){
         Profile(
             profileData = profileData,
-            profileMode = ProfileMode.FullScreen
+            profileMode = ProfileMode.FullScreen,
+            profileState = ProfileState.None,
+            onClick = {},
+            size = 200.dp
         )
         Spacer(modifier = Modifier.height(40.dp))
         Row(

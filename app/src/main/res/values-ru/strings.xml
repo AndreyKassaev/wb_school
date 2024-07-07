@@ -13,4 +13,7 @@
     <string name="homework_two">ДЗ 2</string>
     <string name="events_tabitem_all">Все встречи</string>
     <string name="events_tabitem_active">Активные</string>
+    <string name="people">человек</string>
+    <string name="community_events">Встречи сообщества</string>
+    <string name="ill_go">Пойду на встречу!</string>
 </resources>
