@@ -56,6 +56,8 @@ fun CommunityDetailScreen(
             style = WBTheme.typography.metadata1
         )
         Text(
+            modifier = Modifier
+                .padding(bottom = 16.dp),
             text = stringResource(id = R.string.community_events),
             style = WBTheme.typography.bodyText1,
             color = WBTheme.colors.NeutralWeak
@@ -70,10 +72,10 @@ fun CommunityDetailScreen(
                             }
                     ) {
                         EventCard(eventModel = event)
-                        HorizontalDivider(
-                            color = WBTheme.colors.NeutralLine
-                        )
                     }
+                    HorizontalDivider(
+                        color = WBTheme.colors.NeutralLine
+                    )
                 }
             }
         }

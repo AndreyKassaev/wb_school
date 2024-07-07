@@ -2,11 +2,13 @@ package ru.wildberries.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -80,65 +83,72 @@ fun EventDetailScreen(
             )
         }
     }
-    LazyColumn(
+    Column(
         modifier = Modifier
             .padding(horizontal = 24.dp),
     ) {
-        item {
-            Text(
-                modifier = Modifier
-                    .padding(top = 8.dp, bottom = 8.dp),
-                text = "${event.date} - ${event.location}",
-                style = WBTheme.typography.bodyText1,
-                color = WBTheme.colors.NeutralWeak,
-            )
-            TagRow(tagList = event.tagList)
-        }
-        item {
-            when (painter.state) {
-                is AsyncImagePainter.State.Loading -> {
-                    CircularProgressIndicator()
-                }
-                is AsyncImagePainter.State.Error, AsyncImagePainter.State.Empty -> {
-                    Text(text = "Oops...")
-                }
-                is AsyncImagePainter.State.Success -> {
-                    Image(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .size(
-                                width = 400.dp,
-                                height = 300.dp
-                            )
-                            .padding(
-                                top = 12.dp,
-                                bottom = 20.dp
-                            )
-                            .clickable {
-                                isFullScreen = !isFullScreen
-                            },
-                        painter = painter,
-                        contentDescription = "Profile",
-                        contentScale = ContentScale.FillHeight,
-                    )
+        Text(
+            modifier = Modifier
+                .padding(top = 8.dp),
+            text = "${event.date} - ${event.location}",
+            style = WBTheme.typography.bodyText1,
+            color = WBTheme.colors.NeutralWeak,
+        )
+        TagRow(tagList = event.tagList)
+        LazyColumn(
+            modifier = Modifier
+                .weight(0.75f)
+                .padding(top = 8.dp)
+        ) {
+            item {
+                when (painter.state) {
+                    is AsyncImagePainter.State.Loading -> {
+                        CircularProgressIndicator()
+                    }
+                    is AsyncImagePainter.State.Error, AsyncImagePainter.State.Empty -> {
+                        Text(text = "Oops...")
+                    }
+                    is AsyncImagePainter.State.Success -> {
+                        Image(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .size(
+                                    width = 400.dp,
+                                    height = 300.dp
+                                )
+                                .padding(
+                                    top = 12.dp,
+                                    bottom = 20.dp
+                                )
+                                .clip(RoundedCornerShape(24))
+                                .clickable {
+                                    isFullScreen = !isFullScreen
+                                },
+                            painter = painter,
+                            contentDescription = "Profile",
+                            contentScale = ContentScale.FillHeight,
+                        )
+                    }
                 }
             }
+            item {
+                Text(
+                    modifier = Modifier
+                        .padding(bottom = 20.dp),
+                    text = event.description,
+                    style = WBTheme.typography.metadata1,
+                    color = WBTheme.colors.NeutralWeak
+                )
+            }
         }
-        item {
-            Text(
-                modifier = Modifier
-                    .padding(bottom = 20.dp),
-                text = event.description,
-                style = WBTheme.typography.metadata1,
-                color = WBTheme.colors.NeutralWeak
-            )
-        }
-        item {
+        Column(
+            modifier = Modifier
+                .weight(0.25f)
+        ) {
+            Spacer(modifier = Modifier.weight(1f))
             EventVisitorAvatarList(eventVisitorList = eventVisitorList)
-        }
-        item {
             PrimaryButton(
-                content = { 
+                content = {
                     Text(
                         modifier = Modifier
                             .padding(vertical = 12.dp),
