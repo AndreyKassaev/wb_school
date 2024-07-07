@@ -5,10 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.wildberries.domain.CommunityModel
@@ -31,6 +33,10 @@ class MainViewModel(
     private var _profileData by mutableStateOf(ProfileModel.default)
     val profileData: ProfileModel
         get() = _profileData
+
+    private var _isAppReady by mutableStateOf(false)
+    val isAppReady: Boolean
+        get() = _isAppReady
 
     private var _eventList = MutableStateFlow(emptyList<EventModel>())
     val eventList = _eventList.asStateFlow()
@@ -75,11 +81,19 @@ class MainViewModel(
         }
     }
 
+    private fun isAppReady(){
+        viewModelScope.launch {
+            delay(3000L)
+            _isAppReady = !(_eventList.firstOrNull().isNullOrEmpty())
+        }
+    }
+
     init {
         getProfileData()
         getEventList()
         getCommunityList()
         getEventVisitorList()
+        isAppReady()
     }
 
     fun setTopAppBar(topBarArg: TopBarArg){
