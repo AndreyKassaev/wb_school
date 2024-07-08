@@ -9,15 +9,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getString
-import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
 import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.theme.WBTheme
-import ru.wildberries.util.ActivityContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,7 +90,7 @@ data class TopBarArg(
 ){
     companion object {
         val default = TopBarArg(
-            title = getString(ActivityContext.context, R.string.app_name),
+            title = "",
             navigationIcon = null,
             actionIcon = null,
         )
