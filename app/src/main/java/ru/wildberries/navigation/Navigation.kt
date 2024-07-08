@@ -28,6 +28,8 @@ import ru.wildberries.ui.screen.MyEventsScreen
 import ru.wildberries.ui.screen.ProfileAccountScreen
 import ru.wildberries.ui.screen.SecondLessonScreen
 import ru.wildberries.ui.screen.SplashScreen
+import ru.wildberries.ui.screen.VerificationPhoneScreen
+import ru.wildberries.ui.screen.VerificationPinCodeScreen
 
 @Composable
 fun Navigation() {
@@ -127,6 +129,18 @@ fun Navigation() {
                         viewModel = viewModel
                     )
                 }
+                composable<VerificationPinCodeRoute> {
+                    VerificationPinCodeScreen(
+                        viewModel = viewModel,
+                        navController = navController
+                    )
+                }
+                composable<VerificationPhoneRoute> {
+                    VerificationPhoneScreen(
+                        viewModel = viewModel,
+                        navController = navController
+                    )
+                }
             }
         }
     }
@@ -155,6 +169,12 @@ object CommunitiesRoute
 
 @Serializable
 object SplashRoute
+
+@Serializable
+object VerificationPinCodeRoute
+
+@Serializable
+object VerificationPhoneRoute
 
 data class BottomNavigation(
     val eventsNavigate: () -> Unit,

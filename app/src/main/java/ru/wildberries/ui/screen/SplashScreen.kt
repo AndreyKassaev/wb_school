@@ -14,7 +14,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.wildberries.R
-import ru.wildberries.navigation.EventsRoute
+import ru.wildberries.navigation.VerificationPhoneRoute
 import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.theme.WBTheme
 
@@ -44,6 +44,6 @@ fun SplashScreen(
         )
     }
     if (isAppReady){
-        navController.navigate(EventsRoute)
+        navController.navigate(VerificationPhoneRoute)
     }
 }
