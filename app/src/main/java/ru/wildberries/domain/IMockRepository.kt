@@ -9,4 +9,6 @@ interface IMockRepository {
     fun getEventList(): Flow<List<EventModel>>
 
     fun getCommunityList(): Flow<List<CommunityModel>>
+
+    fun getEventVisitorList(): Flow<List<ProfileModel>>
 }

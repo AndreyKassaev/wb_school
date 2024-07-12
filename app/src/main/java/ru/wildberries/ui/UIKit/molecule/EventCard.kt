@@ -9,21 +9,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import ru.wildberries.domain.EventModel
 import ru.wildberries.ui.UIKit.atom.Avatar
 import ru.wildberries.ui.theme.WBTheme
+import java.util.UUID
 
 @Composable
 fun EventCard(
-    eventModel: EventModel = EventModel()
+    eventModel: EventModel
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Avatar(img = eventModel.img)
+        Avatar(imageUrl = eventModel.imageUrl)
         Column(
             modifier = Modifier
                 .padding(start = 12.dp)
@@ -38,7 +40,7 @@ fun EventCard(
                         .padding(top = 3.dp),
                     style = WBTheme.typography.bodyText1,
                     color = WBTheme.colors.NeutralActive,
-                    text = eventModel.name
+                    text = eventModel.title
                 )
                 Text(
                     style = WBTheme.typography.metadata2,
@@ -53,7 +55,7 @@ fun EventCard(
                 color = WBTheme.colors.NeutralWeak,
                 text = "${eventModel.date} - ${eventModel.location}"
             )
-            TagsRow(tagList = eventModel.tagList)
+            TagRow(tagList = eventModel.tagList)
         }
     }
 }
@@ -64,6 +66,18 @@ fun EventCard(
 @Composable
 fun EventCardPreview(){
     WBTheme {
-        EventCard()
+        EventCard(
+            eventModel = EventModel(
+                id = UUID.randomUUID().toString(),
+                communityId = UUID.randomUUID().toString(),
+                title = "Title",
+                description = LoremIpsum(120).toString(),
+                date = "01.01.1970",
+                imageUrl = "",
+                location = "Moscow",
+                isActive = true,
+                tagList = listOf("Moscow")
+            )
+        )
     }
 }

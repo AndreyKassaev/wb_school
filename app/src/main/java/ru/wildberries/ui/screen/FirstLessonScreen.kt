@@ -16,12 +16,15 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getString
 import ru.wildberries.R
 import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.Avatar
@@ -31,10 +34,11 @@ import ru.wildberries.ui.UIKit.atom.ProfileImage
 import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.UIKit.atom.SearchBar
 import ru.wildberries.ui.UIKit.atom.SecondaryButton
-import ru.wildberries.ui.UIKit.molecule.TagsRow
+import ru.wildberries.ui.UIKit.molecule.TagRow
 import ru.wildberries.ui.UIKit.organism.BottomAppBarItem
 import ru.wildberries.ui.UIKit.organism.TopBarArg
 import ru.wildberries.ui.theme.WBTheme
+import ru.wildberries.util.ActivityContext
 
 @Composable
 fun FirstLessonScreen(
@@ -44,7 +48,7 @@ fun FirstLessonScreen(
     LaunchedEffect(Unit) {
         viewModel.setTopAppBar(
             TopBarArg(
-                title = R.string.homework_one,
+                title = getString(ActivityContext.context, R.string.homework_one),
                 navigationIcon = R.drawable.arrow_back,
                 navigationIconOnClick = navigateBack,
                 actionIcon = null,
@@ -55,6 +59,8 @@ fun FirstLessonScreen(
 
     val interactionSource = remember { MutableInteractionSource() }
     val focusManager = LocalFocusManager.current
+
+    val eventList by viewModel.eventList.collectAsState()
 
     LazyColumn(
         modifier = Modifier
@@ -87,8 +93,15 @@ fun FirstLessonScreen(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                ProfileImage(profileState = ProfileState.None)
-                Avatar(img = R.drawable.avatar_meeting)
+                ProfileImage(
+                    profileState = ProfileState.None,
+                    imageUrl = null,
+                    size = 100.dp,
+                    onClick = {}
+                )
+                Avatar(
+                    imageUrl = eventList.first().imageUrl
+                )
             }
         }
 
@@ -100,7 +113,9 @@ fun FirstLessonScreen(
 
         //Chips
         item {
-            TagsRow()
+            TagRow(
+                tagList = listOf("Moscow", "Python", "Junior")
+            )
             Spacer(modifier = Modifier.height(16.dp))
         }
     }

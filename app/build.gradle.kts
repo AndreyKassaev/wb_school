@@ -74,4 +74,8 @@ dependencies {
 
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
+
+    implementation(libs.coil.compose)
+
+    implementation(libs.lottie.compose)
 }

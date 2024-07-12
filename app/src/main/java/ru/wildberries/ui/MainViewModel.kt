@@ -5,10 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.wildberries.domain.CommunityModel
@@ -24,19 +26,26 @@ class MainViewModel(
     private var _selectedBottomAppBarItem = MutableSharedFlow<BottomAppBarItem>()
     val selectedBottomAppBarItem = _selectedBottomAppBarItem.asSharedFlow()
 
-    private var _topAppBarArg by mutableStateOf(TopBarArg())
+    private var _topAppBarArg by mutableStateOf(TopBarArg.default)
     val topAppBarArg: TopBarArg
         get() = _topAppBarArg
 
-    private var _profileData by mutableStateOf(ProfileModel())
+    private var _profileData by mutableStateOf(ProfileModel.default)
     val profileData: ProfileModel
         get() = _profileData
+
+    private var _isAppReady by mutableStateOf(false)
+    val isAppReady: Boolean
+        get() = _isAppReady
 
     private var _eventList = MutableStateFlow(emptyList<EventModel>())
     val eventList = _eventList.asStateFlow()
 
     private var _communityList = MutableStateFlow(emptyList<CommunityModel>())
     val communityList = _communityList.asStateFlow()
+
+    private var _eventVisitorList = MutableStateFlow(emptyList<ProfileModel>())
+    val eventVisitorList = _eventVisitorList.asStateFlow()
 
     fun setSelectedBottomAppBarItem(selectedBottomAppBarItem: BottomAppBarItem){
         viewModelScope.launch {
@@ -64,10 +73,27 @@ class MainViewModel(
         }
     }
 
+    private fun getEventVisitorList(){
+        viewModelScope.launch {
+            repository.getEventVisitorList().collect{ visitorList ->
+                _eventVisitorList.update { visitorList }
+            }
+        }
+    }
+
+    private fun isAppReady(){
+        viewModelScope.launch {
+            delay(3000L)
+            _isAppReady = !(_eventList.firstOrNull().isNullOrEmpty())
+        }
+    }
+
     init {
         getProfileData()
         getEventList()
         getCommunityList()
+        getEventVisitorList()
+        isAppReady()
     }
 
     fun setTopAppBar(topBarArg: TopBarArg){
