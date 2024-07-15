@@ -5,14 +5,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,8 +22,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -29,14 +33,15 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import kotlinx.serialization.json.JsonNull.content
 import ru.wildberries.R
 import ru.wildberries.domain.EventModel
 import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.PrimaryButton
+import ru.wildberries.ui.UIKit.atom.SecondaryButton
 import ru.wildberries.ui.UIKit.molecule.EventVisitorAvatarList
 import ru.wildberries.ui.UIKit.molecule.TagRow
-import ru.wildberries.ui.UIKit.organism.BottomAppBarItem
-import ru.wildberries.ui.UIKit.organism.TopBarArg
+import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
@@ -45,17 +50,6 @@ fun EventDetailScreen(
     event: EventModel,
     navController: NavHostController
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.setTopAppBar(
-            TopBarArg(
-                title = event.title,
-                navigationIcon = R.drawable.arrow_back,
-                navigationIconOnClick = { navController.popBackStack() },
-                actionIcon = null,
-            )
-        )
-        viewModel.setSelectedBottomAppBarItem(BottomAppBarItem.Events)
-    }
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
             .data(event.imageUrl)
@@ -68,7 +62,10 @@ fun EventDetailScreen(
     var isFullScreen by rememberSaveable {
         mutableStateOf(false)
     }
-    if (isFullScreen){
+    var isInvitationAccepted by rememberSaveable {
+        mutableStateOf(false)
+    }
+    if (isFullScreen) {
         Dialog(
             onDismissRequest = {
                 isFullScreen = false
@@ -87,9 +84,31 @@ fun EventDetailScreen(
         modifier = Modifier
             .padding(horizontal = 24.dp),
     ) {
+        TopBar(
+            title = event.title,
+            navigationIcon = R.drawable.arrow_back,
+            actionIcon = {
+                if (isInvitationAccepted) {
+                    Icon(
+                        painter = painterResource(R.drawable.invite_accepted),
+                        contentDescription = null,
+                        tint = Color.Unspecified
+                    )
+                }
+            },
+            navigationIconOnClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier
+                .padding(
+                    bottom = 29.dp,
+                    top = 16.dp
+                )
+                .offset(x = (-12).dp)
+        )
         Text(
             modifier = Modifier
-                .padding(top = 8.dp),
+                .padding(bottom = 8.dp),
             text = "${event.date} - ${event.location}",
             style = WBTheme.typography.bodyText1,
             color = WBTheme.colors.NeutralWeak,
@@ -105,9 +124,11 @@ fun EventDetailScreen(
                     is AsyncImagePainter.State.Loading -> {
                         CircularProgressIndicator()
                     }
+
                     is AsyncImagePainter.State.Error, AsyncImagePainter.State.Empty -> {
                         Text(text = "Oops...")
                     }
+
                     is AsyncImagePainter.State.Success -> {
                         Image(
                             modifier = Modifier
@@ -147,22 +168,47 @@ fun EventDetailScreen(
         ) {
             Spacer(modifier = Modifier.weight(1f))
             EventVisitorAvatarList(eventVisitorList = eventVisitorList)
-            PrimaryButton(
-                content = {
-                    Text(
-                        modifier = Modifier
-                            .padding(vertical = 12.dp),
-                        text = stringResource(id = R.string.ill_go),
-                    )
-                },
-                onClick = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        top = 12.dp,
-                        bottom = 20.dp
-                    )
-            )
+            when (isInvitationAccepted) {
+                true -> SecondaryButton(
+                    content = {
+                        Text(
+                            modifier = Modifier
+                                .padding(vertical = 12.dp),
+                            text = stringResource(R.string.ill_go_next_time),
+                        )
+                    },
+                    onClick = {
+                        viewModel.revokeInvitation()
+                        isInvitationAccepted = !isInvitationAccepted
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = 12.dp,
+                            bottom = 20.dp
+                        )
+                )
+
+                false -> PrimaryButton(
+                    content = {
+                        Text(
+                            modifier = Modifier
+                                .padding(vertical = 12.dp),
+                            text = stringResource(R.string.ill_go),
+                        )
+                    },
+                    onClick = {
+                        viewModel.goToEvent(viewModel.profileData)
+                        isInvitationAccepted = !isInvitationAccepted
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            top = 12.dp,
+                            bottom = 20.dp
+                        )
+                )
+            }
         }
     }
 }

@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import ru.wildberries.R
 import ru.wildberries.navigation.EventsRoute
+import ru.wildberries.navigation.ProfileCreateRoute
 import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.theme.WBTheme
 
@@ -38,9 +39,7 @@ fun PinCodeField(
     viewModel: MainViewModel,
     navController: NavHostController
 ) {
-    var textFieldValue by remember() {
-        mutableStateOf(TextFieldValue("" ))
-    }
+    val pinCode = viewModel.verificationPinCode
     val focusRequester = remember { FocusRequester() }
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -48,18 +47,19 @@ fun PinCodeField(
     BasicTextField(
         modifier = Modifier
             .focusRequester(focusRequester),
-        value = textFieldValue,
+        value = pinCode,
         onValueChange = {
-            if (it.text.length <= 4) {
-                textFieldValue = it
-            }
+            viewModel.setVerificationPinCode(it.take(4))
         },
+        singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.NumberPassword,
             imeAction = ImeAction.Send
         ),
         keyboardActions = KeyboardActions(
-            onSend = { navController.navigate(EventsRoute) }
+            onSend = {
+                if (pinCode.length == 4) navController.navigate(ProfileCreateRoute)
+            }
         ),
         decorationBox = { innerTextField ->
             Row(
@@ -70,7 +70,7 @@ fun PinCodeField(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 repeat(4){
-                    PinCodeDot(value = textFieldValue.text, index = it)
+                    PinCodeDot(value = pinCode, index = it)
                 }
             }
         }

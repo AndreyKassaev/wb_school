@@ -2,7 +2,7 @@ package ru.wildberries.domain
 
 import kotlinx.coroutines.flow.Flow
 
-interface IMockRepository {
+interface IRepository {
 
     fun getProfileData(): ProfileModel
 
@@ -11,4 +11,9 @@ interface IMockRepository {
     fun getCommunityList(): Flow<List<CommunityModel>>
 
     fun getEventVisitorList(): Flow<List<ProfileModel>>
+
+    fun setEventVisitorList(visitor: ProfileModel): Flow<List<ProfileModel>>
+
+    fun setEventVisitorList(): Flow<List<ProfileModel>>
+
 }

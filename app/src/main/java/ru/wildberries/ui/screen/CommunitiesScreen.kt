@@ -9,40 +9,30 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getString
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ru.wildberries.R
+import ru.wildberries.data.MockRepositoryImpl
 import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.SearchBar
 import ru.wildberries.ui.UIKit.molecule.CommunityCard
-import ru.wildberries.ui.UIKit.organism.BottomAppBarItem
-import ru.wildberries.ui.UIKit.organism.TopBarArg
+import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
-import ru.wildberries.util.ActivityContext
 
 @Composable
 fun CommunitiesScreen(
     viewModel: MainViewModel,
     navController: NavController
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.setTopAppBar(
-            TopBarArg(
-                title = getString(ActivityContext.context, R.string.appbar_item_communities),
-                navigationIcon = null,
-                actionIcon = null,
-            )
-        )
-        viewModel.setSelectedBottomAppBarItem(BottomAppBarItem.Communities)
-    }
 
     val communityList by viewModel.communityList.collectAsState()
     val interactionSource = remember { MutableInteractionSource() }
@@ -59,6 +49,10 @@ fun CommunitiesScreen(
             },
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        TopBar(
+            title = stringResource(id = R.string.appbar_item_communities),
+            modifier = Modifier.padding(top=16.dp, bottom = 13.dp)
+        )
         SearchBar()
         LazyColumn() {
             communityList.forEachIndexed { index, community ->
@@ -77,5 +71,16 @@ fun CommunitiesScreen(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun CommunitiesScreenPrev() {
+    WBTheme {
+        CommunitiesScreen(
+            viewModel = MainViewModel(MockRepositoryImpl()),
+            navController = rememberNavController()
+        )
     }
 }

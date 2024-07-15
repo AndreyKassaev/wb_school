@@ -8,14 +8,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getString
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
 import ru.wildberries.ui.MainViewModel
@@ -23,36 +25,39 @@ import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.UIKit.atom.SecondaryButton
 import ru.wildberries.ui.UIKit.molecule.Profile
 import ru.wildberries.ui.UIKit.molecule.ProfileMode
-import ru.wildberries.ui.UIKit.organism.BottomAppBarItem
-import ru.wildberries.ui.UIKit.organism.TopBarArg
+import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
-import ru.wildberries.util.ActivityContext
 
 @Composable
 fun ProfileAccountScreen(
     viewModel: MainViewModel,
-    navigateBack: () -> Unit,
+    navController: NavController
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.setTopAppBar(
-            TopBarArg(
-                title = getString(ActivityContext.context, R.string.topappbar_title_profile),
-                navigationIcon = R.drawable.arrow_back,
-                navigationIconOnClick = navigateBack,
-                actionIcon = R.drawable.edit
-            )
-        )
-        viewModel.setSelectedBottomAppBarItem(BottomAppBarItem.More)
-    }
-
     val profileData = viewModel.profileData
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 46.dp),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        TopBar(
+            title = stringResource(id = R.string.topappbar_title_profile),
+            navigationIcon = R.drawable.arrow_back,
+            actionIcon = {
+                IconButton(
+                    onClick = {
+
+                    }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.edit),
+                        contentDescription = null
+                    )
+                }
+            },
+            navigationIconOnClick = {navController.popBackStack()},
+            modifier = Modifier.padding(end = 8.dp, top = 16.dp, bottom = 46.dp)
+        )
         Profile(
             profileData = profileData,
             profileMode = ProfileMode.FullScreen,
@@ -112,7 +117,7 @@ private fun ProfileAccountScreenPreview() {
     WBTheme {
         ProfileAccountScreen(
             viewModel = MainViewModel(MockRepositoryImpl()),
-            navigateBack = {},
+            navController = rememberNavController()
         )
     }
 }
