@@ -3,7 +3,7 @@
     <string name="app_name">school</string>
     <string name="appbar_item_events">Встречи</string>
     <string name="appbar_item_communities">Сообщества</string>
-    <string name="bottomappbar_item_more">Ещё</string>
+    <string name="appbar_item_more">Ещё</string>
     <string name="topappbar_title_profile">Профиль</string>
     <string name="morescreen_my_events">Мои встречи</string>
     <string name="my_events_tabitem_planned">Запланировано</string>
@@ -16,4 +16,20 @@
     <string name="people">человек</string>
     <string name="community_events">Встречи сообщества</string>
     <string name="ill_go">Пойду на встречу!</string>
+    <string name="ill_go_next_time">Схожу в другой раз</string>
+    <string name="theme">Тема</string>
+    <string name="notification">Уведомдения</string>
+    <string name="security">Безопасность</string>
+    <string name="memory_and_recources">Память и ресурсы</string>
+    <string name="help">Помощь</string>
+    <string name="invite_friend">Пригласи друга</string>
+    <string name="enter_phone_number">Введите номер телефона</string>
+    <string name="enter_phone_number_desc">Мы вышлем код подтверждения на указаный номер</string>
+    <string name="enter_pin_code">Введите код</string>
+    <string name="enter_pin_code_desc">Отправили код на номер </string>
+    <string name="enter_phone_number_continue">Продолжить</string>
+    <string name="enter_pin_code_request_again">Запросить повторно</string>
+    <string name="save">Сохранить</string>
+    <string name="firstName_required">Имя (обязательно)</string>
+    <string name="lastName_required">Фамилия (опционально)</string>
 </resources>

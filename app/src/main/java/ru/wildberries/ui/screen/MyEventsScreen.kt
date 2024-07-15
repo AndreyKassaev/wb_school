@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
@@ -25,37 +26,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getString
 import androidx.navigation.NavController
 import ru.wildberries.R
-import ru.wildberries.data.MockRepositoryImpl
 import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.molecule.EventCard
-import ru.wildberries.ui.UIKit.organism.BottomAppBarItem
-import ru.wildberries.ui.UIKit.organism.TopBarArg
+import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
-import ru.wildberries.util.ActivityContext
 
 @Composable
 fun MyEventsScreen(
     viewModel: MainViewModel,
     navController: NavController
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.setTopAppBar(
-            TopBarArg(
-                title = getString(ActivityContext.context, R.string.morescreen_my_events),
-                navigationIcon = R.drawable.arrow_back,
-                navigationIconOnClick = { navController.popBackStack() },
-                actionIcon = null,
-            )
-        )
-        viewModel.setSelectedBottomAppBarItem(BottomAppBarItem.More)
-    }
-
-
     val myEventList by viewModel.eventList.collectAsState()
     val tabItemList = listOf(
         TabItem(title = stringResource(id = R.string.my_events_tabitem_planned)),
@@ -79,6 +62,12 @@ fun MyEventsScreen(
             .fillMaxSize()
             .padding(horizontal = 24.dp)
     ) {
+        TopBar(
+            title = stringResource(id = R.string.morescreen_my_events),
+            navigationIcon = R.drawable.arrow_back,
+            navigationIconOnClick = {navController.popBackStack()},
+            modifier = Modifier.padding(top = 16.dp, bottom = 29.dp).offset(x = (-24).dp)
+        )
         TabRow(
             selectedTabIndex = selectedTabIndex,
             divider = {},

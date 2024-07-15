@@ -23,6 +23,7 @@ import ru.wildberries.ui.UIKit.atom.ProfileImage
 import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.theme.WBTheme
 import ru.wildberries.util.ActivityContext
+import ru.wildberries.util.phoneNumberFormatter
 import java.util.Locale
 
 @Composable
@@ -79,6 +80,7 @@ fun Profile(
             )
             Text(
                 text = phoneNumberFormatter(profileData.phoneNumber),
+//                text = phoneNumberFormatter(profileData.phoneNumber),
                 style = WBTheme.typography.subHeading2.copy(
                     fontWeight = FontWeight.Medium
                 ),
@@ -107,10 +109,4 @@ private fun ProfilePreview() {
             profileMode= ProfileMode.Row
         )
     }
-}
-
-fun phoneNumberFormatter(amount: Long): String {
-    val dec = DecimalFormat("###,###,##,##", DecimalFormatSymbols(Locale.ENGLISH))
-    val formattedNumber = dec.format(amount).replace(",", " ")
-    return "+7 $formattedNumber"
 }

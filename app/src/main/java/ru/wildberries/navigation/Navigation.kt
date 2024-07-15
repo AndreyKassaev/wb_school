@@ -1,6 +1,5 @@
 package ru.wildberries.navigation
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -17,7 +16,6 @@ import ru.wildberries.domain.CommunityModel
 import ru.wildberries.domain.EventModel
 import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.organism.BottomBar
-import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.screen.CommunitiesScreen
 import ru.wildberries.ui.screen.CommunityDetailScreen
 import ru.wildberries.ui.screen.EventDetailScreen
@@ -26,6 +24,7 @@ import ru.wildberries.ui.screen.FirstLessonScreen
 import ru.wildberries.ui.screen.MoreScreen
 import ru.wildberries.ui.screen.MyEventsScreen
 import ru.wildberries.ui.screen.ProfileAccountScreen
+import ru.wildberries.ui.screen.ProfileCreateScreen
 import ru.wildberries.ui.screen.SecondLessonScreen
 import ru.wildberries.ui.screen.SplashScreen
 import ru.wildberries.ui.screen.VerificationPhoneScreen
@@ -33,114 +32,104 @@ import ru.wildberries.ui.screen.VerificationPinCodeScreen
 
 @Composable
 fun Navigation() {
-    val navController = rememberNavController()
 
+    val navController = rememberNavController()
     val viewModel = MainViewModel(MockRepositoryImpl())
 
     Scaffold(
-        topBar = {
-            TopBar(viewModel = viewModel)
-        },
         bottomBar = {
             BottomBar(
-                viewModel = viewModel,
-                bottomNavigation = BottomNavigation(
-                    eventsNavigate = { navController.navigate(EventsRoute) },
-                    communityNavigate = { navController.navigate(CommunitiesRoute) },
-                    moreNavigate = { navController.navigate( MoreRoute ) }
-                )
+                navController = navController
             )
         }
     ) { innerPadding ->
-        Box(
+        NavHost(
             modifier = Modifier
-                .padding(innerPadding)
-        ){
-            NavHost(
-                navController = navController,
-                startDestination = SplashRoute,
-            ){
-                composable<ProfileAccountRoute> { backStackEntry ->
-                    ProfileAccountScreen(
-                        viewModel = viewModel,
-                        navigateBack = {navController.popBackStack()}
-                    )
-                }
-                composable<MoreRoute> { navBackStackEntry ->
-                    MoreScreen(
-                        viewModel = viewModel,
-                        navigateToProfile = {navController.navigate(route = ProfileAccountRoute)},
-                        navigateToFirstLesson = {navController.navigate(FirstLessonRoute)},
-                        navigateToSecondLesson = {navController.navigate(SecondLessonRoute)},
-                        navigateToMyEvents = {navController.navigate(MyEventsRoute)},
-                    )
-                }
-                composable<FirstLessonRoute> {
-                    FirstLessonScreen(
-                        viewModel = viewModel,
-                        navigateBack = {navController.popBackStack()}
-                    )
-                }
-                composable<SecondLessonRoute> {
-                    SecondLessonScreen(
-                        viewModel = viewModel,
-                        navigateBack = {navController.popBackStack()}
-                    )
-                }
-                composable<MyEventsRoute> {
-                    MyEventsScreen(
-                        viewModel = viewModel,
-                        navController = navController
-                    )
-                }
-                composable<CommunitiesRoute> {
-                    CommunitiesScreen(
-                        viewModel = viewModel,
-                        navController = navController
-                    )
-                }
-                composable<EventsRoute> {
-                    EventsScreen(
-                        viewModel = viewModel,
-                        navController = navController
-                    )
-                }
-                composable<CommunityModel> { backStackEntry ->
-                    val community: CommunityModel = backStackEntry.toRoute()
-                    CommunityDetailScreen(
-                        viewModel = viewModel,
-                        community = community,
-                        navController = navController
-                    )
-                }
-                composable<EventModel> { backStackEntry ->
-                    val event: EventModel = backStackEntry.toRoute()
-                    EventDetailScreen(
-                        viewModel = viewModel,
-                        event = event,
-                        navController = navController
-                    )
-                }
-                dialog<SplashRoute>(
-                    dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
-                ) {
-                    SplashScreen(
-                        navController = navController,
-                        viewModel = viewModel
-                    )
-                }
-                composable<VerificationPinCodeRoute> {
-                    VerificationPinCodeScreen(
-                        viewModel = viewModel,
-                        navController = navController
-                    )
-                }
-                composable<VerificationPhoneRoute> {
-                    VerificationPhoneScreen(
-                        viewModel = viewModel,
-                        navController = navController
-                    )
-                }
+                .padding(innerPadding),
+            navController = navController,
+            startDestination = SplashRoute,
+        ) {
+            composable<ProfileAccountRoute> { backStackEntry ->
+                ProfileAccountScreen(
+                    viewModel = viewModel,
+                    navController = navController
+                )
+            }
+            composable<MoreRoute> { navBackStackEntry ->
+                MoreScreen(
+                    viewModel = viewModel,
+                    navController = navController
+                )
+            }
+            composable<FirstLessonRoute> {
+                FirstLessonScreen(
+                    viewModel = viewModel,
+                )
+            }
+            composable<SecondLessonRoute> {
+                SecondLessonScreen(
+                    viewModel = viewModel,
+                )
+            }
+            composable<MyEventsRoute> {
+                MyEventsScreen(
+                    viewModel = viewModel,
+                    navController = navController
+                )
+            }
+            composable<CommunitiesRoute> {
+                CommunitiesScreen(
+                    viewModel = viewModel,
+                    navController = navController
+                )
+            }
+            composable<EventsRoute> {
+                EventsScreen(
+                    viewModel = viewModel,
+                    navController = navController
+                )
+            }
+            composable<CommunityModel> { backStackEntry ->
+                val community: CommunityModel = backStackEntry.toRoute()
+                CommunityDetailScreen(
+                    viewModel = viewModel,
+                    community = community,
+                    navController = navController
+                )
+            }
+            composable<EventModel> { backStackEntry ->
+                val event: EventModel = backStackEntry.toRoute()
+                EventDetailScreen(
+                    viewModel = viewModel,
+                    event = event,
+                    navController = navController
+                )
+            }
+            dialog<SplashRoute>(
+                dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+            ) {
+                SplashScreen(
+                    navController = navController,
+                    viewModel = viewModel
+                )
+            }
+            composable<VerificationPinCodeRoute> {
+                VerificationPinCodeScreen(
+                    viewModel = viewModel,
+                    navController = navController
+                )
+            }
+            composable<VerificationPhoneRoute> {
+                VerificationPhoneScreen(
+                    viewModel = viewModel,
+                    navController = navController
+                )
+            }
+            composable<ProfileCreateRoute> {
+                ProfileCreateScreen(
+                    viewModel = viewModel,
+                    navController = navController
+                )
             }
         }
     }
@@ -176,8 +165,5 @@ object VerificationPinCodeRoute
 @Serializable
 object VerificationPhoneRoute
 
-data class BottomNavigation(
-    val eventsNavigate: () -> Unit,
-    val communityNavigate: () -> Unit,
-    val moreNavigate: () -> Unit
-)
+@Serializable
+object ProfileCreateRoute

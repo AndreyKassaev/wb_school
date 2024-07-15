@@ -46,19 +46,19 @@ import ru.wildberries.util.PhoneNumberVisualTransformation
 @Composable
 fun PhoneNumberField(
     viewModel: MainViewModel,
-    navController: NavController
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var textFieldValue by remember {
-        mutableStateOf("")
-    }
+    val phoneNumber = viewModel.verificationPhoneNumber
     var selectedPhoneCountryCode by remember {
         mutableStateOf(phoneCountryCodeList.first())
     }
     val focusRequester = remember { FocusRequester() }
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .then(modifier),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
@@ -111,6 +111,7 @@ fun PhoneNumberField(
                         }
                     },
                     onClick = {
+                        viewModel.setVerificationPhoneNumberCountryCode(phoneCountryCode.code)
                         selectedPhoneCountryCode = phoneCountryCode
                         expanded = false
                     }
@@ -121,10 +122,10 @@ fun PhoneNumberField(
         BasicTextField(
             modifier = Modifier
                 .focusRequester(focusRequester),
-            value = textFieldValue,
+            value = phoneNumber,
             cursorBrush = SolidColor(Color.Transparent),
             onValueChange = {
-                textFieldValue = it.take(9)
+                viewModel.setVerificationPhoneNumber(it.take(10))
             },
             textStyle = WBTheme.typography.bodyText1.copy(
                 color = WBTheme.colors.NeutralActive
@@ -134,9 +135,10 @@ fun PhoneNumberField(
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(
-                onNext = { navController.navigate(VerificationPinCodeRoute) }
+                onNext = { if (viewModel.verificationPhoneNumber.length == 10) navController.navigate(VerificationPinCodeRoute) }
             ),
             visualTransformation = PhoneNumberVisualTransformation(),
+            singleLine = true,
             decorationBox = { innerTextField ->
                 Row(
                     modifier = Modifier
@@ -147,7 +149,7 @@ fun PhoneNumberField(
                         .weight(1f),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (textFieldValue.isEmpty()){
+                    if (phoneNumber.isEmpty()){
                         Text(
                             text = "000 000 00-00-00",
                             style = WBTheme.typography.bodyText1,

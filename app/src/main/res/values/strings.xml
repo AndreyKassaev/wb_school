@@ -2,7 +2,7 @@
     <string name="app_name">school</string>
     <string name="appbar_item_events">Events</string>
     <string name="appbar_item_communities">Communities</string>
-    <string name="bottomappbar_item_more">More</string>
+    <string name="appbar_item_more">More</string>
     <string name="topappbar_title_profile">Profile</string>
     <string name="morescreen_my_events">My Events</string>
     <string name="my_events_tabitem_planned">Planned</string>
@@ -11,8 +11,24 @@
     <string name="my_events_tabitem_passed">Already passed</string>
     <string name="homework_one">Homework 1</string>
     <string name="homework_two">Homework</string>
-    <string name="homework">"Homework "</string>
+    <string name="homework">Homework </string>
     <string name="people">people</string>
-    <string name="community_events">"Community events"</string>
-    <string name="ill_go">"I'll go!"</string>
+    <string name="community_events">Community events</string>
+    <string name="ill_go">"I'll go"</string>
+    <string name="ill_go_next_time">"I'll go next time"</string>
+    <string name="theme">Theme</string>
+    <string name="notification">Notification</string>
+    <string name="security">Security</string>
+    <string name="memory_and_recources">Memory and recources</string>
+    <string name="help">Help</string>
+    <string name="invite_friend">Invite friend</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="enter_phone_number_desc">We will send a confirmation code to the specified number</string>
+    <string name="enter_pin_code">Enter code</string>
+    <string name="enter_pin_code_request_again">Request again</string>
+    <string name="enter_pin_code_desc">Sent the code to the number</string>
+    <string name="enter_phone_number_continue">Continue</string>
+    <string name="save">Save</string>
+    <string name="firstName_required">First name (required)</string>
+    <string name="lastName_required">Last name (optional)</string>
 </resources>

@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -24,8 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getString
-import ru.wildberries.R
 import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.Avatar
 import ru.wildberries.ui.UIKit.atom.GhostButton
@@ -35,28 +32,12 @@ import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.UIKit.atom.SearchBar
 import ru.wildberries.ui.UIKit.atom.SecondaryButton
 import ru.wildberries.ui.UIKit.molecule.TagRow
-import ru.wildberries.ui.UIKit.organism.BottomAppBarItem
-import ru.wildberries.ui.UIKit.organism.TopBarArg
 import ru.wildberries.ui.theme.WBTheme
-import ru.wildberries.util.ActivityContext
 
 @Composable
 fun FirstLessonScreen(
     viewModel: MainViewModel,
-    navigateBack: () -> Unit
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.setTopAppBar(
-            TopBarArg(
-                title = getString(ActivityContext.context, R.string.homework_one),
-                navigationIcon = R.drawable.arrow_back,
-                navigationIconOnClick = navigateBack,
-                actionIcon = null,
-            )
-        )
-        viewModel.setSelectedBottomAppBarItem(BottomAppBarItem.More)
-    }
-
     val interactionSource = remember { MutableInteractionSource() }
     val focusManager = LocalFocusManager.current
 

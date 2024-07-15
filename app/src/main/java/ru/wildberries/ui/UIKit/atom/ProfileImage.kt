@@ -145,7 +145,7 @@ private fun ProfileImagePrev() {
     WBTheme{
         ProfileImage(
             imageUrl = ProfileModel.default.imageUrl,
-            profileState = ProfileState.None,
+            profileState = ProfileState.Edit,
             size = 100.dp,
             onClick = {}
         )
