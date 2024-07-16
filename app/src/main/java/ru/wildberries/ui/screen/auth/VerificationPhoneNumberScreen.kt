@@ -1,4 +1,4 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.auth
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,15 +14,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.wildberries.R
 import ru.wildberries.navigation.VerificationPinCodeRoute
-import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.PrimaryButton
 import ru.wildberries.ui.UIKit.molecule.PhoneNumberField
 import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun VerificationPhoneScreen(
-    viewModel: MainViewModel,
+fun VerificationPhoneNumberScreen(
+    viewModel: AuthViewModel,
     navController: NavController
 ) {
     Column(

@@ -1,4 +1,4 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.event
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -33,10 +32,8 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import kotlinx.serialization.json.JsonNull.content
 import ru.wildberries.R
-import ru.wildberries.domain.EventModel
-import ru.wildberries.ui.MainViewModel
+import ru.wildberries.domain.model.Event
 import ru.wildberries.ui.UIKit.atom.PrimaryButton
 import ru.wildberries.ui.UIKit.atom.SecondaryButton
 import ru.wildberries.ui.UIKit.molecule.EventVisitorAvatarList
@@ -46,8 +43,8 @@ import ru.wildberries.ui.theme.WBTheme
 
 @Composable
 fun EventDetailScreen(
-    viewModel: MainViewModel,
-    event: EventModel,
+    viewModel: EventViewModel,
+    event: Event,
     navController: NavHostController
 ) {
     val painter = rememberAsyncImagePainter(
@@ -198,7 +195,7 @@ fun EventDetailScreen(
                         )
                     },
                     onClick = {
-                        viewModel.goToEvent(viewModel.profileData)
+                        viewModel.acceptInvitation()
                         isInvitationAccepted = !isInvitationAccepted
                     },
                     modifier = Modifier

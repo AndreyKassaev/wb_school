@@ -1,4 +1,4 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,9 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import ru.wildberries.R
-import ru.wildberries.navigation.EventsRoute
-import ru.wildberries.navigation.VerificationPinCodeRoute
-import ru.wildberries.ui.MainViewModel
+import ru.wildberries.navigation.EventListRoute
 import ru.wildberries.ui.UIKit.atom.PrimaryButton
 import ru.wildberries.ui.UIKit.atom.ProfileImage
 import ru.wildberries.ui.UIKit.atom.ProfileState
@@ -39,7 +36,7 @@ import ru.wildberries.ui.theme.WBTheme
 
 @Composable
 fun ProfileCreateScreen(
-    viewModel: MainViewModel,
+    viewModel: AuthViewModel,
     navController: NavHostController
 ) {
     var firstName by rememberSaveable {
@@ -155,11 +152,11 @@ fun ProfileCreateScreen(
                 .fillMaxWidth()
                 .padding(top = 56.dp),
             onClick = {
-                viewModel.setProfileData(
+                viewModel.setProfile(
                     firstName = firstName,
                     lastName = lastName
                 )
-                navController.navigate(EventsRoute)
+                navController.navigate(EventListRoute)
             },
             isEnabled = firstName != ""
         )

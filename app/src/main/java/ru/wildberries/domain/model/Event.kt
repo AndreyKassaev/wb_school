@@ -1,11 +1,11 @@
-package ru.wildberries.domain
+package ru.wildberries.domain.model
 
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import kotlinx.serialization.Serializable
 import java.util.UUID
 
 @Serializable
-data class EventModel(
+data class Event(
     val id: String,
     val communityId: String,
     val title: String,
@@ -17,7 +17,7 @@ data class EventModel(
     val tagList: List<String>
 ){
     companion object {
-        val default = EventModel(
+        val default = Event(
             id = UUID.randomUUID().toString(),
             communityId = UUID.randomUUID().toString(),
             title = "Title",

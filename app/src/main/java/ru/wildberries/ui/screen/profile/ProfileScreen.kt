@@ -1,4 +1,4 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
-import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.UIKit.atom.SecondaryButton
 import ru.wildberries.ui.UIKit.molecule.Profile
@@ -29,11 +28,11 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun ProfileAccountScreen(
-    viewModel: MainViewModel,
+fun ProfileScreen(
+    viewModel: ProfileViewModel,
     navController: NavController
 ) {
-    val profileData = viewModel.profileData
+    val profileData = viewModel.profile
 
     Column(
         modifier = Modifier
@@ -115,8 +114,8 @@ fun ProfileAccountScreen(
 @Composable
 private fun ProfileAccountScreenPreview() {
     WBTheme {
-        ProfileAccountScreen(
-            viewModel = MainViewModel(MockRepositoryImpl()),
+        ProfileScreen(
+            viewModel = ProfileViewModel(MockRepositoryImpl()),
             navController = rememberNavController()
         )
     }

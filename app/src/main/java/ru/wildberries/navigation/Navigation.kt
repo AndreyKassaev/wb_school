@@ -9,32 +9,36 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import kotlinx.serialization.Serializable
-import ru.wildberries.data.MockRepositoryImpl
-import ru.wildberries.domain.CommunityModel
-import ru.wildberries.domain.EventModel
-import ru.wildberries.ui.MainViewModel
+import org.koin.androidx.compose.koinViewModel
+import ru.wildberries.domain.model.Community
+import ru.wildberries.domain.model.Event
 import ru.wildberries.ui.UIKit.organism.BottomBar
-import ru.wildberries.ui.screen.CommunitiesScreen
-import ru.wildberries.ui.screen.CommunityDetailScreen
-import ru.wildberries.ui.screen.EventDetailScreen
-import ru.wildberries.ui.screen.EventsScreen
-import ru.wildberries.ui.screen.FirstLessonScreen
-import ru.wildberries.ui.screen.MoreScreen
-import ru.wildberries.ui.screen.MyEventsScreen
-import ru.wildberries.ui.screen.ProfileAccountScreen
-import ru.wildberries.ui.screen.ProfileCreateScreen
-import ru.wildberries.ui.screen.SecondLessonScreen
-import ru.wildberries.ui.screen.SplashScreen
-import ru.wildberries.ui.screen.VerificationPhoneScreen
-import ru.wildberries.ui.screen.VerificationPinCodeScreen
+import ru.wildberries.ui.screen.auth.AuthViewModel
+import ru.wildberries.ui.screen.auth.ProfileCreateScreen
+import ru.wildberries.ui.screen.auth.VerificationPhoneNumberScreen
+import ru.wildberries.ui.screen.auth.VerificationPinCodeScreen
+import ru.wildberries.ui.screen.community.CommunityDetailScreen
+import ru.wildberries.ui.screen.community.CommunityListScreen
+import ru.wildberries.ui.screen.community.CommunityViewModel
+import ru.wildberries.ui.screen.event.EventDetailScreen
+import ru.wildberries.ui.screen.event.EventListScreen
+import ru.wildberries.ui.screen.event.EventViewModel
+import ru.wildberries.ui.screen.event.PersonalEventListScreen
+import ru.wildberries.ui.screen.lesson.FirstLessonScreen
+import ru.wildberries.ui.screen.lesson.LessonViewModel
+import ru.wildberries.ui.screen.lesson.SecondLessonScreen
+import ru.wildberries.ui.screen.profile.MoreScreen
+import ru.wildberries.ui.screen.profile.ProfileScreen
+import ru.wildberries.ui.screen.profile.ProfileViewModel
+import ru.wildberries.ui.screen.splash.SplashScreen
+import ru.wildberries.ui.screen.splash.SplashViewModel
 
 @Composable
 fun Navigation() {
 
     val navController = rememberNavController()
-    val viewModel = MainViewModel(MockRepositoryImpl())
 
     Scaffold(
         bottomBar = {
@@ -49,121 +53,109 @@ fun Navigation() {
             navController = navController,
             startDestination = SplashRoute,
         ) {
-            composable<ProfileAccountRoute> { backStackEntry ->
-                ProfileAccountScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
+            navigation<VerificationRoute>(
+                startDestination = VerificationPhoneNumberRoute,
+            ){
+                composable<VerificationPhoneNumberRoute> {
+                    VerificationPhoneNumberScreen(
+                        viewModel = koinViewModel<AuthViewModel>(),
+                        navController = navController
+                    )
+                }
+                composable<VerificationPinCodeRoute> {
+                    VerificationPinCodeScreen(
+                        viewModel = koinViewModel<AuthViewModel>(),
+                        navController = navController
+                    )
+                }
+                composable<ProfileCreateRoute> {
+                    ProfileCreateScreen(
+                        viewModel = koinViewModel<AuthViewModel>(),
+                        navController = navController
+                    )
+                }
             }
-            composable<MoreRoute> { navBackStackEntry ->
-                MoreScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
+            navigation<EventRoute>(
+                startDestination = EventListRoute
+            ){
+                composable<EventListRoute> {
+                    EventListScreen(
+                        viewModel = koinViewModel<EventViewModel>(),
+                        navController = navController
+                    )
+                }
+                composable<Event> { backStackEntry ->
+                    val event: Event = backStackEntry.toRoute()
+                    EventDetailScreen(
+                        viewModel = koinViewModel<EventViewModel>(),
+                        event = event,
+                        navController = navController
+                    )
+                }
             }
-            composable<FirstLessonRoute> {
-                FirstLessonScreen(
-                    viewModel = viewModel,
-                )
+            navigation<CommunityRoute>(
+                startDestination = CommunityListRoute
+            ){
+                composable<CommunityListRoute> {
+                    CommunityListScreen(
+                        viewModel = koinViewModel<CommunityViewModel>(),
+                        navController = navController
+                    )
+                }
+                composable<Community> { backStackEntry ->
+                    val community: Community = backStackEntry.toRoute()
+                    CommunityDetailScreen(
+                        viewModel = koinViewModel<CommunityViewModel>(),
+                        community = community,
+                        navController = navController
+                    )
+                }
             }
-            composable<SecondLessonRoute> {
-                SecondLessonScreen(
-                    viewModel = viewModel,
-                )
+            navigation<ProfileBaseRoute>(
+                startDestination = MoreRoute
+            ){
+                composable<ProfileRoute> { backStackEntry ->
+                    ProfileScreen(
+                        viewModel = koinViewModel<ProfileViewModel>(),
+                        navController = navController
+                    )
+                }
+                composable<MoreRoute> { navBackStackEntry ->
+                    MoreScreen(
+                        viewModel = koinViewModel<ProfileViewModel>(),
+                        navController = navController
+                    )
+                }
+                composable<PersonalEventListRoute> {
+                    PersonalEventListScreen(
+                        viewModel = koinViewModel<EventViewModel>(),
+                        navController = navController
+                    )
+                }
             }
-            composable<MyEventsRoute> {
-                MyEventsScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<CommunitiesRoute> {
-                CommunitiesScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<EventsRoute> {
-                EventsScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<CommunityModel> { backStackEntry ->
-                val community: CommunityModel = backStackEntry.toRoute()
-                CommunityDetailScreen(
-                    viewModel = viewModel,
-                    community = community,
-                    navController = navController
-                )
-            }
-            composable<EventModel> { backStackEntry ->
-                val event: EventModel = backStackEntry.toRoute()
-                EventDetailScreen(
-                    viewModel = viewModel,
-                    event = event,
-                    navController = navController
-                )
+            navigation<LessonRoute>(
+                startDestination = FirstLessonRoute
+            ){
+                composable<FirstLessonRoute> {
+                    FirstLessonScreen(
+                        viewModel = koinViewModel<LessonViewModel>(),
+                    )
+                }
+                composable<SecondLessonRoute> {
+                    SecondLessonScreen(
+                        viewModel = koinViewModel<LessonViewModel>(),
+                    )
+                }
             }
             dialog<SplashRoute>(
                 dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
             ) {
                 SplashScreen(
+                    viewModel = koinViewModel<SplashViewModel>(),
                     navController = navController,
-                    viewModel = viewModel
                 )
             }
-            composable<VerificationPinCodeRoute> {
-                VerificationPinCodeScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<VerificationPhoneRoute> {
-                VerificationPhoneScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<ProfileCreateRoute> {
-                ProfileCreateScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
+
         }
     }
 }
-
-@Serializable
-object ProfileAccountRoute
-
-@Serializable
-object MoreRoute
-
-@Serializable
-object FirstLessonRoute
-
-@Serializable
-object SecondLessonRoute
-
-@Serializable
-object MyEventsRoute
-
-@Serializable
-object EventsRoute
-
-@Serializable
-object CommunitiesRoute
-
-@Serializable
-object SplashRoute
-
-@Serializable
-object VerificationPinCodeRoute
-
-@Serializable
-object VerificationPhoneRoute
-
-@Serializable
-object ProfileCreateRoute
