@@ -9,39 +9,38 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getString
 import ru.wildberries.R
-import ru.wildberries.domain.CommunityModel
+import ru.wildberries.domain.model.Community
 import ru.wildberries.ui.UIKit.atom.Avatar
 import ru.wildberries.ui.theme.WBTheme
-import ru.wildberries.util.ActivityContext
 import java.util.Locale
 
 @Composable
 fun CommunityCard(
-    communityModel: CommunityModel
+    community: Community
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 16.dp)
     ) {
-        Avatar(imageUrl = communityModel.imageUrl)
+        Avatar(imageUrl = community.imageUrl)
         Column(
             modifier = Modifier
                 .padding(start = 12.dp)
         ) {
             Text(
-                text = communityModel.title,
+                text = community.title,
                 style = WBTheme.typography.bodyText1,
                 color = WBTheme.colors.NeutralActive,
             )
             Text(
                 modifier = Modifier
                     .padding(top = 4.dp),
-                text = communityCardAmountFormatter(amount = communityModel.amount),
+                text = communityCardAmountFormatter(amount = community.size),
                 style = WBTheme.typography.metadata1,
                 color = WBTheme.colors.NeutralDisabled
             )
@@ -53,12 +52,13 @@ fun CommunityCard(
 @Composable
 private fun CommunityCardPreview() {
     WBTheme {
-        CommunityCard(communityModel = CommunityModel.default)
+        CommunityCard(community = Community.default)
     }
 }
 
+@Composable
 fun communityCardAmountFormatter(amount: Int): String {
     val dec = DecimalFormat("###,###,###,###,###", DecimalFormatSymbols(Locale.ENGLISH))
     val formattedNumber = dec.format(amount).replace(",", " ")
-    return "$formattedNumber ${getString(ActivityContext.context, R.string.people)}"
+    return "$formattedNumber ${stringResource(R.string.people)}"
 }

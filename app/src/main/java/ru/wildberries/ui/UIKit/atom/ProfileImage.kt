@@ -26,7 +26,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import ru.wildberries.R
-import ru.wildberries.domain.ProfileModel
+import ru.wildberries.domain.model.Profile
 import ru.wildberries.ui.theme.WBTheme
 
 enum class ProfileState {
@@ -144,7 +144,7 @@ fun ProfileImage (
 private fun ProfileImagePrev() {
     WBTheme{
         ProfileImage(
-            imageUrl = ProfileModel.default.imageUrl,
+            imageUrl = Profile.default.imageUrl,
             profileState = ProfileState.Edit,
             size = 100.dp,
             onClick = {}

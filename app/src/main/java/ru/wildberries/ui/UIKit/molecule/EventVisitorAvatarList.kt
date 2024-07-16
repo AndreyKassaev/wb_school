@@ -13,14 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import ru.wildberries.R
-import ru.wildberries.domain.ProfileModel
+import ru.wildberries.domain.model.Profile
 import ru.wildberries.ui.UIKit.atom.Avatar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
 fun EventVisitorAvatarList(
-    eventVisitorList: List<ProfileModel>
+    eventVisitorList: List<Profile>
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -59,6 +58,6 @@ fun EventVisitorAvatarList(
 @Composable
 private fun EventUserAvatarListPreview() {
     EventVisitorAvatarList(
-        eventVisitorList = (0..13).map { ProfileModel.default }
+        eventVisitorList = (0..13).map { Profile.default }
     )
 }

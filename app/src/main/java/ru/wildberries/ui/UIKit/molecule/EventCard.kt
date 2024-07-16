@@ -11,21 +11,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import ru.wildberries.domain.EventModel
+import ru.wildberries.domain.model.Event
 import ru.wildberries.ui.UIKit.atom.Avatar
 import ru.wildberries.ui.theme.WBTheme
 import java.util.UUID
 
 @Composable
 fun EventCard(
-    eventModel: EventModel
+    event: Event
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Avatar(imageUrl = eventModel.imageUrl)
+        Avatar(imageUrl = event.imageUrl)
         Column(
             modifier = Modifier
                 .padding(start = 12.dp)
@@ -40,12 +40,12 @@ fun EventCard(
                         .padding(top = 3.dp),
                     style = WBTheme.typography.bodyText1,
                     color = WBTheme.colors.NeutralActive,
-                    text = eventModel.title
+                    text = event.title
                 )
                 Text(
                     style = WBTheme.typography.metadata2,
                     color = WBTheme.colors.NeutralWeak,
-                    text = if (eventModel.isActive) "" else "Закончилась"
+                    text = if (event.isActive) "" else "Закончилась"
                 )
             }
             Text(
@@ -53,9 +53,9 @@ fun EventCard(
                     .padding(top = 2.dp, bottom = 6.dp),
                 style = WBTheme.typography.metadata1,
                 color = WBTheme.colors.NeutralWeak,
-                text = "${eventModel.date} - ${eventModel.location}"
+                text = "${event.date} - ${event.location}"
             )
-            TagRow(tagList = eventModel.tagList)
+            TagRow(tagList = event.tagList)
         }
     }
 }
@@ -67,7 +67,7 @@ fun EventCard(
 fun EventCardPreview(){
     WBTheme {
         EventCard(
-            eventModel = EventModel(
+            event = Event(
                 id = UUID.randomUUID().toString(),
                 communityId = UUID.randomUUID().toString(),
                 title = "Title",

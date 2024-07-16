@@ -1,4 +1,4 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.splash
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,15 +14,14 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.wildberries.R
-import ru.wildberries.navigation.VerificationPhoneRoute
-import ru.wildberries.ui.MainViewModel
+import ru.wildberries.navigation.VerificationPhoneNumberRoute
 import ru.wildberries.ui.theme.WBTheme
 
 
 @Composable
 fun SplashScreen(
+    viewModel: SplashViewModel,
     navController: NavController,
-    viewModel: MainViewModel
 ) {
     val isAppReady = viewModel.isAppReady
     val composition by rememberLottieComposition(
@@ -44,6 +43,6 @@ fun SplashScreen(
         )
     }
     if (isAppReady){
-        navController.navigate(VerificationPhoneRoute)
+        navController.navigate(VerificationPhoneNumberRoute)
     }
 }

@@ -25,11 +25,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ru.wildberries.R
-import ru.wildberries.navigation.CommunitiesRoute
-import ru.wildberries.navigation.EventsRoute
+import ru.wildberries.navigation.CommunityListRoute
+import ru.wildberries.navigation.EventListRoute
 import ru.wildberries.navigation.MoreRoute
 import ru.wildberries.navigation.SplashRoute
-import ru.wildberries.navigation.VerificationPhoneRoute
+import ru.wildberries.navigation.VerificationPhoneNumberRoute
 import ru.wildberries.navigation.VerificationPinCodeRoute
 import ru.wildberries.ui.theme.WBTheme
 import ru.wildberries.util.classToRoute
@@ -49,7 +49,7 @@ fun BottomBar(
 ) {
     val navStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navStackEntry?.destination?.route
-        ?: EventsRoute.classToRoute()
+        ?: EventListRoute.classToRoute()
 
     val itemList = listOf(
         BottomNavigationItem(
@@ -57,18 +57,18 @@ fun BottomBar(
             title = R.string.appbar_item_events,
             isSelected = false,
             navigateTo = {
-                navController.navigate(EventsRoute)
+                navController.navigate(EventListRoute)
             },
-            route = EventsRoute.classToRoute()
+            route = EventListRoute.classToRoute()
         ),
         BottomNavigationItem(
             icon = R.drawable.group_alt,
             title = R.string.appbar_item_communities,
             isSelected = false,
             navigateTo = {
-                navController.navigate(CommunitiesRoute)
+                navController.navigate(CommunityListRoute)
             },
-            route = CommunitiesRoute.classToRoute()
+            route = CommunityListRoute.classToRoute()
         ),
         BottomNavigationItem(
             icon = R.drawable.more_horizontal,
@@ -83,7 +83,7 @@ fun BottomBar(
     when (currentDestination) {
         SplashRoute.classToRoute(),
         VerificationPinCodeRoute.classToRoute(),
-        VerificationPhoneRoute.classToRoute() -> {
+        VerificationPhoneNumberRoute.classToRoute() -> {
         }
 
         else -> Row(

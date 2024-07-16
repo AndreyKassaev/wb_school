@@ -3,28 +3,25 @@ package ru.wildberries.data
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ru.wildberries.domain.CommunityModel
-import ru.wildberries.domain.EventModel
-import ru.wildberries.domain.IRepository
-import ru.wildberries.domain.ProfileModel
+import ru.wildberries.domain.model.Community
+import ru.wildberries.domain.model.Event
+import ru.wildberries.domain.Repository
+import ru.wildberries.domain.model.Profile
 import java.util.UUID
 
-class MockRepositoryImpl : IRepository {
-    override fun getProfileData(): ProfileModel =
-        ProfileModel(
-            imageUrl = "https://kassaev.com/media/night_sky.jpg",
-            firstName = "Андрей",
-            lastName = "Кассаев",
-            phoneNumber = "+79967370744",
-            id = UUID.randomUUID()
-                .toString()
-        )
+class MockRepositoryImpl : Repository {
+    override fun getProfileData(): Profile =
+        profile
 
-    override fun getEventList(): Flow<List<EventModel>> =
+    override fun setProfileData(profile: Profile){
+        this.profile = profile
+    }
+
+    override fun getEventList(): Flow<List<Event>> =
         flow {
             emit(
                 listOf(
-                    EventModel(
+                    Event(
                         id = UUID.randomUUID()
                             .toString(),
                         communityId = UUID.randomUUID()
@@ -40,7 +37,7 @@ class MockRepositoryImpl : IRepository {
                             "Сызрань"
                         )
                     ),
-                    EventModel(
+                    Event(
                         id = UUID.randomUUID()
                             .toString(),
                         communityId = UUID.randomUUID()
@@ -56,7 +53,7 @@ class MockRepositoryImpl : IRepository {
                             "Воронеж"
                         )
                     ),
-                    EventModel(
+                    Event(
                         id = UUID.randomUUID()
                             .toString(),
                         communityId = UUID.randomUUID()
@@ -72,7 +69,7 @@ class MockRepositoryImpl : IRepository {
                             "Пятигорск"
                         )
                     ),
-                    EventModel(
+                    Event(
                         id = UUID.randomUUID()
                             .toString(),
                         communityId = UUID.randomUUID()
@@ -92,118 +89,118 @@ class MockRepositoryImpl : IRepository {
             )
         }
 
-    override fun getCommunityList(): Flow<List<CommunityModel>> =
+    override fun getCommunityList(): Flow<List<Community>> =
         flow {
             emit(
                 listOf(
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Вологда",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/vologda.jpg",
-                        amount = 318112
+                        size = 318112
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Пятигорск",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/pytigorsk.png",
-                        amount = 213000
+                        size = 213000
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Сызрань",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/sizran.png",
-                        amount = 165000
+                        size = 165000
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Воронеж",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/voronezh.jpg",
-                        amount = 1048738
+                        size = 1048738
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Вологда",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/vologda.jpg",
-                        amount = 318112
+                        size = 318112
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Пятигорск",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/pytigorsk.png",
-                        amount = 213000
+                        size = 213000
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Сызрань",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/sizran.png",
-                        amount = 165000
+                        size = 165000
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Воронеж",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/voronezh.jpg",
-                        amount = 1048738
+                        size = 1048738
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Вологда",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/vologda.jpg",
-                        amount = 318112
+                        size = 318112
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Пятигорск",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/pytigorsk.png",
-                        amount = 213000
+                        size = 213000
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Сызрань",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/sizran.png",
-                        amount = 165000
+                        size = 165000
                     ),
-                    CommunityModel(
+                    Community(
                         id = UUID.randomUUID()
                             .toString(),
                         title = "Воронеж",
                         description = LoremIpsum(117).values.first(),
                         imageUrl = "https://kassaev.com/media/voronezh.jpg",
-                        amount = 1048738
+                        size = 1048738
                     ),
                 )
             )
         }
 
-    override fun getEventVisitorList(): Flow<List<ProfileModel>> =
+    override fun getEventVisitorList(): Flow<List<Profile>> =
         flow {
             emit(
                 visitorList
             )
         }
 
-    override fun setEventVisitorList(visitor: ProfileModel): Flow<List<ProfileModel>> {
+    override fun setEventVisitorList(visitor: Profile): Flow<List<Profile>> {
         visitorList += visitor
         return flow {
             emit(
@@ -212,7 +209,7 @@ class MockRepositoryImpl : IRepository {
         }
     }
 
-    override fun setEventVisitorList(): Flow<List<ProfileModel>> {
+    override fun setEventVisitorList(): Flow<List<Profile>> {
         visitorList.removeLast()
         return flow {
             emit(
@@ -222,7 +219,7 @@ class MockRepositoryImpl : IRepository {
     }
 
     private var visitorList = mutableListOf(
-        ProfileModel(
+        Profile(
             imageUrl = "https://kassaev.com/media/night_sky.jpg",
             firstName = "Андрей",
             lastName = "Кассаев",
@@ -230,7 +227,7 @@ class MockRepositoryImpl : IRepository {
             id = UUID.randomUUID()
                 .toString()
         ),
-        ProfileModel(
+        Profile(
             imageUrl = "https://kassaev.com/media/night_sky.jpg",
             firstName = "Андрей",
             lastName = "Кассаев",
@@ -238,7 +235,7 @@ class MockRepositoryImpl : IRepository {
             id = UUID.randomUUID()
                 .toString()
         ),
-        ProfileModel(
+        Profile(
             imageUrl = "https://kassaev.com/media/night_sky.jpg",
             firstName = "Андрей",
             lastName = "Кассаев",
@@ -246,7 +243,7 @@ class MockRepositoryImpl : IRepository {
             id = UUID.randomUUID()
                 .toString()
         ),
-        ProfileModel(
+        Profile(
             imageUrl = "https://kassaev.com/media/night_sky.jpg",
             firstName = "Андрей",
             lastName = "Кассаев",
@@ -254,7 +251,7 @@ class MockRepositoryImpl : IRepository {
             id = UUID.randomUUID()
                 .toString()
         ),
-        ProfileModel(
+        Profile(
             imageUrl = "https://kassaev.com/media/night_sky.jpg",
             firstName = "Андрей",
             lastName = "Кассаев",
@@ -262,7 +259,7 @@ class MockRepositoryImpl : IRepository {
             id = UUID.randomUUID()
                 .toString()
         ),
-        ProfileModel(
+        Profile(
             imageUrl = "https://kassaev.com/media/night_sky.jpg",
             firstName = "Андрей",
             lastName = "Кассаев",
@@ -270,7 +267,7 @@ class MockRepositoryImpl : IRepository {
             id = UUID.randomUUID()
                 .toString()
         ),
-        ProfileModel(
+        Profile(
             imageUrl = "https://kassaev.com/media/night_sky.jpg",
             firstName = "Андрей",
             lastName = "Кассаев",
@@ -278,6 +275,15 @@ class MockRepositoryImpl : IRepository {
             id = UUID.randomUUID()
                 .toString()
         ),
+    )
+
+    var profile = Profile(
+        imageUrl = "https://kassaev.com/media/night_sky.jpg",
+        firstName = "Андрей",
+        lastName = "Кассаев",
+        phoneNumber = "+79967370744",
+        id = UUID.randomUUID()
+            .toString()
     )
 
 }

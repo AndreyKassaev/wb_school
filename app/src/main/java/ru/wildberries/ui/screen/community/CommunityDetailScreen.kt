@@ -1,4 +1,4 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.community
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,16 +15,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.wildberries.R
-import ru.wildberries.domain.CommunityModel
-import ru.wildberries.ui.MainViewModel
+import ru.wildberries.domain.model.Community
 import ru.wildberries.ui.UIKit.molecule.EventCard
 import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
 fun CommunityDetailScreen(
-    community: CommunityModel,
-    viewModel: MainViewModel,
+    community: Community,
+    viewModel: CommunityViewModel,
     navController: NavController
 ) {
 
@@ -68,7 +67,7 @@ fun CommunityDetailScreen(
                                     navController.navigate(event)
                                 }
                         ) {
-                            EventCard(eventModel = event)
+                            EventCard(event = event)
                         }
                         HorizontalDivider(
                             color = WBTheme.colors.NeutralLine

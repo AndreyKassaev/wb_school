@@ -1,18 +1,15 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.event
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -24,32 +21,27 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.wildberries.R
-import ru.wildberries.ui.MainViewModel
-import ru.wildberries.ui.UIKit.atom.SearchBar
 import ru.wildberries.ui.UIKit.molecule.EventCard
 import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun EventsScreen(
-    viewModel: MainViewModel,
+fun PersonalEventListScreen(
+    viewModel: EventViewModel,
     navController: NavController
 ) {
     val myEventList by viewModel.eventList.collectAsState()
     val tabItemList = listOf(
-        TabItem(title = stringResource(id = R.string.events_tabitem_all)),
-        TabItem(title = stringResource(id = R.string.events_tabitem_active))
+        TabItem(title = stringResource(id = R.string.my_events_tabitem_planned)),
+        TabItem(title = stringResource(id = R.string.my_events_tabitem_passed))
     )
     var selectedTabIndex by rememberSaveable {
         mutableIntStateOf(0)
@@ -63,43 +55,18 @@ fun EventsScreen(
     LaunchedEffect(pagerState.currentPage) {
         selectedTabIndex = pagerState.currentPage
     }
-    val interactionSource = remember { MutableInteractionSource() }
-    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 24.dp)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null
-            ) {
-                focusManager.clearFocus()
-            },
-        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         TopBar(
-            title = stringResource(R.string.appbar_item_events),
-            navigationIcon = null,
-            actionIcon = {
-                IconButton(
-                    onClick = {
-
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.plus ),
-                        contentDescription = null,
-                        tint = WBTheme.colors.NeutralActive
-                    )
-                }
-            },
-            modifier = Modifier.padding(
-                bottom = 13.dp,
-                top = 16.dp
-            )
+            title = stringResource(id = R.string.morescreen_my_events),
+            navigationIcon = R.drawable.arrow_back,
+            navigationIconOnClick = {navController.popBackStack()},
+            modifier = Modifier.padding(top = 16.dp, bottom = 29.dp).offset(x = (-24).dp)
         )
-        SearchBar()
         TabRow(
             selectedTabIndex = selectedTabIndex,
             divider = {},
@@ -134,31 +101,11 @@ fun EventsScreen(
                 .weight(1f),
             verticalAlignment = Alignment.Top
         ) { index ->
-            when (index) {
+            when (index){
                 0 -> {
                     LazyColumn {
                         myEventList.forEach { event ->
-                            item {
-                                Surface(
-                                    modifier = Modifier
-                                        .clickable {
-                                            navController.navigate(event)
-                                        }
-                                ) {
-                                    EventCard(eventModel = event)
-                                }
-                                HorizontalDivider(
-                                    color = WBTheme.colors.NeutralLine
-                                )
-                            }
-                        }
-                    }
-                }
-
-                1 -> {
-                    LazyColumn {
-                        myEventList.forEach { event ->
-                            if (event.isActive) {
+                            if (event.isActive){
                                 item {
                                     Surface(
                                         modifier = Modifier
@@ -166,7 +113,28 @@ fun EventsScreen(
                                                 navController.navigate(event)
                                             }
                                     ) {
-                                        EventCard(eventModel = event)
+                                        EventCard(event = event)
+                                    }
+                                    HorizontalDivider(
+                                        color = WBTheme.colors.NeutralLine
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                1 -> {
+                    LazyColumn {
+                        myEventList.forEach { event ->
+                            if (!event.isActive){
+                                item {
+                                    Surface(
+                                        modifier = Modifier
+                                            .clickable {
+                                                navController.navigate(event)
+                                            }
+                                    ) {
+                                        EventCard(event = event)
                                     }
                                     HorizontalDivider(
                                         color = WBTheme.colors.NeutralLine
@@ -180,3 +148,7 @@ fun EventsScreen(
         }
     }
 }
+
+data class TabItem(
+    val title: String
+)
