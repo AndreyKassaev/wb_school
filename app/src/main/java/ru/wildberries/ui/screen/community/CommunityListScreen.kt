@@ -1,4 +1,4 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.community
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -14,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,15 +21,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
-import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.SearchBar
 import ru.wildberries.ui.UIKit.molecule.CommunityCard
 import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun CommunitiesScreen(
-    viewModel: MainViewModel,
+fun CommunityListScreen(
+    viewModel: CommunityViewModel,
     navController: NavController
 ) {
 
@@ -63,7 +61,7 @@ fun CommunitiesScreen(
                                 navController.navigate(community)
                             }
                     ) {
-                        CommunityCard(communityModel = community)
+                        CommunityCard(community = community)
                     }
                     HorizontalDivider(
                         color = WBTheme.colors.NeutralLine
@@ -78,8 +76,8 @@ fun CommunitiesScreen(
 @Composable
 private fun CommunitiesScreenPrev() {
     WBTheme {
-        CommunitiesScreen(
-            viewModel = MainViewModel(MockRepositoryImpl()),
+        CommunityListScreen(
+            viewModel = CommunityViewModel(MockRepositoryImpl()),
             navController = rememberNavController()
         )
     }

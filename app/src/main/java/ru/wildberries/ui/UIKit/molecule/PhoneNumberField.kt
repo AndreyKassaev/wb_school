@@ -39,13 +39,13 @@ import androidx.navigation.compose.rememberNavController
 import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
 import ru.wildberries.navigation.VerificationPinCodeRoute
-import ru.wildberries.ui.MainViewModel
+import ru.wildberries.ui.screen.auth.AuthViewModel
 import ru.wildberries.ui.theme.WBTheme
 import ru.wildberries.util.PhoneNumberVisualTransformation
 
 @Composable
 fun PhoneNumberField(
-    viewModel: MainViewModel,
+    viewModel: AuthViewModel,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -193,7 +193,7 @@ data class PhoneCountryCode(
 fun PhoneNumberFieldPreview() {
     WBTheme {
         PhoneNumberField(
-            viewModel= MainViewModel(MockRepositoryImpl()),
+            viewModel= AuthViewModel(MockRepositoryImpl()),
             navController = rememberNavController()
         )
     }

@@ -1,4 +1,4 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.lesson
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.Avatar
 import ru.wildberries.ui.UIKit.atom.GhostButton
 import ru.wildberries.ui.UIKit.atom.PrimaryButton
@@ -36,7 +35,7 @@ import ru.wildberries.ui.theme.WBTheme
 
 @Composable
 fun FirstLessonScreen(
-    viewModel: MainViewModel,
+    viewModel: LessonViewModel,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val focusManager = LocalFocusManager.current

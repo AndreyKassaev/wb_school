@@ -1,11 +1,10 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.profile
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
@@ -18,17 +17,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import kotlinx.serialization.json.JsonNull.content
 import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
 import ru.wildberries.navigation.FirstLessonRoute
-import ru.wildberries.navigation.MyEventsRoute
-import ru.wildberries.navigation.ProfileAccountRoute
+import ru.wildberries.navigation.PersonalEventListRoute
+import ru.wildberries.navigation.ProfileRoute
 import ru.wildberries.navigation.SecondLessonRoute
-import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.UIKit.molecule.Profile
 import ru.wildberries.ui.UIKit.molecule.ProfileMode
@@ -37,10 +33,10 @@ import ru.wildberries.ui.theme.WBTheme
 
 @Composable
 fun MoreScreen(
-    viewModel: MainViewModel,
+    viewModel: ProfileViewModel,
     navController: NavHostController,
 ) {
-    val profileData = viewModel.profileData
+    val profileData = viewModel.profile
     val itemList = listOf(
         MoreScreenItemClass(
             content = {
@@ -52,7 +48,7 @@ fun MoreScreen(
                     onClick = {}
                 )
             },
-            action = { navController.navigate(ProfileAccountRoute) }
+            action = { navController.navigate(ProfileRoute) }
         ),
         MoreScreenItemClass(
             content = {
@@ -66,7 +62,7 @@ fun MoreScreen(
                     style = WBTheme.typography.bodyText1
                 )
             },
-            action = { navController.navigate(MyEventsRoute) }
+            action = { navController.navigate(PersonalEventListRoute) }
         ),
         MoreScreenItemClass(
             content = {
@@ -210,7 +206,7 @@ fun MoreScreen(
 private fun MoreScreenPreview() {
     WBTheme {
         MoreScreen(
-            viewModel = MainViewModel(MockRepositoryImpl()),
+            viewModel = ProfileViewModel(MockRepositoryImpl()),
             navController = rememberNavController()
         )
     }

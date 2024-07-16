@@ -1,5 +1,6 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.auth
 
+import android.telephony.PhoneNumberUtils
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,16 +14,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import ru.wildberries.R
-import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.GhostButton
 import ru.wildberries.ui.UIKit.molecule.PinCodeField
 import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
-import ru.wildberries.util.phoneNumberFormatter
+import java.util.Locale
 
 @Composable
 fun VerificationPinCodeScreen(
-    viewModel: MainViewModel,
+    viewModel: AuthViewModel,
     navController: NavHostController
 ) {
     Column(
@@ -54,7 +54,8 @@ fun VerificationPinCodeScreen(
             color = WBTheme.colors.NeutralActive
         )
         Text(
-            text = phoneNumberFormatter("${viewModel.verificationPhoneNumberCountryCode}${viewModel.verificationPhoneNumber}"),
+            modifier = Modifier.padding(bottom = 50.dp),
+            text = PhoneNumberUtils.formatNumber("${viewModel.verificationPhoneNumberCountryCode}${viewModel.verificationPhoneNumber}", Locale.getDefault().country),
             style = WBTheme.typography.bodyText2,
             color = WBTheme.colors.NeutralActive
         )

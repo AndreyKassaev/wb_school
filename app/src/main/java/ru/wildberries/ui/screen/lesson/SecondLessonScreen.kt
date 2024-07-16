@@ -1,4 +1,4 @@
-package ru.wildberries.ui.screen
+package ru.wildberries.ui.screen.lesson
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -10,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.wildberries.ui.MainViewModel
 import ru.wildberries.ui.UIKit.atom.ProfileImage
 import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.UIKit.molecule.CommunityCard
@@ -19,7 +18,7 @@ import ru.wildberries.ui.UIKit.molecule.EventVisitorAvatarList
 
 @Composable
 fun SecondLessonScreen(
-    viewModel: MainViewModel,
+    viewModel: LessonViewModel,
 ) {
     val eventList by viewModel.eventList.collectAsState()
     val communityList by viewModel.communityList.collectAsState()
@@ -36,7 +35,7 @@ fun SecondLessonScreen(
 
         item {
             EventVisitorAvatarList(
-                eventVisitorList = (0..13).map { viewModel.profileData }
+                eventVisitorList = (0..13).map { viewModel.profile }
             )
         }
 
