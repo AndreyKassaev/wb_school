@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.wildberries.R
+import ru.wildberries.domain.model.Event
 import ru.wildberries.ui.UIKit.atom.SearchBar
 import ru.wildberries.ui.UIKit.molecule.EventCard
 import ru.wildberries.ui.UIKit.organism.TopBar
@@ -45,7 +46,7 @@ fun EventListScreen(
     viewModel: EventViewModel,
     navController: NavController
 ) {
-    val myEventList by viewModel.eventList.collectAsState()
+    val eventListFull by viewModel.eventList.collectAsState()
     val tabItemList = listOf(
         TabItem(title = stringResource(id = R.string.events_tabitem_all)),
         TabItem(title = stringResource(id = R.string.events_tabitem_active))
@@ -64,7 +65,17 @@ fun EventListScreen(
     }
     val interactionSource = remember { MutableInteractionSource() }
     val focusManager = LocalFocusManager.current
-
+    val activeEventList = eventListFull.filter { event -> event.isActive }
+    val horizontalPagerEventList = remember {
+        listOf(
+            HorizontalPagerEventListClass(
+                eventList = eventListFull,
+            ),
+            HorizontalPagerEventListClass(
+                eventList = activeEventList,
+            ),
+        )
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -133,48 +144,39 @@ fun EventListScreen(
                 .weight(1f),
             verticalAlignment = Alignment.Top
         ) { index ->
-            when (index) {
-                0 -> {
-                    LazyColumn {
-                        myEventList.forEach { event ->
-                            item {
-                                Surface(
-                                    modifier = Modifier
-                                        .clickable {
-                                            navController.navigate(event)
-                                        }
-                                ) {
-                                    EventCard(event = event)
-                                }
-                                HorizontalDivider(
-                                    color = WBTheme.colors.NeutralLine
-                                )
-                            }
-                        }
-                    }
-                }
+            with(horizontalPagerEventList[index]){
+                HorizontalPagerEventList(
+                    eventList = eventList,
+                    navController = navController
+                )
+            }
+        }
+    }
+}
 
-                1 -> {
-                    LazyColumn {
-                        myEventList.forEach { event ->
-                            if (event.isActive) {
-                                item {
-                                    Surface(
-                                        modifier = Modifier
-                                            .clickable {
-                                                navController.navigate(event)
-                                            }
-                                    ) {
-                                        EventCard(event = event)
-                                    }
-                                    HorizontalDivider(
-                                        color = WBTheme.colors.NeutralLine
-                                    )
-                                }
-                            }
+data class HorizontalPagerEventListClass(
+    val eventList: List<Event>
+)
+
+@Composable
+fun HorizontalPagerEventList(
+    eventList: List<Event>,
+    navController: NavController
+) {
+    LazyColumn {
+        eventList.forEach { event ->
+            item {
+                Surface(
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(event)
                         }
-                    }
+                ) {
+                    EventCard(event = event)
                 }
+                HorizontalDivider(
+                    color = WBTheme.colors.NeutralLine
+                )
             }
         }
     }

@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -38,7 +39,7 @@ fun PersonalEventListScreen(
     viewModel: EventViewModel,
     navController: NavController
 ) {
-    val myEventList by viewModel.eventList.collectAsState()
+    val eventListFull by viewModel.eventList.collectAsState()
     val tabItemList = listOf(
         TabItem(title = stringResource(id = R.string.my_events_tabitem_planned)),
         TabItem(title = stringResource(id = R.string.my_events_tabitem_passed))
@@ -48,6 +49,18 @@ fun PersonalEventListScreen(
     }
     val pagerState = rememberPagerState {
         tabItemList.size
+    }
+    val activeEventList = eventListFull.filter { event -> event.isActive }
+    val inactiveEventList = eventListFull.filter { event -> !event.isActive }
+    val horizontalPagerEventList = remember {
+        listOf(
+            HorizontalPagerEventListClass(
+                eventList = activeEventList,
+            ),
+            HorizontalPagerEventListClass(
+                eventList = inactiveEventList,
+            ),
+        )
     }
     LaunchedEffect(selectedTabIndex) {
         pagerState.animateScrollToPage(selectedTabIndex)
@@ -101,49 +114,11 @@ fun PersonalEventListScreen(
                 .weight(1f),
             verticalAlignment = Alignment.Top
         ) { index ->
-            when (index){
-                0 -> {
-                    LazyColumn {
-                        myEventList.forEach { event ->
-                            if (event.isActive){
-                                item {
-                                    Surface(
-                                        modifier = Modifier
-                                            .clickable {
-                                                navController.navigate(event)
-                                            }
-                                    ) {
-                                        EventCard(event = event)
-                                    }
-                                    HorizontalDivider(
-                                        color = WBTheme.colors.NeutralLine
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-                1 -> {
-                    LazyColumn {
-                        myEventList.forEach { event ->
-                            if (!event.isActive){
-                                item {
-                                    Surface(
-                                        modifier = Modifier
-                                            .clickable {
-                                                navController.navigate(event)
-                                            }
-                                    ) {
-                                        EventCard(event = event)
-                                    }
-                                    HorizontalDivider(
-                                        color = WBTheme.colors.NeutralLine
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+            with(horizontalPagerEventList[index]){
+                HorizontalPagerEventList(
+                    eventList = eventList,
+                    navController = navController
+                )
             }
         }
     }
