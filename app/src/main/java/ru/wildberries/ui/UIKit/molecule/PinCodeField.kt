@@ -25,7 +25,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import ru.wildberries.R
-import ru.wildberries.navigation.ProfileCreateRoute
+import ru.wildberries.navigation.Route
 import ru.wildberries.ui.screen.auth.AuthViewModel
 import ru.wildberries.ui.theme.WBTheme
 
@@ -53,7 +53,7 @@ fun PinCodeField(
         ),
         keyboardActions = KeyboardActions(
             onSend = {
-                if (pinCode.length == 4) navController.navigate(ProfileCreateRoute)
+                if (pinCode.length == 4) navController.navigate(Route.ProfileCreate)
             }
         ),
         decorationBox = { innerTextField ->

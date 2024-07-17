@@ -51,34 +51,34 @@ fun Navigation() {
             modifier = Modifier
                 .padding(innerPadding),
             navController = navController,
-            startDestination = SplashRoute,
+            startDestination = Route.Splash,
         ) {
-            navigation<VerificationRoute>(
-                startDestination = VerificationPhoneNumberRoute,
-            ){
-                composable<VerificationPhoneNumberRoute> {
+            navigation<Route.AuthBase>(
+                startDestination = Route.VerificationPhoneNumber,
+            ) {
+                composable<Route.VerificationPhoneNumber> {
                     VerificationPhoneNumberScreen(
                         viewModel = koinViewModel<AuthViewModel>(),
                         navController = navController
                     )
                 }
-                composable<VerificationPinCodeRoute> {
+                composable<Route.VerificationPinCode> {
                     VerificationPinCodeScreen(
                         viewModel = koinViewModel<AuthViewModel>(),
                         navController = navController
                     )
                 }
-                composable<ProfileCreateRoute> {
+                composable<Route.ProfileCreate> {
                     ProfileCreateScreen(
                         viewModel = koinViewModel<AuthViewModel>(),
                         navController = navController
                     )
                 }
             }
-            navigation<EventRoute>(
-                startDestination = EventListRoute
-            ){
-                composable<EventListRoute> {
+            navigation<Route.EventBase>(
+                startDestination = Route.EventList
+            ) {
+                composable<Route.EventList> {
                     EventListScreen(
                         viewModel = koinViewModel<EventViewModel>(),
                         navController = navController
@@ -93,10 +93,10 @@ fun Navigation() {
                     )
                 }
             }
-            navigation<CommunityRoute>(
-                startDestination = CommunityListRoute
-            ){
-                composable<CommunityListRoute> {
+            navigation<Route.CommunityBase>(
+                startDestination = Route.CommunityList
+            ) {
+                composable<Route.CommunityList> {
                     CommunityListScreen(
                         viewModel = koinViewModel<CommunityViewModel>(),
                         navController = navController
@@ -111,43 +111,43 @@ fun Navigation() {
                     )
                 }
             }
-            navigation<ProfileBaseRoute>(
-                startDestination = MoreRoute
-            ){
-                composable<ProfileRoute> { backStackEntry ->
+            navigation<Route.ProfileBase>(
+                startDestination = Route.More
+            ) {
+                composable<Route.Profile> { backStackEntry ->
                     ProfileScreen(
                         viewModel = koinViewModel<ProfileViewModel>(),
                         navController = navController
                     )
                 }
-                composable<MoreRoute> { navBackStackEntry ->
+                composable<Route.More> { navBackStackEntry ->
                     MoreScreen(
                         viewModel = koinViewModel<ProfileViewModel>(),
                         navController = navController
                     )
                 }
-                composable<PersonalEventListRoute> {
+                composable<Route.PersonalEventList> {
                     PersonalEventListScreen(
                         viewModel = koinViewModel<EventViewModel>(),
                         navController = navController
                     )
                 }
             }
-            navigation<LessonRoute>(
-                startDestination = FirstLessonRoute
-            ){
-                composable<FirstLessonRoute> {
+            navigation<Route.LessonBase>(
+                startDestination = Route.FirstLesson
+            ) {
+                composable<Route.FirstLesson> {
                     FirstLessonScreen(
                         viewModel = koinViewModel<LessonViewModel>(),
                     )
                 }
-                composable<SecondLessonRoute> {
+                composable<Route.SecondLesson> {
                     SecondLessonScreen(
                         viewModel = koinViewModel<LessonViewModel>(),
                     )
                 }
             }
-            dialog<SplashRoute>(
+            dialog<Route.Splash>(
                 dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
             ) {
                 SplashScreen(

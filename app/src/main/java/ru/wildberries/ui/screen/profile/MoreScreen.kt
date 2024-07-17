@@ -21,10 +21,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
-import ru.wildberries.navigation.FirstLessonRoute
-import ru.wildberries.navigation.PersonalEventListRoute
-import ru.wildberries.navigation.ProfileRoute
-import ru.wildberries.navigation.SecondLessonRoute
+import ru.wildberries.navigation.Route
 import ru.wildberries.ui.UIKit.atom.ProfileState
 import ru.wildberries.ui.UIKit.molecule.Profile
 import ru.wildberries.ui.UIKit.molecule.ProfileMode
@@ -48,7 +45,7 @@ fun MoreScreen(
                     onClick = {}
                 )
             },
-            action = { navController.navigate(ProfileRoute) }
+            action = { navController.navigate(Route.Profile) }
         ),
         MoreScreenItemClass(
             content = {
@@ -62,7 +59,7 @@ fun MoreScreen(
                     style = WBTheme.typography.bodyText1
                 )
             },
-            action = { navController.navigate(PersonalEventListRoute) }
+            action = { navController.navigate(Route.PersonalEventList) }
         ),
         MoreScreenItemClass(
             content = {
@@ -71,7 +68,7 @@ fun MoreScreen(
                     text = "Lesson 1"
                 )
             },
-            action = { navController.navigate(FirstLessonRoute) }
+            action = { navController.navigate(Route.FirstLesson) }
         ),
         MoreScreenItemClass(
             content = {
@@ -80,7 +77,7 @@ fun MoreScreen(
                     text = "Lesson 2"
                 )
             },
-            action = { navController.navigate(SecondLessonRoute) }
+            action = { navController.navigate(Route.SecondLesson) }
         ),
         MoreScreenItemClass(
             content = {

@@ -24,7 +24,6 @@ import ru.wildberries.ui.theme.WBTheme
 fun TopBar(
     title: String? = null,
     navigationIcon: Int? = null,
-//    actionIcon: Int?,
     actionIcon: @Composable () -> Unit = {},
     navigationIconOnClick: ()->Unit = {},
     modifier: Modifier = Modifier

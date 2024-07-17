@@ -38,7 +38,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ru.wildberries.R
 import ru.wildberries.data.MockRepositoryImpl
-import ru.wildberries.navigation.VerificationPinCodeRoute
+import ru.wildberries.navigation.Route
 import ru.wildberries.ui.screen.auth.AuthViewModel
 import ru.wildberries.ui.theme.WBTheme
 import ru.wildberries.util.PhoneNumberVisualTransformation
@@ -135,7 +135,7 @@ fun PhoneNumberField(
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(
-                onNext = { if (viewModel.verificationPhoneNumber.length == 10) navController.navigate(VerificationPinCodeRoute) }
+                onNext = { if (viewModel.verificationPhoneNumber.length == 10) navController.navigate(Route.VerificationPinCode) }
             ),
             visualTransformation = PhoneNumberVisualTransformation(),
             singleLine = true,

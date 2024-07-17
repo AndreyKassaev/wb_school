@@ -2,50 +2,53 @@ package ru.wildberries.navigation
 
 import kotlinx.serialization.Serializable
 
-@Serializable
-object ProfileRoute
+sealed class Route {
+    @Serializable
+    data object AuthBase : Route()
 
-@Serializable
-object ProfileBaseRoute
+    @Serializable
+    data object ProfileBase : Route()
 
-@Serializable
-object MoreRoute
+    @Serializable
+    data object EventBase: Route()
 
-@Serializable
-object FirstLessonRoute
+    @Serializable
+    data object CommunityBase: Route()
 
-@Serializable
-object SecondLessonRoute
+    @Serializable
+    data object LessonBase: Route()
 
-@Serializable
-object PersonalEventListRoute
+    @Serializable
+    data object Profile : Route()
 
-@Serializable
-object EventListRoute
+    @Serializable
+    data object More : Route()
 
-@Serializable
-object CommunityListRoute
+    @Serializable
+    data object FirstLesson : Route()
 
-@Serializable
-object SplashRoute
+    @Serializable
+    data object SecondLesson : Route()
 
-@Serializable
-object VerificationPhoneNumberRoute
+    @Serializable
+    data object PersonalEventList : Route()
 
-@Serializable
-object VerificationPinCodeRoute
+    @Serializable
+    data object EventList : Route()
 
-@Serializable
-object ProfileCreateRoute
+    @Serializable
+    data object CommunityList : Route()
 
-@Serializable
-object VerificationRoute
+    @Serializable
+    data object Splash : Route()
 
-@Serializable
-object EventRoute
+    @Serializable
+    data object VerificationPhoneNumber : Route()
 
-@Serializable
-object CommunityRoute
+    @Serializable
+    data object VerificationPinCode : Route()
 
-@Serializable
-object LessonRoute
+    @Serializable
+    data object ProfileCreate : Route()
+}
+

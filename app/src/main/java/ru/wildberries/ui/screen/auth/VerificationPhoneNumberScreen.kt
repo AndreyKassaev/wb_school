@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.wildberries.R
-import ru.wildberries.navigation.VerificationPinCodeRoute
+import ru.wildberries.navigation.Route
 import ru.wildberries.ui.UIKit.atom.PrimaryButton
 import ru.wildberries.ui.UIKit.molecule.PhoneNumberField
 import ru.wildberries.ui.UIKit.organism.TopBar
@@ -65,7 +65,7 @@ fun VerificationPhoneNumberScreen(
                 .fillMaxWidth()
                 .padding(top = 69.dp),
             onClick = {
-                navController.navigate(VerificationPinCodeRoute)
+                navController.navigate(Route.VerificationPinCode)
             },
             isEnabled = viewModel.verificationPhoneNumber.length == 10
         )

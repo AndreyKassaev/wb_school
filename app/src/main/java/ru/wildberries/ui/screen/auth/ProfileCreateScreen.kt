@@ -27,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import ru.wildberries.R
-import ru.wildberries.navigation.EventListRoute
+import ru.wildberries.navigation.Route
 import ru.wildberries.ui.UIKit.atom.PrimaryButton
 import ru.wildberries.ui.UIKit.atom.ProfileImage
 import ru.wildberries.ui.UIKit.atom.ProfileState
@@ -156,7 +156,7 @@ fun ProfileCreateScreen(
                     firstName = firstName,
                     lastName = lastName
                 )
-                navController.navigate(EventListRoute)
+                navController.navigate(Route.EventList)
             },
             isEnabled = firstName != ""
         )
