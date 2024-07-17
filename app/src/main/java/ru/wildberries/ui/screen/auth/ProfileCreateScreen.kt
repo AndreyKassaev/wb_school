@@ -156,7 +156,11 @@ fun ProfileCreateScreen(
                     firstName = firstName,
                     lastName = lastName
                 )
-                navController.navigate(Route.EventList)
+                navController.navigate(Route.EventBase){
+                    popUpTo(Route.AuthBase){
+                        inclusive = true
+                    }
+                }
             },
             isEnabled = firstName != ""
         )
