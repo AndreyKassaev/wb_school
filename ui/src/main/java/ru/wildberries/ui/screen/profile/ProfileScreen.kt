@@ -34,7 +34,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel,
     navController: NavController
 ) {
-    val profileData by viewModel.profile.collectAsState()
+    val profileData by viewModel.getProfileFlow().collectAsState()
 
     Column(
         modifier = Modifier

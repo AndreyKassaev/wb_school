@@ -40,7 +40,6 @@ import androidx.navigation.compose.rememberNavController
 import ru.wb.repository.MockRepositoryImpl
 import ru.wildberries.navigation.Route
 import ru.wildberries.ui.screen.auth.AuthViewModel
-import ru.wildberries.ui.screen.auth.phoneCountryCodeList
 import ru.wildberries.ui.theme.WBTheme
 import ru.wildberries.util.PhoneNumberVisualTransformation
 
@@ -50,7 +49,9 @@ fun PhoneNumberField(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
-    val phoneNumber by viewModel.phoneNumber.collectAsState()
+    val phoneNumber by viewModel.getPhoneNumberFlow().collectAsState()
+    val isPhoneNumberValid by viewModel.getIsPhoneNumberValidFlow().collectAsState(false)
+    val phoneCountryCodeList = viewModel.phoneCountryCodeList
     var expanded by remember { mutableStateOf(false) }
     var selectedPhoneCountryCode by remember {
         mutableStateOf(phoneCountryCodeList.first())
@@ -136,7 +137,7 @@ fun PhoneNumberField(
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(
-                onNext = { if (phoneNumber.number.length == 10) navController.navigate(Route.VerificationPinCode) }
+                onNext = { if (isPhoneNumberValid) navController.navigate(Route.VerificationPinCode) }
             ),
             visualTransformation = PhoneNumberVisualTransformation(),
             singleLine = true,

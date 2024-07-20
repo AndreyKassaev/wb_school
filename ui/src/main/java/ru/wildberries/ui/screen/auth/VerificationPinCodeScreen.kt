@@ -28,8 +28,7 @@ fun VerificationPinCodeScreen(
     navController: NavHostController
 ) {
 
-    val phoneNumber by viewModel.phoneNumber.collectAsState()
-    val pinCode by viewModel.pinCode.collectAsState()
+    val phoneNumber by viewModel.getPhoneNumberFlow().collectAsState()
 
     Column(
         modifier = Modifier
@@ -86,7 +85,6 @@ fun VerificationPinCodeScreen(
             onClick = {
                 viewModel.setVerificationPinCode("")
             },
-            isEnabled = pinCode.length == 4
         )
     }
 }

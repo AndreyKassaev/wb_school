@@ -24,7 +24,7 @@ fun SplashScreen(
     viewModel: SplashViewModel,
     navController: NavController,
 ) {
-    val isAppReady by viewModel.isAppReady.collectAsState()
+    val isAppReady by viewModel.getIsAppReadyFlow().collectAsState()
     val composition by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.splash_animation)
     )

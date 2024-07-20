@@ -21,7 +21,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ru.wb.repository.MockRepositoryImpl
 import ru.wildberries.R
-import ru.wildberries.navigation.Route
 import ru.wildberries.ui.UIKit.atom.SearchBar
 import ru.wildberries.ui.UIKit.molecule.CommunityCard
 import ru.wildberries.ui.UIKit.organism.TopBar
@@ -34,7 +33,7 @@ fun CommunityListScreen(
     navController: NavController
 ) {
 
-    val communityList by viewModel.communityList.collectAsState()
+    val communityList by viewModel.getCommunityListFlow().collectAsState()
     val interactionSource = remember { MutableInteractionSource() }
     val focusManager = LocalFocusManager.current
 

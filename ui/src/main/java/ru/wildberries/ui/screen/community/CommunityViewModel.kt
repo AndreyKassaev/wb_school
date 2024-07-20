@@ -13,32 +13,36 @@ import ru.wb.domain.model.Event
 class CommunityViewModel(
     private val repository: Repository
 ): ViewModel() {
-    private var _communityList = MutableStateFlow(emptyList<Community>())
-    val communityList = _communityList.asStateFlow()
+    private var communityListMutable = MutableStateFlow(emptyList<Community>())
+    private var communityList = communityListMutable.asStateFlow()
 
-    private var _eventList = MutableStateFlow(emptyList<Event>())
-    val eventList = _eventList.asStateFlow()
+    private var eventListMutable = MutableStateFlow(emptyList<Event>())
+    private var eventList = eventListMutable.asStateFlow()
 
-    private fun getCommunityList() {
+    fun getCommunityListFlow() = communityList
+
+    fun getEventListFlow() = eventList
+
+    private fun initCommunityList() {
         viewModelScope.launch {
             repository.getCommunityList()
                 .collect { communityList ->
-                    _communityList.update { communityList }
+                    communityListMutable.update { communityList }
                 }
         }
     }
 
-    private fun getEventList() {
+    private fun initEventList() {
         viewModelScope.launch {
             repository.getEventList()
                 .collect { eventList ->
-                    _eventList.update { eventList }
+                    eventListMutable.update { eventList }
                 }
         }
     }
 
     init {
-        getCommunityList()
-        getEventList()
+        initCommunityList()
+        initEventList()
     }
 }

@@ -13,26 +13,30 @@ import ru.wb.domain.model.Profile
 class EventViewModel(
     private val repository: Repository
 ) : ViewModel() {
-    private var _eventList = MutableStateFlow(emptyList<Event>())
-    val eventList = _eventList.asStateFlow()
+    private var eventListMutable = MutableStateFlow(emptyList<Event>())
+    private val eventList = eventListMutable.asStateFlow()
 
-    private var _eventVisitorList = MutableStateFlow(emptyList<Profile>())
-    val eventVisitorList = _eventVisitorList.asStateFlow()
+    private var eventVisitorListMutable = MutableStateFlow(emptyList<Profile>())
+    private val eventVisitorList = eventVisitorListMutable.asStateFlow()
 
-    private fun getEventList() {
+    fun getEventListFlow() = eventList
+
+    fun getEventVisitorListFlow() = eventVisitorList
+
+    private fun initEventList() {
         viewModelScope.launch {
             repository.getEventList()
                 .collect { eventList ->
-                    _eventList.update { eventList }
+                    eventListMutable.update { eventList }
                 }
         }
     }
 
-    private fun getEventVisitorList() {
+    private fun initEventVisitorList() {
         viewModelScope.launch {
             repository.getEventVisitorList()
                 .collect { visitorList ->
-                    _eventVisitorList.update { visitorList }
+                    eventVisitorListMutable.update { visitorList }
                 }
         }
     }
@@ -41,7 +45,7 @@ class EventViewModel(
         viewModelScope.launch {
             repository.setEventVisitorList(getProfileData())
                 .collect { updatedList ->
-                    _eventVisitorList.update { updatedList }
+                    eventVisitorListMutable.update { updatedList }
                 }
         }
     }
@@ -50,7 +54,7 @@ class EventViewModel(
         viewModelScope.launch {
             repository.setEventVisitorList()
                 .collect { updatedList ->
-                    _eventVisitorList.update { updatedList }
+                    eventVisitorListMutable.update { updatedList }
                 }
         }
     }
@@ -59,7 +63,7 @@ class EventViewModel(
         repository.getProfileData()
 
     init {
-        getEventList()
-        getEventVisitorList()
+        initEventList()
+        initEventVisitorList()
     }
 }

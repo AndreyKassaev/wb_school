@@ -47,7 +47,7 @@ fun EventListScreen(
     viewModel: EventViewModel,
     navController: NavController
 ) {
-    val eventListFull by viewModel.eventList.collectAsState()
+    val eventListFull by viewModel.getEventListFlow().collectAsState()
     val tabItemList = listOf(
         TabItem(title = stringResource(id = R.string.events_tabitem_all)),
         TabItem(title = stringResource(id = R.string.events_tabitem_active))

@@ -20,9 +20,9 @@ import ru.wildberries.ui.UIKit.molecule.EventVisitorAvatarList
 fun SecondLessonScreen(
     viewModel: LessonViewModel,
 ) {
-    val eventList by viewModel.eventList.collectAsState()
-    val communityList by viewModel.communityList.collectAsState()
-    val profile by viewModel.profile.collectAsState()
+    val eventList by viewModel.getEventListFlow().collectAsState()
+    val communityList by viewModel.getCommunityListFlow().collectAsState()
+    val profile by viewModel.getProfileFlow().collectAsState()
 
     LazyColumn(
         modifier = Modifier

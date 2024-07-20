@@ -35,7 +35,7 @@ fun MoreScreen(
     viewModel: ProfileViewModel,
     navController: NavHostController,
 ) {
-    val profileData by viewModel.profile.collectAsState()
+    val profileData by viewModel.getProfileFlow().collectAsState()
     val itemList = listOf(
         MoreScreenItemClass(
             content = {

@@ -4,24 +4,54 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.wb.domain.Repository
 import ru.wb.domain.model.Profile
 import ru.wildberries.R
+import ru.wildberries.ui.model.PhoneCountryCode
+import ru.wildberries.ui.model.PhoneNumber
+
+const val PHONE_NUMBER_REQUIRED_LENGTH = 10
 
 class AuthViewModel(
     private val repository: Repository
 ) : ViewModel() {
 
-    private val _phoneNumber = MutableStateFlow(PhoneNumber.default)
-    val phoneNumber = _phoneNumber.asStateFlow()
+    val phoneCountryCodeList = listOf(
+        PhoneCountryCode(
+            code = "+7",
+            icon = R.drawable.ru_flag
+        ),
+        PhoneCountryCode(
+            code = "+1",
+            icon = R.drawable.usa_flag
+        ),
+        PhoneCountryCode(
+            code = "+44",
+            icon = R.drawable.uk_flag
+        ),
+    )
 
-    private var _pinCode = MutableStateFlow("")
-    val pinCode = _pinCode.asStateFlow()
+    private val phoneNumberMutable = MutableStateFlow(PhoneNumber.default)
+    private val phoneNumber = phoneNumberMutable.asStateFlow()
+
+    private val pinCodeMutable = MutableStateFlow("")
+    private val pinCode = pinCodeMutable.asStateFlow()
+
+    private val _isPhoneNumberValid = combine(phoneNumberMutable){
+        phoneNumberMutable.value.number.length == PHONE_NUMBER_REQUIRED_LENGTH
+    }
+
+    fun getPhoneNumberFlow() = phoneNumber
+
+    fun getPinCodeFlow() = pinCode
+
+    fun getIsPhoneNumberValidFlow() = _isPhoneNumberValid
 
     fun setVerificationPhoneNumber(phoneNumber: String) {
-        _phoneNumber.update {
+        phoneNumberMutable.update {
             it.copy(
                 number = phoneNumber
             )
@@ -29,7 +59,7 @@ class AuthViewModel(
     }
 
     fun setVerificationPhoneNumber(countryCode: PhoneCountryCode) {
-        _phoneNumber.update {
+        phoneNumberMutable.update {
             it.copy(
                 countryCode = countryCode
             )
@@ -37,7 +67,7 @@ class AuthViewModel(
     }
 
     fun setVerificationPinCode(pinCode: String){
-        _pinCode.update {
+        pinCodeMutable.update {
             pinCode
         }
     }
@@ -51,48 +81,9 @@ class AuthViewModel(
                 profile = Profile.default.copy(
                     firstName = firstName,
                     lastName = lastName,
-                    phoneNumber = "${_phoneNumber.value.countryCode.code}${_phoneNumber.value.number}"
+                    phoneNumber = "${phoneNumberMutable.value.countryCode.code}${phoneNumberMutable.value.number}"
                 )
             )
         }
     }
 }
-
-data class PhoneNumber(
-    val countryCode: PhoneCountryCode,
-    val number: String
-){
-    companion object {
-        val default = PhoneNumber(
-            countryCode = PhoneCountryCode.default,
-            number = ""
-        )
-    }
-}
-
-data class PhoneCountryCode(
-    val code: String,
-    val icon: Int
-){
-    companion object {
-        val default = PhoneCountryCode(
-            code = "+7",
-            icon = R.drawable.ru_flag
-        )
-    }
-}
-
-val phoneCountryCodeList = listOf(
-    PhoneCountryCode(
-        code = "+7",
-        icon = R.drawable.ru_flag
-    ),
-    PhoneCountryCode(
-        code = "+1",
-        icon = R.drawable.usa_flag
-    ),
-    PhoneCountryCode(
-        code = "+44",
-        icon = R.drawable.uk_flag
-    ),
-)

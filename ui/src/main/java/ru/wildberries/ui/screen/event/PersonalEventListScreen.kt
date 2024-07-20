@@ -34,7 +34,7 @@ fun PersonalEventListScreen(
     viewModel: EventViewModel,
     navController: NavController
 ) {
-    val eventListFull by viewModel.eventList.collectAsState()
+    val eventListFull by viewModel.getEventListFlow().collectAsState()
     val tabItemList = listOf(
         TabItem(title = stringResource(id = R.string.my_events_tabitem_planned)),
         TabItem(title = stringResource(id = R.string.my_events_tabitem_passed))

@@ -11,16 +11,18 @@ class ProfileViewModel(
     private val repository: Repository
 ): ViewModel() {
 
-    private var _profile = MutableStateFlow(Profile.default)
-    val profile = _profile.asStateFlow()
+    private var profileMutable = MutableStateFlow(Profile.default)
+    private val profile = profileMutable.asStateFlow()
 
-    private fun getProfileData() {
-        _profile.update {
+    fun getProfileFlow() = profile
+
+    private fun initProfileData() {
+        profileMutable.update {
             repository.getProfileData()
         }
     }
 
     init {
-        getProfileData()
+        initProfileData()
     }
 }

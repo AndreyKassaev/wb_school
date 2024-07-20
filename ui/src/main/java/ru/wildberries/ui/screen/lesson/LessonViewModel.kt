@@ -14,35 +14,41 @@ import ru.wb.domain.model.Profile
 class LessonViewModel(
     private val repository: Repository
 ): ViewModel() {
-    private var _eventList = MutableStateFlow(emptyList<Event>())
-    val eventList = _eventList.asStateFlow()
+    private var eventListMutable = MutableStateFlow(emptyList<Event>())
+    private val eventList = eventListMutable.asStateFlow()
 
-    private var _communityList = MutableStateFlow(emptyList<Community>())
-    val communityList = _communityList.asStateFlow()
+    private var communityListMutable = MutableStateFlow(emptyList<Community>())
+    private val communityList = communityListMutable.asStateFlow()
 
-    private var _profile = MutableStateFlow(Profile.default)
-    val profile = _profile.asStateFlow()
+    private var profileMutable = MutableStateFlow(Profile.default)
+    private val profile = profileMutable.asStateFlow()
 
-    private fun getEventList() {
+    fun getEventListFlow() = eventList
+
+    fun getCommunityListFlow()= communityList
+
+    fun getProfileFlow() = profile
+
+    private fun initEventList() {
         viewModelScope.launch {
             repository.getEventList()
                 .collect { eventList ->
-                    _eventList.update { eventList }
+                    eventListMutable.update { eventList }
                 }
         }
     }
 
-    private fun getCommunityList() {
+    private fun initCommunityList() {
         viewModelScope.launch {
             repository.getCommunityList()
                 .collect { communityList ->
-                    _communityList.update { communityList }
+                    communityListMutable.update { communityList }
                 }
         }
     }
 
     init {
-        getEventList()
-        getCommunityList()
+        initEventList()
+        initCommunityList()
     }
 }

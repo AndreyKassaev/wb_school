@@ -40,7 +40,7 @@ fun FirstLessonScreen(
     val interactionSource = remember { MutableInteractionSource() }
     val focusManager = LocalFocusManager.current
 
-    val eventList by viewModel.eventList.collectAsState()
+    val eventList by viewModel.getEventListFlow().collectAsState()
 
     LazyColumn(
         modifier = Modifier
@@ -179,7 +179,7 @@ fun TypographyRow(
 }
 
 @Composable
-fun TypographyList(modifier: Modifier = Modifier) {
+fun TypographyList() {
     Column(
         modifier = Modifier
             .padding(top = 16.dp),

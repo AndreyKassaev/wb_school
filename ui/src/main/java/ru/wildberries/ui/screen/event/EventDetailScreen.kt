@@ -55,7 +55,7 @@ fun EventDetailScreen(
             .build(),
         contentScale = ContentScale.Crop //necessary to determine the correct dimensions to load the image at.
     )
-    val eventVisitorList by viewModel.eventVisitorList.collectAsState()
+    val eventVisitorList by viewModel.getEventVisitorListFlow().collectAsState()
     var isFullScreen by rememberSaveable {
         mutableStateOf(false)
     }

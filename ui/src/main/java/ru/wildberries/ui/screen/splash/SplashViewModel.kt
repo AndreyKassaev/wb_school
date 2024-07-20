@@ -9,20 +9,22 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SplashViewModel: ViewModel() {
-    private var _isAppReady = MutableStateFlow(false)
-    val isAppReady = _isAppReady.asStateFlow()
+    private var isAppReadyMutable = MutableStateFlow(false)
+    private val isAppReady = isAppReadyMutable.asStateFlow()
 
-    private fun isAppReady() {
+    fun getIsAppReadyFlow() = isAppReady
+
+    private fun checkUp() {
         viewModelScope.launch {
             //imitate check up
             delay(DELAY)
-            _isAppReady.update {
+            isAppReadyMutable.update {
                 true
             }
         }
     }
     init {
-        isAppReady()
+        checkUp()
     }
 }
 

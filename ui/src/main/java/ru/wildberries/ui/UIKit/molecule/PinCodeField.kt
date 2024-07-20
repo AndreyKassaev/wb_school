@@ -36,7 +36,7 @@ fun PinCodeField(
     viewModel: AuthViewModel,
     navController: NavHostController
 ) {
-    val pinCode by viewModel.pinCode.collectAsState()
+    val pinCode by viewModel.getPinCodeFlow().collectAsState()
     val focusRequester = remember { FocusRequester() }
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()

@@ -26,7 +26,7 @@ fun VerificationPhoneNumberScreen(
     viewModel: AuthViewModel,
     navController: NavController
 ) {
-    val phoneNumber by viewModel.phoneNumber.collectAsState()
+    val isPhoneNumberValid by viewModel.getIsPhoneNumberValidFlow().collectAsState(false)
 
     Column(
         modifier = Modifier
@@ -74,7 +74,7 @@ fun VerificationPhoneNumberScreen(
             onClick = {
                 navController.navigate(Route.VerificationPinCode)
             },
-            isEnabled = phoneNumber.number.length == 10
+            isEnabled = isPhoneNumberValid
         )
     }
 }

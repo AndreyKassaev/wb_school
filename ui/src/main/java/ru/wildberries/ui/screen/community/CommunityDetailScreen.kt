@@ -28,7 +28,7 @@ fun CommunityDetailScreen(
     navController: NavController
 ) {
 
-    val communityEventList = viewModel.eventList.collectAsState().value.filter { event ->
+    val communityEventList = viewModel.getEventListFlow().collectAsState().value.filter { event ->
         event.location == community.title
     }
 
