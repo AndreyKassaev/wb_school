@@ -20,5 +20,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "school"
-include(":app")
- 
+include(":ui")
+include(":repository")
+include(":domain")
