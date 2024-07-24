@@ -13,10 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -25,21 +22,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import ru.wildberries.R
-import ru.wildberries.navigation.EventsRoute
-import ru.wildberries.navigation.ProfileCreateRoute
-import ru.wildberries.ui.MainViewModel
+import ru.wildberries.navigation.LocalNavController
+import ru.wildberries.navigation.Router
 import ru.wildberries.ui.theme.WBTheme
+const val PIN_CODE_LENGTH = 4
 
 @Composable
 fun PinCodeField(
-    viewModel: MainViewModel,
-    navController: NavHostController
+    pinCode: String,
+    isPinCodeValid: Boolean,
+    setVerificationPinCode: (String) -> Unit,
+    navigateToCreateProfile: () -> Unit
 ) {
-    val pinCode = viewModel.verificationPinCode
+
+    val navController = LocalNavController.current
     val focusRequester = remember { FocusRequester() }
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -49,7 +47,7 @@ fun PinCodeField(
             .focusRequester(focusRequester),
         value = pinCode,
         onValueChange = {
-            viewModel.setVerificationPinCode(it.take(4))
+            setVerificationPinCode(it.take(4))
         },
         singleLine = true,
         keyboardOptions = KeyboardOptions(
@@ -58,7 +56,7 @@ fun PinCodeField(
         ),
         keyboardActions = KeyboardActions(
             onSend = {
-                if (pinCode.length == 4) navController.navigate(ProfileCreateRoute)
+                if (isPinCodeValid) navigateToCreateProfile()
             }
         ),
         decorationBox = { innerTextField ->
@@ -69,8 +67,11 @@ fun PinCodeField(
                 horizontalArrangement = Arrangement.spacedBy(40.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                repeat(4){
-                    PinCodeDot(value = pinCode, index = it)
+                repeat(4) {
+                    PinCodeDot(
+                        value = pinCode,
+                        index = it
+                    )
                 }
             }
         }
@@ -78,19 +79,23 @@ fun PinCodeField(
 }
 
 @Composable
-fun PinCodeDot(value: String, index: Int) {
+fun PinCodeDot(
+    value: String,
+    index: Int
+) {
     Box(
         modifier = Modifier
             .size(40.dp),
         contentAlignment = Alignment.Center
-    ){
-        if (value.getOrNull(index) != null){
+    ) {
+        if (value.getOrNull(index) != null) {
             Text(
-                text = value.getOrNull(index).toString(),
+                text = value.getOrNull(index)
+                    .toString(),
                 style = WBTheme.typography.heading1,
                 color = WBTheme.colors.NeutralActive
             )
-        }else{
+        } else {
             Icon(
                 painter = painterResource(id = R.drawable.pin_code),
                 contentDescription = null,

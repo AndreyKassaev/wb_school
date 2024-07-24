@@ -3,167 +3,146 @@ package ru.wildberries.navigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.DialogProperties
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
-import kotlinx.serialization.Serializable
-import ru.wildberries.data.MockRepositoryImpl
-import ru.wildberries.domain.CommunityModel
-import ru.wildberries.domain.EventModel
-import ru.wildberries.ui.MainViewModel
+import androidx.navigation.navigation
 import ru.wildberries.ui.UIKit.organism.BottomBar
-import ru.wildberries.ui.screen.CommunitiesScreen
-import ru.wildberries.ui.screen.CommunityDetailScreen
-import ru.wildberries.ui.screen.EventDetailScreen
-import ru.wildberries.ui.screen.EventsScreen
-import ru.wildberries.ui.screen.FirstLessonScreen
-import ru.wildberries.ui.screen.MoreScreen
-import ru.wildberries.ui.screen.MyEventsScreen
-import ru.wildberries.ui.screen.ProfileAccountScreen
-import ru.wildberries.ui.screen.ProfileCreateScreen
-import ru.wildberries.ui.screen.SecondLessonScreen
-import ru.wildberries.ui.screen.SplashScreen
-import ru.wildberries.ui.screen.VerificationPhoneScreen
-import ru.wildberries.ui.screen.VerificationPinCodeScreen
+import ru.wildberries.ui.screen.profile.create.ProfileCreateScreen
+import ru.wildberries.ui.screen.auth.phone.PhoneNumberScreen
+import ru.wildberries.ui.screen.auth.pincode.PinCodeScreen
+import ru.wildberries.ui.screen.community.detail.CommunityDetailScreen
+import ru.wildberries.ui.screen.community.list.CommunityListScreen
+import ru.wildberries.ui.screen.event.detail.EventDetailScreen
+import ru.wildberries.ui.screen.event.list.EventListScreen
+import ru.wildberries.ui.screen.event.personal.PersonalEventListScreen
+import ru.wildberries.ui.screen.lesson.FirstLessonScreen
+import ru.wildberries.ui.screen.lesson.SecondLessonScreen
+import ru.wildberries.ui.screen.more.MoreScreen
+import ru.wildberries.ui.screen.profile.detail.ProfileDetailScreen
+import ru.wildberries.ui.screen.splash.SplashScreen
+
+val LocalNavController = compositionLocalOf<NavController> {
+    error("No NavController found!")
+}
 
 @Composable
 fun Navigation() {
 
     val navController = rememberNavController()
-    val viewModel = MainViewModel(MockRepositoryImpl())
 
-    Scaffold(
-        bottomBar = {
-            BottomBar(
-                navController = navController
-            )
-        }
-    ) { innerPadding ->
-        NavHost(
-            modifier = Modifier
-                .padding(innerPadding),
-            navController = navController,
-            startDestination = SplashRoute,
-        ) {
-            composable<ProfileAccountRoute> { backStackEntry ->
-                ProfileAccountScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
+    CompositionLocalProvider(
+        LocalNavController provides navController
+    ) {
+        Scaffold(
+            bottomBar = {
+                BottomBar()
             }
-            composable<MoreRoute> { navBackStackEntry ->
-                MoreScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<FirstLessonRoute> {
-                FirstLessonScreen(
-                    viewModel = viewModel,
-                )
-            }
-            composable<SecondLessonRoute> {
-                SecondLessonScreen(
-                    viewModel = viewModel,
-                )
-            }
-            composable<MyEventsRoute> {
-                MyEventsScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<CommunitiesRoute> {
-                CommunitiesScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<EventsRoute> {
-                EventsScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<CommunityModel> { backStackEntry ->
-                val community: CommunityModel = backStackEntry.toRoute()
-                CommunityDetailScreen(
-                    viewModel = viewModel,
-                    community = community,
-                    navController = navController
-                )
-            }
-            composable<EventModel> { backStackEntry ->
-                val event: EventModel = backStackEntry.toRoute()
-                EventDetailScreen(
-                    viewModel = viewModel,
-                    event = event,
-                    navController = navController
-                )
-            }
-            dialog<SplashRoute>(
-                dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+        ) { innerPadding ->
+            NavHost(
+                modifier = Modifier
+                    .padding(innerPadding),
+                navController = navController,
+                startDestination = Router.Splash.route,
             ) {
-                SplashScreen(
-                    navController = navController,
-                    viewModel = viewModel
-                )
-            }
-            composable<VerificationPinCodeRoute> {
-                VerificationPinCodeScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<VerificationPhoneRoute> {
-                VerificationPhoneScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
-            }
-            composable<ProfileCreateRoute> {
-                ProfileCreateScreen(
-                    viewModel = viewModel,
-                    navController = navController
-                )
+                navigation(
+                    route = Router.Base.Auth.route,
+                    startDestination = Router.VerificationPhoneNumber.route,
+                ) {
+                    composable(
+                        route = Router.VerificationPhoneNumber.route
+                    ) {
+                        PhoneNumberScreen()
+                    }
+                    composable(
+                        route = Router.VerificationPinCode.route
+                    ) {
+                        PinCodeScreen()
+                    }
+                    composable(
+                        route = Router.ProfileCreate.route
+                    ) {
+                        ProfileCreateScreen()
+                    }
+                }
+                navigation(
+                    route = Router.Base.Event.route,
+                    startDestination = Router.EventList.route
+                ) {
+                    composable(
+                        route = Router.EventList.route
+                    ) {
+                        EventListScreen()
+                    }
+                    composable(
+                        route = Router.Event.route
+                    ) {
+                        EventDetailScreen()
+                    }
+                }
+                navigation(
+                    route = Router.Base.Community.route,
+                    startDestination = Router.CommunityList.route
+                ) {
+                    composable(
+                        route = Router.CommunityList.route
+                    ) {
+                        CommunityListScreen()
+                    }
+                    composable(
+                        route = Router.Community.route
+                    ) {
+                        CommunityDetailScreen()
+                    }
+                }
+                navigation(
+                    route = Router.Base.Profile.route,
+                    startDestination = Router.More.route
+                ) {
+                    composable(
+                        route = Router.Profile.route
+                    ) {
+                        ProfileDetailScreen()
+                    }
+                    composable(
+                        route = Router.More.route
+                    ) {
+                        MoreScreen()
+                    }
+                    composable(
+                        route = Router.PersonalEventList.route
+                    ) {
+                        PersonalEventListScreen()
+                    }
+                }
+                navigation(
+                    route = Router.Base.Lesson.route,
+                    startDestination = Router.FirstLesson.route
+                ) {
+                    composable(
+                        route = Router.FirstLesson.route
+                    ) {
+                        FirstLessonScreen()
+                    }
+                    composable(
+                        route = Router.SecondLesson.route
+                    ) {
+                        SecondLessonScreen()
+                    }
+                }
+                dialog(
+                    route = Router.Splash.route,
+                    dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+                ) {
+                    SplashScreen()
+                }
             }
         }
     }
 }
-
-@Serializable
-object ProfileAccountRoute
-
-@Serializable
-object MoreRoute
-
-@Serializable
-object FirstLessonRoute
-
-@Serializable
-object SecondLessonRoute
-
-@Serializable
-object MyEventsRoute
-
-@Serializable
-object EventsRoute
-
-@Serializable
-object CommunitiesRoute
-
-@Serializable
-object SplashRoute
-
-@Serializable
-object VerificationPinCodeRoute
-
-@Serializable
-object VerificationPhoneRoute
-
-@Serializable
-object ProfileCreateRoute

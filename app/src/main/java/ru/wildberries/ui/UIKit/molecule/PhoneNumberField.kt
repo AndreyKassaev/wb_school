@@ -32,27 +32,28 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import ru.wildberries.R
-import ru.wildberries.data.MockRepositoryImpl
-import ru.wildberries.navigation.VerificationPinCodeRoute
-import ru.wildberries.ui.MainViewModel
+import ru.wildberries.navigation.LocalNavController
+import ru.wildberries.ui.model.CountryCode
+import ru.wildberries.ui.model.PhoneNumber
 import ru.wildberries.ui.theme.WBTheme
 import ru.wildberries.util.PhoneNumberVisualTransformation
 
 @Composable
-fun PhoneNumberField(
-    viewModel: MainViewModel,
-    navController: NavController,
+internal fun PhoneNumberField(
+    phoneNumber: PhoneNumber,
+    isPhoneNumberValid: Boolean,
+    countryCodeList: List<CountryCode>,
+    setPhoneNumber: (String) -> Unit,
+    setPhoneCountryCode: (CountryCode) -> Unit,
+    navigateToPinCodeScreen: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    val navController = LocalNavController.current
     var expanded by remember { mutableStateOf(false) }
-    val phoneNumber = viewModel.verificationPhoneNumber
     var selectedPhoneCountryCode by remember {
-        mutableStateOf(phoneCountryCodeList.first())
+        mutableStateOf(countryCodeList.first())
     }
     val focusRequester = remember { FocusRequester() }
     Row(
@@ -88,8 +89,8 @@ fun PhoneNumberField(
                 .background(WBTheme.colors.NeutralOffWhite),
             expanded = expanded,
             onDismissRequest = { expanded = false }
-        ){
-            phoneCountryCodeList.forEachIndexed { index, phoneCountryCode ->
+        ) {
+            countryCodeList.forEachIndexed { index, phoneCountryCode ->
                 DropdownMenuItem(
                     modifier = Modifier
                         .background(WBTheme.colors.NeutralOffWhite),
@@ -111,7 +112,7 @@ fun PhoneNumberField(
                         }
                     },
                     onClick = {
-                        viewModel.setVerificationPhoneNumberCountryCode(phoneCountryCode.code)
+                        setPhoneCountryCode(phoneCountryCode)
                         selectedPhoneCountryCode = phoneCountryCode
                         expanded = false
                     }
@@ -122,10 +123,10 @@ fun PhoneNumberField(
         BasicTextField(
             modifier = Modifier
                 .focusRequester(focusRequester),
-            value = phoneNumber,
+            value = phoneNumber.number,
             cursorBrush = SolidColor(Color.Transparent),
             onValueChange = {
-                viewModel.setVerificationPhoneNumber(it.take(10))
+                setPhoneNumber(it.take(10))
             },
             textStyle = WBTheme.typography.bodyText1.copy(
                 color = WBTheme.colors.NeutralActive
@@ -135,7 +136,7 @@ fun PhoneNumberField(
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(
-                onNext = { if (viewModel.verificationPhoneNumber.length == 10) navController.navigate(VerificationPinCodeRoute) }
+                onNext = { if (isPhoneNumberValid) navigateToPinCodeScreen() }
             ),
             visualTransformation = PhoneNumberVisualTransformation(),
             singleLine = true,
@@ -149,7 +150,7 @@ fun PhoneNumberField(
                         .weight(1f),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    if (phoneNumber.isEmpty()){
+                    if (phoneNumber.number.isEmpty()) {
                         Text(
                             text = "000 000 00-00-00",
                             style = WBTheme.typography.bodyText1,
@@ -163,38 +164,5 @@ fun PhoneNumberField(
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
         }
-    }
-}
-
-val phoneCountryCodeList = listOf(
-    PhoneCountryCode(
-        code = "+7",
-        icon = R.drawable.ru_flag
-    ),
-    PhoneCountryCode(
-        code = "+1",
-        icon = R.drawable.usa_flag
-    ),
-    PhoneCountryCode(
-        code = "+44",
-        icon = R.drawable.uk_flag
-    ),
-)
-
-data class PhoneCountryCode(
-    val code: String,
-    val icon: Int
-)
-
-@Preview(
-    showBackground = true
-)
-@Composable
-fun PhoneNumberFieldPreview() {
-    WBTheme {
-        PhoneNumberField(
-            viewModel= MainViewModel(MockRepositoryImpl()),
-            navController = rememberNavController()
-        )
     }
 }

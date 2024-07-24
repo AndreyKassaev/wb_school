@@ -78,4 +78,14 @@ dependencies {
     implementation(libs.coil.compose)
 
     implementation(libs.lottie.compose)
+
+    implementation(libs.insert.koin.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.insert.koin.koin.androidx.compose)
+    implementation(libs.insert.koin.koin.androidx.navigation)
+
+    implementation(libs.androidx.core.splashscreen)
+
+    implementation(project(path = ":domain"))
+    implementation(project(":data"))
 }

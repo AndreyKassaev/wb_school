@@ -21,18 +21,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import ru.wildberries.R
-import ru.wildberries.navigation.CommunitiesRoute
-import ru.wildberries.navigation.EventsRoute
-import ru.wildberries.navigation.MoreRoute
-import ru.wildberries.navigation.SplashRoute
-import ru.wildberries.navigation.VerificationPhoneRoute
-import ru.wildberries.navigation.VerificationPinCodeRoute
+import ru.wildberries.navigation.LocalNavController
+import ru.wildberries.navigation.Router
 import ru.wildberries.ui.theme.WBTheme
-import ru.wildberries.util.classToRoute
 
 data class BottomNavigationItem(
     val icon: Int,
@@ -44,12 +37,11 @@ data class BottomNavigationItem(
 
 
 @Composable
-fun BottomBar(
-    navController: NavHostController
-) {
+fun BottomBar() {
+
+    val navController = LocalNavController.current
     val navStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navStackEntry?.destination?.route
-        ?: EventsRoute.classToRoute()
+    val currentDestination = navStackEntry?.destination?.route ?: Router.Base.Event.route
 
     val itemList = listOf(
         BottomNavigationItem(
@@ -57,34 +49,33 @@ fun BottomBar(
             title = R.string.appbar_item_events,
             isSelected = false,
             navigateTo = {
-                navController.navigate(EventsRoute)
+                navController.navigate(Router.EventList.route)
             },
-            route = EventsRoute.classToRoute()
+            route = Router.EventList.route
         ),
         BottomNavigationItem(
             icon = R.drawable.group_alt,
             title = R.string.appbar_item_communities,
             isSelected = false,
             navigateTo = {
-                navController.navigate(CommunitiesRoute)
+                navController.navigate(Router.CommunityList.route)
             },
-            route = CommunitiesRoute.classToRoute()
+            route = Router.CommunityList.route
         ),
         BottomNavigationItem(
             icon = R.drawable.more_horizontal,
             title = R.string.appbar_item_more,
             isSelected = false,
             navigateTo = {
-                navController.navigate(MoreRoute)
+                navController.navigate(Router.More.route)
             },
-            route = MoreRoute.classToRoute()
+            route = Router.More.route
         ),
     )
     when (currentDestination) {
-        SplashRoute.classToRoute(),
-        VerificationPinCodeRoute.classToRoute(),
-        VerificationPhoneRoute.classToRoute() -> {
-        }
+        Router.Splash.route,
+        Router.VerificationPinCode.route,
+        Router.VerificationPhoneNumber.route -> {}
 
         else -> Row(
             modifier = Modifier
@@ -183,6 +174,6 @@ fun BottomBarItem(
 @Composable
 private fun BottomBarPreview() {
     WBTheme {
-        BottomBar(rememberNavController())
+        BottomBar()
     }
 }

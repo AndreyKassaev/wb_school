@@ -9,6 +9,7 @@
     <string name="events_tabitem_all">All events</string>
     <string name="events_tabitem_active">Active</string>
     <string name="my_events_tabitem_passed">Already passed</string>
+    <string name="my_events_tabitem_finished">"It's over"</string>
     <string name="homework_one">Homework 1</string>
     <string name="homework_two">Homework</string>
     <string name="homework">Homework </string>

@@ -32,4 +32,5 @@
     <string name="save">Сохранить</string>
     <string name="firstName_required">Имя (обязательно)</string>
     <string name="lastName_required">Фамилия (опционально)</string>
+    <string name="my_events_tabitem_finished">Закончилась</string>
 </resources>
