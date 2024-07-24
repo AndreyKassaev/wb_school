@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.wb.domain.usecase.community.GetAllCommunityListUSeCase
+import ru.wb.domain.usecase.community.GetAllCommunityListUseCase
 import ru.wb.domain.usecase.event.GetAllEventListUseCase
 import ru.wb.domain.usecase.event.GetEventVisitorListUseCase
 import ru.wildberries.ui.model.Community
@@ -18,7 +18,7 @@ import ru.wildberries.ui.model.toUiEventVisitor
 
 class LessonViewModel(
     private val getAllEventListUseCase: GetAllEventListUseCase,
-    private val getAllCommunityListUSeCase: GetAllCommunityListUSeCase,
+    private val getAllCommunityListUSeCase: GetAllCommunityListUseCase,
     private val getEventVisitorList: GetEventVisitorListUseCase
 ): ViewModel() {
     private var eventListMutable = MutableStateFlow(emptyList<Event>())

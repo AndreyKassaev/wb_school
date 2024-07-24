@@ -1,46 +1,84 @@
 package ru.wb.domain.di
 
-import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
+import ru.wb.domain.usecase.auth.RequestPinCodeInteractor
 import ru.wb.domain.usecase.auth.RequestPinCodeUseCase
+import ru.wb.domain.usecase.auth.ValidatePinCodeInteractor
 import ru.wb.domain.usecase.auth.ValidatePinCodeUseCase
-import ru.wb.domain.usecase.community.GetAllCommunityListUSeCase
+import ru.wb.domain.usecase.community.GetAllCommunityListInteractor
+import ru.wb.domain.usecase.community.GetAllCommunityListUseCase
+import ru.wb.domain.usecase.community.GetCommunityByIdInteractor
 import ru.wb.domain.usecase.community.GetCommunityByIdUseCase
-import ru.wb.domain.usecase.community.GetCommunityEventListUSeCase
+import ru.wb.domain.usecase.community.GetCommunityEventListInteractor
+import ru.wb.domain.usecase.community.GetCommunityEventListUseCase
+import ru.wb.domain.usecase.event.AcceptEventInvitationInteractor
 import ru.wb.domain.usecase.event.AcceptEventInvitationUseCase
+import ru.wb.domain.usecase.event.GetAllEventListInteractor
 import ru.wb.domain.usecase.event.GetAllEventListUseCase
+import ru.wb.domain.usecase.event.GetEventByIdInteractor
 import ru.wb.domain.usecase.event.GetEventByIdUseCase
+import ru.wb.domain.usecase.event.GetEventVisitorListInteractor
 import ru.wb.domain.usecase.event.GetEventVisitorListUseCase
+import ru.wb.domain.usecase.event.GetPersonalEventListInteractor
 import ru.wb.domain.usecase.event.GetPersonalEventListUseCase
+import ru.wb.domain.usecase.event.RevokeEventInvitationInteractor
 import ru.wb.domain.usecase.event.RevokeEventInvitationUseCase
+import ru.wb.domain.usecase.profile.CreateProfileInteractor
 import ru.wb.domain.usecase.profile.CreateProfileUseCase
+import ru.wb.domain.usecase.profile.GetProfileByIdInteractor
 import ru.wb.domain.usecase.profile.GetProfileByIdUseCase
 
 val domainModule = module {
 
-    factoryOf(::RequestPinCodeUseCase)
+    factory<RequestPinCodeUseCase>{
+        RequestPinCodeInteractor(get())
+    }
 
-    factoryOf(::ValidatePinCodeUseCase)
+    factory<ValidatePinCodeUseCase>{
+        ValidatePinCodeInteractor(get())
+    }
 
-    factoryOf(::CreateProfileUseCase)
+    factory<CreateProfileUseCase>{
+        CreateProfileInteractor(get())
+    }
 
-    factoryOf(::GetProfileByIdUseCase)
+    factory<GetProfileByIdUseCase>{
+        GetProfileByIdInteractor(get())
+    }
 
-    factoryOf(::GetAllEventListUseCase)
+    factory<GetAllEventListUseCase>{
+        GetAllEventListInteractor(get())
+    }
 
-    factoryOf(::GetEventByIdUseCase)
+    factory<GetEventByIdUseCase>{
+        GetEventByIdInteractor(get())
+    }
 
-    factoryOf(::GetEventVisitorListUseCase)
+    factory<GetEventVisitorListUseCase>{
+        GetEventVisitorListInteractor(get())
+    }
 
-    factoryOf(::RevokeEventInvitationUseCase)
+    factory<RevokeEventInvitationUseCase>{
+        RevokeEventInvitationInteractor(get())
+    }
 
-    factoryOf(::AcceptEventInvitationUseCase)
+    factory<AcceptEventInvitationUseCase>{
+        AcceptEventInvitationInteractor(get())
+    }
 
-    factoryOf(::GetPersonalEventListUseCase)
+    factory<GetPersonalEventListUseCase>{
+        GetPersonalEventListInteractor(get())
+    }
 
-    factoryOf(::GetAllCommunityListUSeCase)
+    factory<GetAllCommunityListUseCase>{
+        GetAllCommunityListInteractor(get())
+    }
 
-    factoryOf(::GetCommunityByIdUseCase)
+    factory<GetCommunityByIdUseCase>{
+        GetCommunityByIdInteractor(get())
+    }
 
-    factoryOf(::GetCommunityEventListUSeCase)
+    factory<GetCommunityEventListUseCase>{
+        GetCommunityEventListInteractor(get())
+    }
 }
