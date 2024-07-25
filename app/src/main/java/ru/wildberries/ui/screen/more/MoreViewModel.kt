@@ -3,7 +3,7 @@ package ru.wildberries.ui.screen.more
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.wb.domain.usecase.profile.GetProfileByIdUseCase
@@ -15,7 +15,7 @@ class MoreViewModel(
 ): ViewModel() {
 
     private var profileMutable = MutableStateFlow(Profile.default)
-    private val profile = profileMutable.asStateFlow()
+    private val profile: StateFlow<Profile> = profileMutable
 
     init {
         initProfileData()
