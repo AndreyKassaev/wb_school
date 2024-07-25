@@ -35,7 +35,7 @@ import ru.wildberries.ui.UIKit.molecule.TagRow
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun FirstLessonScreen(
+internal fun FirstLessonScreen(
     viewModel: LessonViewModel = koinViewModel(),
 ) {
     val interactionSource = remember { MutableInteractionSource() }

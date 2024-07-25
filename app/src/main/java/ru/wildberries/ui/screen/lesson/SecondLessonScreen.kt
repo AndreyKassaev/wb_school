@@ -18,7 +18,7 @@ import ru.wildberries.ui.UIKit.molecule.EventCardList
 import ru.wildberries.ui.UIKit.molecule.EventVisitorAvatarList
 
 @Composable
-fun SecondLessonScreen(
+internal fun SecondLessonScreen(
     viewModel: LessonViewModel = koinViewModel(),
 ) {
     val eventList by viewModel.getEventListFlow().collectAsState()

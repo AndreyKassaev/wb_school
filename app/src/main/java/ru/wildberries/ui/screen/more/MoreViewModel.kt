@@ -10,7 +10,7 @@ import ru.wb.domain.usecase.profile.GetProfileByIdUseCase
 import ru.wildberries.ui.model.Profile
 import ru.wildberries.ui.model.toUiProfile
 
-class MoreViewModel(
+internal class MoreViewModel(
     private val getProfileByIdUseCase: GetProfileByIdUseCase
 ): ViewModel() {
 
@@ -21,7 +21,7 @@ class MoreViewModel(
         initProfileData()
     }
 
-    internal fun getProfileFlow() = profile
+    fun getProfileFlow() = profile
 
     private fun initProfileData() {
         viewModelScope.launch {

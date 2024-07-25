@@ -10,7 +10,7 @@ import ru.wb.domain.usecase.community.GetAllCommunityListUseCase
 import ru.wildberries.ui.model.Community
 import ru.wildberries.ui.model.toUiCommunity
 
-class CommunityListViewModel(
+internal class CommunityListViewModel(
     private val getAllCommunityListUSeCase: GetAllCommunityListUseCase
 ): ViewModel() {
 
@@ -21,7 +21,7 @@ class CommunityListViewModel(
         initCommunityList()
     }
 
-    internal fun getCommunityListFlow() = communityList
+    fun getCommunityListFlow() = communityList
 
     private fun initCommunityList() {
         viewModelScope.launch {

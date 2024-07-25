@@ -16,7 +16,7 @@ import ru.wildberries.ui.model.toUiCommunity
 import ru.wildberries.ui.model.toUiEvent
 import ru.wildberries.ui.model.toUiEventVisitor
 
-class LessonViewModel(
+internal class LessonViewModel(
     private val getAllEventListUseCase: GetAllEventListUseCase,
     private val getAllCommunityListUSeCase: GetAllCommunityListUseCase,
     private val getEventVisitorList: GetEventVisitorListUseCase
@@ -36,11 +36,11 @@ class LessonViewModel(
         initVisitorList()
     }
 
-    internal fun getEventListFlow() = eventList
+    fun getEventListFlow() = eventList
 
-    internal fun getCommunityListFlow() = communityList
+    fun getCommunityListFlow() = communityList
 
-    internal fun getEventVisitorListFlow() = visitorList
+    fun getEventVisitorListFlow() = visitorList
 
     private fun initEventList() {
         viewModelScope.launch {

@@ -10,7 +10,7 @@ import ru.wb.domain.usecase.event.GetAllEventListUseCase
 import ru.wildberries.ui.model.Event
 import ru.wildberries.ui.model.toUiEvent
 
-class EventListViewModel(
+internal class EventListViewModel(
     private val getAllEventListUseCase: GetAllEventListUseCase
 ): ViewModel() {
 
@@ -22,7 +22,7 @@ class EventListViewModel(
         initEventList()
     }
 
-    internal fun getEventListFlow() = eventList
+    fun getEventListFlow() = eventList
 
     private fun initEventList() {
         viewModelScope.launch {

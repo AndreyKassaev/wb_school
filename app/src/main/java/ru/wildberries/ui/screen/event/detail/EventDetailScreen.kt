@@ -42,7 +42,7 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun EventDetailScreen(
+internal fun EventDetailScreen(
     viewModel: EventDetailViewModel = koinViewModel()
 ) {
 

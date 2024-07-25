@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SplashViewModel(): ViewModel() {
+internal class SplashViewModel(): ViewModel() {
 
     private var isAppReadyMutable = MutableStateFlow(false)
     private val isAppReady: StateFlow<Boolean> = isAppReadyMutable

@@ -16,7 +16,7 @@ import ru.wildberries.ui.model.EventVisitor
 import ru.wildberries.ui.model.toUiEvent
 import ru.wildberries.ui.model.toUiEventVisitor
 
-class EventDetailViewModel(
+internal class EventDetailViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val getEventByIdUseCase: GetEventByIdUseCase,
     private val getEventVisitorListUseCase: GetEventVisitorListUseCase,
@@ -55,9 +55,9 @@ class EventDetailViewModel(
         }
     }
 
-    internal fun getCurrentEventFlow() = currentEvent
+    fun getCurrentEventFlow() = currentEvent
 
-    internal fun getEventVisitorListFlow() = eventVisitorList
+    fun getEventVisitorListFlow() = eventVisitorList
 
     fun acceptEventInvitation() {
         viewModelScope.launch {
