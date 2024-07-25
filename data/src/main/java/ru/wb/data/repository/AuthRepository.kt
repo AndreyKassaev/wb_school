@@ -1,16 +1,17 @@
 package ru.wb.data.repository
 
+import ru.wb.data.datasource.IDataSource
 import ru.wb.domain.repository.IAuthRepository
-import kotlin.random.Random
 
-internal class AuthRepository: IAuthRepository {
-
-    private val pinCode = Random.nextInt(from = 1000, until = 9999).toString()
+internal class AuthRepository(
+    private val dataSource: IDataSource
+): IAuthRepository {
 
     override suspend fun requestPinCode(): String =
-        pinCode
+        dataSource.getPinCode()
 
     override suspend fun validatePinCode(pinCode: String): Boolean =
 //        pinCode == this.pinCode
         true
+
 }

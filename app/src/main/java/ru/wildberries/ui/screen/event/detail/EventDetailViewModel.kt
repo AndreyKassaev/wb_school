@@ -30,10 +30,15 @@ internal class EventDetailViewModel(
     private val eventVisitorListMutable = MutableStateFlow(emptyList<EventVisitor>())
     private val eventVisitorList: StateFlow<List<EventVisitor>> = eventVisitorListMutable
 
+    private val isInvitationAcceptedMutable = MutableStateFlow(false)
+    private val isInvitationAccepted: StateFlow<Boolean> = isInvitationAcceptedMutable
+
     init {
         initCurrentEvent()
         initEventVisitorList()
     }
+
+    fun getIsInvitationAcceptedFlow() = isInvitationAccepted
 
     private fun initCurrentEvent(){
         savedStateHandle.get<String>("event_id")?.let { eventId ->
@@ -64,6 +69,9 @@ internal class EventDetailViewModel(
             eventVisitorListMutable.update {
                 acceptEventInvitationUseCase(currentEvent.value.id).map { it.toUiEventVisitor() }
             }
+            isInvitationAcceptedMutable.update {
+                true
+            }
         }
     }
 
@@ -71,6 +79,9 @@ internal class EventDetailViewModel(
         viewModelScope.launch {
             eventVisitorListMutable.update {
                 revokeEventInvitationUseCase(currentEvent.value.id).map { it.toUiEventVisitor() }
+            }
+            isInvitationAcceptedMutable.update {
+                false
             }
         }
     }

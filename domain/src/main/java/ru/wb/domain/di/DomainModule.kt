@@ -81,4 +81,5 @@ val domainModule = module {
     factory<GetCommunityEventListUseCase>{
         GetCommunityEventListInteractor(get())
     }
+
 }

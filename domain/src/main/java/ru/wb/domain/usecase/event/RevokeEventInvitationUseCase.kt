@@ -14,6 +14,6 @@ internal class RevokeEventInvitationInteractor(
 ): RevokeEventInvitationUseCase {
 
     override suspend operator fun invoke(eventId: String) =
-        eventRepository.revokeEventInvitation(eventId = eventId)
+        eventRepository.removeUserFromEventVisitorList(eventId = eventId)
 
 }

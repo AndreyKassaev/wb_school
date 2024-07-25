@@ -1,21 +1,22 @@
 package ru.wb.data.repository
 
+import ru.wb.data.datasource.IDataSource
 import ru.wb.domain.model.Profile
 import ru.wb.domain.repository.IProfileRepository
 
-internal class ProfileRepository: IProfileRepository {
-
-    private var profile = Profile.default
+internal class ProfileRepository(
+    private val dataSource: IDataSource
+): IProfileRepository {
 
     override suspend fun createProfile(profile: Profile) {
-        this.profile = profile
+        dataSource.setProfile(profile = profile)
     }
 
     override suspend fun updateProfile(profile: Profile) {
-        this.profile = profile
+        dataSource.setProfile(profile = profile)
     }
 
     override suspend fun getProfileById(profileId: String) =
-        this.profile
+        dataSource.getProfile()
 
 }

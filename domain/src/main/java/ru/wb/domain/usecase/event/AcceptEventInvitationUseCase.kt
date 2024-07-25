@@ -13,6 +13,6 @@ internal class AcceptEventInvitationInteractor(
 ): AcceptEventInvitationUseCase {
 
     override suspend operator fun invoke(eventId: String) =
-        eventRepository.acceptEventInvitation(eventId = eventId)
+        eventRepository.addUserToEventVisitorList(eventId = eventId)
 
 }
