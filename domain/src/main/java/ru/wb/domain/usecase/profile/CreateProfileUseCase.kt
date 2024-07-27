@@ -5,7 +5,7 @@ import ru.wb.domain.repository.IProfileRepository
 
 interface CreateProfileUseCase {
 
-    suspend operator fun invoke(profile: Profile)
+    suspend operator fun invoke(profile: Profile): Boolean
 
 }
 

@@ -8,9 +8,13 @@ internal class ProfileRepository(
     private val dataSource: IDataSource
 ): IProfileRepository {
 
-    override suspend fun createProfile(profile: Profile) {
-        dataSource.setProfile(profile = profile)
-    }
+    override suspend fun createProfile(profile: Profile) =
+        try {
+            dataSource.setProfile(profile = profile)
+            true
+        } catch (e: Exception){
+            false
+        }
 
     override suspend fun updateProfile(profile: Profile) {
         dataSource.setProfile(profile = profile)

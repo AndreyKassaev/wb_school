@@ -24,7 +24,7 @@ internal class MockIDataSource: IDataSource {
 
     private val communityList = listOf(
         Community(
-            id = "6c19d92a-7a24-41ab-acb8-2ab6503cf124",
+            id = "1",
             title = "Вологда",
             description = loremIpsum,
             imageUrl = "https://kassaev.com/media/vologda.jpg",
@@ -102,7 +102,7 @@ internal class MockIDataSource: IDataSource {
         Event(
             id = UUID.randomUUID()
                 .toString(),
-            communityId = "6c19d92a-7a24-41ab-acb8-2ab6503cf124",
+            communityId = "1",
             title = "Android 15",
             description = loremIpsum,
             imageUrl = "https://kassaev.com/media/android_15.png",

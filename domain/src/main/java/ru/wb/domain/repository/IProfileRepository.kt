@@ -4,7 +4,7 @@ import ru.wb.domain.model.Profile
 
 interface IProfileRepository {
 
-    suspend fun createProfile(profile: Profile)
+    suspend fun createProfile(profile: Profile): Boolean
 
     suspend fun updateProfile(profile: Profile)
 

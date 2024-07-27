@@ -2,6 +2,8 @@
 agp = "8.5.0"
 coilCompose = "2.6.0"
 coreSplashscreen = "1.2.0-alpha01"
+hamcrest = "3.0-rc1"
+junitJupiter = "5.11.0-M2"
 koinAndroidxCompose = "3.6.0-wasm-alpha2"
 koinAndroidxNavigation = "3.6.0-wasm-alpha2"
 koinCore = "3.6.0-wasm-alpha2"
@@ -17,6 +19,8 @@ composeBom = "2024.06.00"
 
 composeNavigation = "2.8.0-beta04"
 lottieCompose = "6.4.1"
+mockitoCore = "5.12.0"
+mockitoKotlin = "5.4.0"
 serialization = "1.7.1"
 
 koin-bom = "3.5.6"
@@ -29,6 +33,7 @@ uiToolingPreviewAndroid = "1.6.8"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
 insert-koin-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
 insert-koin-koin-androidx-navigation = { module = "io.insert-koin:koin-androidx-navigation", version.ref = "koinAndroidxNavigation" }
 insert-koin-koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
@@ -46,9 +51,12 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinCore" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 
