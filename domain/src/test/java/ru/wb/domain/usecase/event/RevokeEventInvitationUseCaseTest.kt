@@ -1,6 +1,6 @@
 package ru.wb.domain.usecase.event
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -13,7 +13,7 @@ class RevokeEventInvitationUseCaseTest {
     private val revokeEventInvitationUseCase = mock<RevokeEventInvitationUseCase>()
 
     @Test
-    fun `event list not empty`(): Unit = runBlocking {
+    fun `event list not empty`(): Unit = runTest {
 
         Mockito.`when`(revokeEventInvitationUseCase(eventId = any())).thenReturn(
             List(3){ EventVisitor.default}

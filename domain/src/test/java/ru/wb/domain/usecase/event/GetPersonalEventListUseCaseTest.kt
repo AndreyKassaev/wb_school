@@ -1,6 +1,6 @@
 package ru.wb.domain.usecase.event
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -12,7 +12,7 @@ class GetPersonalEventListUseCaseTest {
     private val getPersonalEventListUseCase = mock<GetPersonalEventListUseCase>()
 
     @Test
-    fun `personal event list is not empty`() = runBlocking {
+    fun `personal event list is not empty`() = runTest {
 
         Mockito.`when`(getPersonalEventListUseCase()).thenReturn(
             List(10){ Event.default }

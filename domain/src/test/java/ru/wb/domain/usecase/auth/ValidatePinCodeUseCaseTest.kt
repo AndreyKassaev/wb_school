@@ -1,6 +1,6 @@
 package ru.wb.domain.usecase.auth
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -14,7 +14,7 @@ class ValidatePinCodeUseCaseTest {
     private val validatePinCodeUseCase = mock<ValidatePinCodeUseCase>()
 
     @Test
-    fun `corrected pin code must be validated`() = runBlocking{
+    fun `corrected pin code must be validated`() = runTest {
 
         Mockito.`when`(requestPinCodeUseCase()).thenReturn(
             Random.nextInt(from = 1000, until = 9999).toString()

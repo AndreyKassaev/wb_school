@@ -1,6 +1,6 @@
 package ru.wb.domain.usecase.community
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -13,7 +13,7 @@ class GetCommunityByIdUseCaseTest {
     private val getCommunityByIdUseCase = mock<GetCommunityByIdUseCase>()
 
     @Test
-    fun `corrected type returned`(): Unit = runBlocking {
+    fun `corrected type returned`(): Unit = runTest {
 
         Mockito.`when`(getCommunityByIdUseCase(communityId = any())).thenReturn(
             Community.default

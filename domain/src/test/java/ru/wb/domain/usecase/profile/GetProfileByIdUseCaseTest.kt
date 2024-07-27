@@ -1,6 +1,6 @@
 package ru.wb.domain.usecase.profile
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertInstanceOf
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -13,7 +13,7 @@ class GetProfileByIdUseCaseTest {
     private val getProfileByIdUseCase = mock<GetProfileByIdUseCase>()
 
     @Test
-    fun `corrected type returned`(): Unit = runBlocking {
+    fun `corrected type returned`(): Unit = runTest {
 
         Mockito.`when`(getProfileByIdUseCase(profileId = any())).thenReturn(
             Profile.default

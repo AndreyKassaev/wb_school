@@ -1,6 +1,6 @@
 package ru.wb.domain.usecase.profile
 
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -13,7 +13,7 @@ class CreateProfileUseCaseTest {
     private val createProfileUseCase = mock<CreateProfileUseCase>()
 
     @Test
-    fun `corrected pin code must be validated`() = runBlocking{
+    fun `corrected pin code must be validated`() = runTest {
 
         Mockito.`when`(createProfileUseCase(profile = any())).thenReturn(
             true
