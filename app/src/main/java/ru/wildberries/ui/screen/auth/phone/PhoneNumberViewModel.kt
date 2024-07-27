@@ -15,7 +15,7 @@ import ru.wildberries.ui.model.PhoneNumber
 
 const val PHONE_NUMBER_REQUIRED_LENGTH = 10
 
-class PhoneNumberViewModel(
+internal class PhoneNumberViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val requestPinCodeUseCase: RequestPinCodeUseCase
 ): ViewModel() {
@@ -42,7 +42,7 @@ class PhoneNumberViewModel(
         phoneNumberMutable.value.number.length == PHONE_NUMBER_REQUIRED_LENGTH
     }
 
-    internal fun getPhoneNumberFlow() = phoneNumber
+    fun getPhoneNumberFlow() = phoneNumber
 
     fun getIsPhoneNumberValidFlow() = _isPhoneNumberValid
 
@@ -54,7 +54,7 @@ class PhoneNumberViewModel(
         }
     }
 
-    internal fun setPhoneCountryCode(countryCode: CountryCode) {
+    fun setPhoneCountryCode(countryCode: CountryCode) {
         phoneNumberMutable.update {
             it.copy(
                 countryCode = countryCode

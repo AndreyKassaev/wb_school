@@ -2,11 +2,17 @@ package ru.wb.domain.usecase.auth
 
 import ru.wb.domain.repository.IAuthRepository
 
-class RequestPinCodeUseCase(
-    private val authRepository: IAuthRepository
-) {
+interface RequestPinCodeUseCase{
 
-    suspend operator fun invoke() =
+    suspend operator fun invoke(): String
+
+}
+
+internal class RequestPinCodeInteractor(
+    private val authRepository: IAuthRepository
+): RequestPinCodeUseCase {
+
+    override suspend operator fun invoke() =
         authRepository.requestPinCode()
 
 }

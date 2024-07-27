@@ -46,7 +46,7 @@ import ru.wildberries.ui.screen.event.personal.TabItem
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun EventListScreen(
+internal fun EventListScreen(
     viewModel: EventListViewModel = koinViewModel(),
 ) {
 

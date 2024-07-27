@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.update
 import ru.wb.domain.usecase.auth.ValidatePinCodeUseCase
 import ru.wildberries.ui.UIKit.molecule.PIN_CODE_LENGTH
 
-class PinCodeViewModel(
+internal class PinCodeViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val validatePinCodeUseCase: ValidatePinCodeUseCase
 ): ViewModel() {

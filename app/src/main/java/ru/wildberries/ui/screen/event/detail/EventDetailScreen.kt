@@ -42,7 +42,7 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun EventDetailScreen(
+internal fun EventDetailScreen(
     viewModel: EventDetailViewModel = koinViewModel()
 ) {
 
@@ -60,9 +60,8 @@ fun EventDetailScreen(
     var isFullScreen by rememberSaveable {
         mutableStateOf(false)
     }
-    var isInvitationAccepted by rememberSaveable {
-        mutableStateOf(false)
-    }
+    val isInvitationAccepted by viewModel.getIsInvitationAcceptedFlow().collectAsState()
+
     if (isFullScreen) {
         Dialog(
             onDismissRequest = {
@@ -166,47 +165,79 @@ fun EventDetailScreen(
         ) {
             Spacer(modifier = Modifier.weight(1f))
             EventVisitorAvatarList(eventVisitorList = eventVisitorList)
-            when (isInvitationAccepted) {
-                true -> SecondaryButton(
-                    content = {
-                        Text(
-                            modifier = Modifier
-                                .padding(vertical = 12.dp),
-                            text = stringResource(R.string.ill_go_next_time),
-                        )
-                    },
-                    onClick = {
-                        viewModel.revokeEventInvitation()
-                        isInvitationAccepted = !isInvitationAccepted
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = 12.dp,
-                            bottom = 20.dp
-                        )
-                )
-
-                false -> PrimaryButton(
-                    content = {
-                        Text(
-                            modifier = Modifier
-                                .padding(vertical = 12.dp),
-                            text = stringResource(R.string.ill_go),
-                        )
-                    },
-                    onClick = {
-                        viewModel.acceptEventInvitation()
-                        isInvitationAccepted = !isInvitationAccepted
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = 12.dp,
-                            bottom = 20.dp
-                        )
-                )
-            }
+        }
+        when(event.isActive){
+            true -> SwitchEventInviteButton(
+                isInvitationAccepted = isInvitationAccepted,
+                acceptEventInvitation = viewModel::acceptEventInvitation,
+                revokeEventInvitation = viewModel::revokeEventInvitation
+            )
+            false -> PrimaryButton(
+                content = {
+                    Text(
+                        modifier = Modifier
+                            .padding(vertical = 12.dp),
+                        text = stringResource(id = R.string.my_events_tabitem_finished)
+                    )
+                },
+                onClick = {},
+                isEnabled = false,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = 12.dp,
+                        bottom = 20.dp
+                    )
+            )
         }
     }
+}
+
+@Composable
+internal fun SwitchEventInviteButton(
+    isInvitationAccepted: Boolean,
+    acceptEventInvitation: () -> Unit,
+    revokeEventInvitation: () -> Unit,
+) {
+
+    when (isInvitationAccepted) {
+        true -> SecondaryButton(
+            content = {
+                Text(
+                    modifier = Modifier
+                        .padding(vertical = 12.dp),
+                    text = stringResource(R.string.ill_go_next_time),
+                )
+            },
+            onClick = {
+                revokeEventInvitation()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = 12.dp,
+                    bottom = 20.dp
+                )
+        )
+
+        false -> PrimaryButton(
+            content = {
+                Text(
+                    modifier = Modifier
+                        .padding(vertical = 12.dp),
+                    text = stringResource(R.string.ill_go),
+                )
+            },
+            onClick = {
+                acceptEventInvitation()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = 12.dp,
+                    bottom = 20.dp
+                )
+        )
+    }
+
 }

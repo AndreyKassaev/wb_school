@@ -30,7 +30,7 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun MoreScreen(
+internal fun MoreScreen(
     viewModel: MoreViewModel = koinViewModel(),
 ) {
 

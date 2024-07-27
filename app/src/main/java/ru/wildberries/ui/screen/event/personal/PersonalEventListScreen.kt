@@ -33,7 +33,7 @@ import ru.wildberries.ui.screen.event.list.HorizontalPagerEventListClass
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun PersonalEventListScreen(
+internal fun PersonalEventListScreen(
     viewModel: PersonalEventListViewModel = koinViewModel(),
 ) {
 

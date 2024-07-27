@@ -27,7 +27,7 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun CommunityListScreen(
+internal fun CommunityListScreen(
     viewModel: CommunityListViewModel = koinViewModel(),
 ) {
 

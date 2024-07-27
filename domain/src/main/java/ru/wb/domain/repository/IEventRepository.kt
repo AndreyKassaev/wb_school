@@ -11,9 +11,9 @@ interface IEventRepository {
 
     suspend fun getEventVisitorList(eventId: String): List<EventVisitor>
 
-    suspend fun acceptEventInvitation(eventId: String): List<EventVisitor>
+    suspend fun addUserToEventVisitorList(eventId: String): List<EventVisitor>
 
-    suspend fun revokeEventInvitation(eventId: String): List<EventVisitor>
+    suspend fun removeUserFromEventVisitorList(eventId: String): List<EventVisitor>
 
     suspend fun getPersonalEventList(): List<Event>
 

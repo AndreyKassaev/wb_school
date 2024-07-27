@@ -25,7 +25,7 @@ import ru.wildberries.ui.theme.WBTheme
 import java.util.Locale
 
 @Composable
-fun PinCodeScreen(
+internal fun PinCodeScreen(
     viewModel: PinCodeViewModel = koinViewModel(),
 ) {
 

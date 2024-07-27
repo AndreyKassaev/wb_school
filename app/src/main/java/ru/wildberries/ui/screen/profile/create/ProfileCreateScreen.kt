@@ -36,7 +36,7 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun ProfileCreateScreen(
+internal fun ProfileCreateScreen(
     viewModel: ProfileCreateViewModel = koinViewModel(),
 ) {
 

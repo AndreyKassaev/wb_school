@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.wb.domain.usecase.community.GetAllCommunityListUSeCase
+import ru.wb.domain.usecase.community.GetAllCommunityListUseCase
 import ru.wildberries.ui.model.Community
 import ru.wildberries.ui.model.toUiCommunity
 
-class CommunityListViewModel(
-    private val getAllCommunityListUSeCase: GetAllCommunityListUSeCase
+internal class CommunityListViewModel(
+    private val getAllCommunityListUSeCase: GetAllCommunityListUseCase
 ): ViewModel() {
 
     private var communityListMutable = MutableStateFlow(emptyList<Community>())
@@ -21,7 +21,7 @@ class CommunityListViewModel(
         initCommunityList()
     }
 
-    internal fun getCommunityListFlow() = communityList
+    fun getCommunityListFlow() = communityList
 
     private fun initCommunityList() {
         viewModelScope.launch {

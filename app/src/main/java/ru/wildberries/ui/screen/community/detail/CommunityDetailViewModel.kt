@@ -8,16 +8,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.wb.domain.usecase.community.GetCommunityByIdUseCase
-import ru.wb.domain.usecase.community.GetCommunityEventListUSeCase
+import ru.wb.domain.usecase.community.GetCommunityEventListUseCase
 import ru.wildberries.ui.model.Community
 import ru.wildberries.ui.model.Event
 import ru.wildberries.ui.model.toUiCommunity
 import ru.wildberries.ui.model.toUiEvent
 
-class CommunityDetailViewModel(
+internal class CommunityDetailViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val getCommunityByIdUseCase: GetCommunityByIdUseCase,
-    private val getCommunityEventListUSeCase: GetCommunityEventListUSeCase
+    private val getCommunityEventListUSeCase: GetCommunityEventListUseCase
 ): ViewModel() {
 
     private val currentCommunityMutable = MutableStateFlow(Community.default)
@@ -31,9 +31,9 @@ class CommunityDetailViewModel(
         initEventList()
     }
 
-    internal fun getCurrentCommunityFlow() = currentCommunity
+    fun getCurrentCommunityFlow() = currentCommunity
 
-    internal fun getEventListFlow() = eventList
+    fun getEventListFlow() = eventList
 
     private fun initCurrentCommunity(){
         savedStateHandle.get<String>("community_id")?.let { communityId ->

@@ -16,7 +16,7 @@ import ru.wildberries.ui.model.EventVisitor
 import ru.wildberries.ui.model.toUiEvent
 import ru.wildberries.ui.model.toUiEventVisitor
 
-class EventDetailViewModel(
+internal class EventDetailViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val getEventByIdUseCase: GetEventByIdUseCase,
     private val getEventVisitorListUseCase: GetEventVisitorListUseCase,
@@ -30,10 +30,15 @@ class EventDetailViewModel(
     private val eventVisitorListMutable = MutableStateFlow(emptyList<EventVisitor>())
     private val eventVisitorList: StateFlow<List<EventVisitor>> = eventVisitorListMutable
 
+    private val isInvitationAcceptedMutable = MutableStateFlow(false)
+    private val isInvitationAccepted: StateFlow<Boolean> = isInvitationAcceptedMutable
+
     init {
         initCurrentEvent()
         initEventVisitorList()
     }
+
+    fun getIsInvitationAcceptedFlow() = isInvitationAccepted
 
     private fun initCurrentEvent(){
         savedStateHandle.get<String>("event_id")?.let { eventId ->
@@ -55,14 +60,17 @@ class EventDetailViewModel(
         }
     }
 
-    internal fun getCurrentEventFlow() = currentEvent
+    fun getCurrentEventFlow() = currentEvent
 
-    internal fun getEventVisitorListFlow() = eventVisitorList
+    fun getEventVisitorListFlow() = eventVisitorList
 
     fun acceptEventInvitation() {
         viewModelScope.launch {
             eventVisitorListMutable.update {
                 acceptEventInvitationUseCase(currentEvent.value.id).map { it.toUiEventVisitor() }
+            }
+            isInvitationAcceptedMutable.update {
+                true
             }
         }
     }
@@ -71,6 +79,9 @@ class EventDetailViewModel(
         viewModelScope.launch {
             eventVisitorListMutable.update {
                 revokeEventInvitationUseCase(currentEvent.value.id).map { it.toUiEventVisitor() }
+            }
+            isInvitationAcceptedMutable.update {
+                false
             }
         }
     }

@@ -44,11 +44,13 @@ internal fun EventCard(
                     color = WBTheme.colors.NeutralActive,
                     text = event.title
                 )
-                Text(
-                    style = WBTheme.typography.metadata2,
-                    color = WBTheme.colors.NeutralWeak,
-                    text = if (event.isActive) "" else stringResource(id = R.string.my_events_tabitem_finished)
-                )
+                if (!event.isActive){
+                    Text(
+                        style = WBTheme.typography.metadata2,
+                        color = WBTheme.colors.NeutralWeak,
+                        text = stringResource(id = R.string.my_events_tabitem_finished)
+                    )
+                }
             }
             Text(
                 modifier = Modifier

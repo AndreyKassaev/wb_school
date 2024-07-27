@@ -21,7 +21,7 @@ import ru.wildberries.ui.theme.WBTheme
 
 
 @Composable
-fun SplashScreen(
+internal fun SplashScreen(
     viewModel: SplashViewModel = koinViewModel(),
 ) {
 

@@ -23,7 +23,7 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun PhoneNumberScreen(
+internal fun PhoneNumberScreen(
     viewModel: PhoneNumberViewModel = koinViewModel()
 ) {
 

@@ -9,7 +9,7 @@ import ru.wildberries.ui.model.Profile
 import ru.wildberries.ui.model.toDomainProfile
 import java.util.UUID
 
-class ProfileCreateViewModel(
+internal class ProfileCreateViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val createProfileUseCase: CreateProfileUseCase
 ): ViewModel() {

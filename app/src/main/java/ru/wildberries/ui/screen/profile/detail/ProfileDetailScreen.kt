@@ -29,7 +29,7 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun ProfileDetailScreen(
+internal fun ProfileDetailScreen(
     viewModel: ProfileDetailViewModel = koinViewModel(),
 ) {
 
