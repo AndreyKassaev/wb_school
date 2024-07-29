@@ -1,11 +1,12 @@
 package ru.wb.domain.usecase.profile
 
+import kotlinx.coroutines.flow.Flow
 import ru.wb.domain.model.Profile
 import ru.wb.domain.repository.IProfileRepository
 
 interface CreateProfileUseCase {
 
-    suspend operator fun invoke(profile: Profile): Boolean
+    suspend operator fun invoke(profile: Profile): Flow<Boolean>
 
 }
 

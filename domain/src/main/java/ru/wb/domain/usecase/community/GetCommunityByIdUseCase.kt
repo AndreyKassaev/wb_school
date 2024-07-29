@@ -1,11 +1,12 @@
 package ru.wb.domain.usecase.community
 
+import kotlinx.coroutines.flow.Flow
 import ru.wb.domain.model.Community
 import ru.wb.domain.repository.ICommunityRepository
 
 interface GetCommunityByIdUseCase {
 
-    suspend operator fun invoke(communityId: String): Community
+    suspend operator fun invoke(communityId: String): Flow<Community>
 
 }
 

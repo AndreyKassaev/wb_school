@@ -32,7 +32,8 @@ internal fun PinCodeScreen(
     val navController = LocalNavController.current
     val phoneNumber by viewModel.getPhoneNumberFlow().collectAsState()
     val pinCode by viewModel.getPinCodeFlow().collectAsState()
-    val isPinCodeValid by viewModel.getIsPinCodeValid().collectAsState(false)
+    val isPinCodeValid by viewModel.getIsPinCodeValidFlow()
+        .collectAsState(false)
 
     Column(
         modifier = Modifier

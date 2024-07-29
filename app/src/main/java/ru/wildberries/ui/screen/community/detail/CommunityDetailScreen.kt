@@ -29,9 +29,6 @@ internal fun CommunityDetailScreen(
 
     val navController = LocalNavController.current
     val community by viewModel.getCurrentCommunityFlow().collectAsState()
-    val communityEventList = viewModel.getEventListFlow().collectAsState().value.filter { event ->
-        event.location == community.title
-    }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -61,7 +58,7 @@ internal fun CommunityDetailScreen(
                 color = WBTheme.colors.NeutralWeak
             )
             LazyColumn {
-                communityEventList.forEach { event ->
+                community.eventList.forEach { event ->
                     item {
                         Surface(
                             modifier = Modifier

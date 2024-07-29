@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.wb.domain.usecase.event.GetPersonalEventListUseCase
@@ -25,8 +26,10 @@ internal class PersonalEventListViewModel(
 
     private fun initEventList() {
         viewModelScope.launch {
-            eventListMutable.update {
-                getPersonalEventListUseCase().map { it.toUiEvent() }
+            getPersonalEventListUseCase().collectLatest { eventList ->
+                eventListMutable.update {
+                    eventList.map { it.toUiEvent() }
+                }
             }
         }
     }

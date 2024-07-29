@@ -1,11 +1,12 @@
 package ru.wb.domain.usecase.event
 
-import ru.wb.domain.model.EventVisitor
+import kotlinx.coroutines.flow.Flow
+import ru.wb.domain.model.Event
 import ru.wb.domain.repository.IEventRepository
 
 interface RevokeEventInvitationUseCase {
 
-    suspend operator fun invoke(eventId: String): List<EventVisitor>
+    suspend operator fun invoke(eventId: String): Flow<Event>
 
 }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.wb.domain.usecase.profile.GetProfileByIdUseCase
@@ -25,8 +26,10 @@ internal class MoreViewModel(
 
     private fun initProfileData() {
         viewModelScope.launch {
-            profileMutable.update {
-                getProfileByIdUseCase(profileId = "").toUiProfile()
+            getProfileByIdUseCase(profileId = "").collectLatest { profile ->
+                profileMutable.update {
+                    profile.toUiProfile()
+                }
             }
         }
     }

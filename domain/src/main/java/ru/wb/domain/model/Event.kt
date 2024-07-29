@@ -11,7 +11,8 @@ data class Event(
     val imageUrl: String,
     val location: String,
     val isActive: Boolean,
-    val tagList: List<String>
+    val tagList: List<String>,
+    var visitorList: List<EventVisitor>
 ){
     companion object {
         val default = Event(
@@ -29,7 +30,10 @@ data class Event(
             imageUrl = "https://kassaev.com/media/night_sky.jpg",
             location = "Moscow",
             isActive = true,
-            tagList = listOf("Moscow")
+            tagList = listOf("Moscow"),
+            visitorList = listOf(
+                EventVisitor.default
+            )
         )
     }
 }

@@ -1,30 +1,48 @@
 package ru.wb.data.repository
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import ru.wb.data.datasource.IDataSource
 import ru.wb.domain.model.Event
-import ru.wb.domain.model.EventVisitor
 import ru.wb.domain.repository.IEventRepository
 
 internal class EventRepository(
     private val dataSource: IDataSource
 ): IEventRepository {
 
-    override suspend fun getAllEventList(): List<Event> =
-        dataSource.getEventList()
+    override fun getAllEventList(): Flow<List<Event>> =
+        flow {
+            emit(
+                dataSource.getEventList()
+            )
+        }
 
-    override suspend fun getEventById(eventId: String): Event =
-        dataSource.getEventById(eventId = eventId)
+    override fun getEventById(eventId: String): Flow<Event> =
+        flow {
+            emit(
+                dataSource.getEventById(eventId = eventId)
+            )
+        }
 
-    override suspend fun getPersonalEventList(): List<Event> =
-        dataSource.getEventList()
+    override fun getPersonalEventList(): Flow<List<Event>> =
+        flow {
+            emit(
+                dataSource.getEventList()
+            )
+        }
 
-    override suspend fun getEventVisitorList(eventId: String): List<EventVisitor> =
-        dataSource.getEventVisitorList()
+    override fun addUserToEventVisitorList(eventId: String): Flow<Event> =
+        flow {
+            emit(
+                dataSource.addUserToEventVisitorList(eventId = eventId)
+            )
+        }
 
-    override suspend fun addUserToEventVisitorList(eventId: String): List<EventVisitor> =
-        dataSource.addUserToEventVisitorList(eventId = eventId)
-
-    override suspend fun removeUserFromEventVisitorList(eventId: String): List<EventVisitor> =
-        dataSource.removeUserFromEventVisitorList(eventId = eventId)
+    override fun removeUserFromEventVisitorList(eventId: String): Flow<Event> =
+        flow {
+            emit(
+                dataSource.removeUserFromEventVisitorList(eventId = eventId)
+            )
+        }
 
 }

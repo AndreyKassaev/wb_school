@@ -1,10 +1,11 @@
 package ru.wb.domain.usecase.auth
 
+import kotlinx.coroutines.flow.Flow
 import ru.wb.domain.repository.IAuthRepository
 
 interface RequestPinCodeUseCase{
 
-    suspend operator fun invoke(): String
+    operator fun invoke(): Flow<String>
 
 }
 
@@ -12,7 +13,7 @@ internal class RequestPinCodeInteractor(
     private val authRepository: IAuthRepository
 ): RequestPinCodeUseCase {
 
-    override suspend operator fun invoke() =
+    override operator fun invoke() =
         authRepository.requestPinCode()
 
 }

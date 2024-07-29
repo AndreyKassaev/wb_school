@@ -20,5 +20,6 @@ dependencies {
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.hamcrest)
     implementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockito.junit.jupiter)
 
 }

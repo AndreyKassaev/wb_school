@@ -23,7 +23,6 @@ internal fun SecondLessonScreen(
 ) {
     val eventList by viewModel.getEventListFlow().collectAsState()
     val communityList by viewModel.getCommunityListFlow().collectAsState()
-    val eventVisitorList by viewModel.getEventVisitorListFlow().collectAsState()
 
     LazyColumn(
         modifier = Modifier
@@ -37,7 +36,7 @@ internal fun SecondLessonScreen(
 
         item {
             EventVisitorAvatarList(
-                eventVisitorList =  eventVisitorList
+                eventVisitorList = eventList.first().visitorList
             )
         }
 

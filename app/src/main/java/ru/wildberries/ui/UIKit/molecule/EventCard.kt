@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import ru.wildberries.R
 import ru.wildberries.ui.UIKit.atom.Avatar
 import ru.wildberries.ui.model.Event
+import ru.wildberries.ui.model.EventVisitor
 import ru.wildberries.ui.theme.WBTheme
 import java.util.UUID
 
@@ -80,7 +81,10 @@ fun EventCardPreview(){
                 imageUrl = "",
                 location = "Moscow",
                 isActive = true,
-                tagList = listOf("Moscow")
+                tagList = listOf("Moscow"),
+                visitorList = listOf(
+                    EventVisitor.default
+                )
             )
         )
     }

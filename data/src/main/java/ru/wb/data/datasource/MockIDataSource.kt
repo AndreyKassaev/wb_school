@@ -5,14 +5,17 @@ import ru.wb.domain.model.Event
 import ru.wb.domain.model.EventVisitor
 import ru.wb.domain.model.Profile
 import ru.wb.domain.model.toEventVisitor
-import java.util.UUID
 import kotlin.random.Random
 
 internal class MockIDataSource: IDataSource {
 
     private var profile = Profile.default
 
-    private val pinCode = Random.nextInt(from = 1000, until = 9999).toString()
+    private val pinCode = Random.nextInt(
+        from = 1000,
+        until = 9999
+    )
+        .toString()
 
     private val loremIpsum = """
                         Lorem ipsum dolor sit amet consectetur. Libero duis cum egestas amet mollis massa. Convallis sit lacus tortor interdum auctor viverra vitae. Egestas aliquam odio aenean eget facilisi ipsum vitae. Risus lectus quam urna condimentum id massa magna id mattis. Sit tempor volutpat ac eget dignissim nibh sagittis vitae duis. Vivamus quis fusce egestas vel sodales arcu praesent non. Ullamcorper elit sit eros egestas euismod amet. Nec molestie a sit sed. At neque diam turpis cursus tincidunt nisi quam sed non. Tempor tortor ultricies ultrices maecenas lectus in nunc sapien dapibus.
@@ -22,42 +25,12 @@ internal class MockIDataSource: IDataSource {
                         Malesuada egestas enim purus cras diam eget vel. Massa ante sit scelerisque scelerisque hac. Consequat tempor non pretium convallis. Interdum iaculis sit interdum interdum magna. Gravida urna et cursus donec consectetur nulla. Aliquet egestas nulla arcu aliquam facilisi duis maecenas viverra. Egestas consectetur mauris orci sit. Bibendum orci at viverra pharetra tortor nulla amet erat vehicula. Mauris volutpat amet in sit rhoncus. Imperdiet feugiat id fames gravida.
                     """.trimIndent()
 
-    private val communityList = listOf(
-        Community(
-            id = "1",
-            title = "Вологда",
-            description = loremIpsum,
-            imageUrl = "https://kassaev.com/media/vologda.jpg",
-            size = 318112
-        ),
-        Community(
-            id = "4e9b30e1-b695-4839-aceb-eb6d5e7a092f",
-            title = "Пятигорск",
-            description = loremIpsum,
-            imageUrl = "https://kassaev.com/media/pytigorsk.png",
-            size = 213000
-        ),
-        Community(
-            id = "7547580a-e940-4c31-955a-f05dd30dec58",
-            title = "Сызрань",
-            description = loremIpsum,
-            imageUrl = "https://kassaev.com/media/sizran.png",
-            size = 165000
-        ),
-        Community(
-            id = "203653fc-1632-49b5-9749-9b45554680e3",
-            title = "Воронеж",
-            description = loremIpsum,
-            imageUrl = "https://kassaev.com/media/voronezh.jpg",
-            size = 1048738
-        ),
-    )
+    private var eventVisitorList = MutableList(10) { Profile.default.toEventVisitor() }
 
-    private val eventList = listOf(
+    private var eventList = mutableListOf(
         Event(
-            id = UUID.randomUUID()
-                .toString(),
-            communityId = "7547580a-e940-4c31-955a-f05dd30dec58",
+            id = "1",
+            communityId = "3",
             title = "Android 11",
             description = loremIpsum,
             imageUrl = "https://kassaev.com/media/android_11.png",
@@ -67,11 +40,11 @@ internal class MockIDataSource: IDataSource {
             tagList = listOf(
                 "Android",
                 "Сызрань"
-            )
+            ),
+            visitorList = eventVisitorList
         ),
         Event(
-            id = UUID.randomUUID()
-                .toString(),
+            id = "2",
             communityId = "203653fc-1632-49b5-9749-9b45554680e3",
             title = "Android 13",
             description = loremIpsum,
@@ -82,11 +55,11 @@ internal class MockIDataSource: IDataSource {
             tagList = listOf(
                 "Android",
                 "Воронеж"
-            )
+            ),
+            visitorList = eventVisitorList
         ),
         Event(
-            id = UUID.randomUUID()
-                .toString(),
+            id = "3",
             communityId = "4e9b30e1-b695-4839-aceb-eb6d5e7a092f",
             title = "Android 14",
             description = loremIpsum,
@@ -97,11 +70,11 @@ internal class MockIDataSource: IDataSource {
             tagList = listOf(
                 "Android",
                 "Пятигорск"
-            )
+            ),
+            visitorList = eventVisitorList
         ),
         Event(
-            id = UUID.randomUUID()
-                .toString(),
+            id = "4",
             communityId = "1",
             title = "Android 15",
             description = loremIpsum,
@@ -112,20 +85,63 @@ internal class MockIDataSource: IDataSource {
             tagList = listOf(
                 "Android",
                 "Вологда"
-            )
+            ),
+            visitorList = eventVisitorList
         ),
     )
 
-    override suspend fun setProfile(profile: Profile) {
-        this.profile = profile
+    private var communityList = listOf(
+        Community(
+            id = "1",
+            title = "Вологда",
+            description = loremIpsum,
+            imageUrl = "https://kassaev.com/media/vologda.jpg",
+            size = 318112,
+            eventList = eventList.filter { event: Event -> event.location == "Вологда" }
+        ),
+        Community(
+            id = "2",
+            title = "Пятигорск",
+            description = loremIpsum,
+            imageUrl = "https://kassaev.com/media/pytigorsk.png",
+            size = 213000,
+            eventList = eventList.filter { event: Event -> event.location == "Пятигорск" }
+        ),
+        Community(
+            id = "3",
+            title = "Сызрань",
+            description = loremIpsum,
+            imageUrl = "https://kassaev.com/media/sizran.png",
+            size = 165000,
+            eventList = eventList.filter { event: Event -> event.location == "Сызрань" }
+        ),
+        Community(
+            id = "4",
+            title = "Воронеж",
+            description = loremIpsum,
+            imageUrl = "https://kassaev.com/media/voronezh.jpg",
+            size = 1048738,
+            eventList = eventList.filter { event: Event -> event.location == "Воронеж" }
+
+        ),
+    )
+
+    override suspend fun validatePinCode(pinCode: String): Boolean {
+        return pinCode.matches(Regex("""\d{4}"""))
     }
 
-    private var eventVisitorList = MutableList(10) { Profile.default.toEventVisitor() }
+    override suspend fun setProfile(profile: Profile): Boolean {
+        this.profile = profile
+        return true
+    }
 
-    override suspend fun removeUserFromEventVisitorList(eventId: String): List<EventVisitor> =
-        this.eventVisitorList.also {
-            it.removeLast()
+    override suspend fun removeUserFromEventVisitorList(eventId: String): Event {
+        val _index = this.eventList.indexOfFirst { event ->
+            event.id == eventId
         }
+        this.eventList[_index].visitorList = this.eventList[_index].visitorList.dropLast(1)
+        return this.eventList[_index]
+    }
 
     override suspend fun getPinCode(): String =
         this.pinCode
@@ -133,10 +149,13 @@ internal class MockIDataSource: IDataSource {
     override suspend fun getCommunityList(): List<Community> =
         this.communityList
 
-    override suspend fun addUserToEventVisitorList(eventId: String): List<EventVisitor> =
-        this.eventVisitorList.also {
-            it += this.profile.toEventVisitor()
+    override suspend fun addUserToEventVisitorList(eventId: String): Event {
+        val _index = this.eventList.indexOfFirst { event ->
+            event.id == eventId
         }
+        this.eventList[_index].visitorList += EventVisitor.default
+        return this.eventList[_index]
+    }
 
     override suspend fun getEventList(): List<Event> =
         this.eventList
@@ -150,9 +169,6 @@ internal class MockIDataSource: IDataSource {
         this.eventList.first{ event ->
             event.id == eventId
         }
-
-    override suspend fun getEventVisitorList(): List<EventVisitor> =
-        this.eventVisitorList
 
     override suspend fun getProfile(): Profile =
         this.profile

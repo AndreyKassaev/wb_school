@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.wb.domain.usecase.community.GetAllCommunityListUseCase
@@ -14,20 +15,26 @@ internal class CommunityListViewModel(
     private val getAllCommunityListUSeCase: GetAllCommunityListUseCase
 ): ViewModel() {
 
-    private var communityListMutable = MutableStateFlow(emptyList<Community>())
+    private var communityListMutable = MutableStateFlow<List<Community>>(emptyList())
     private var communityList: StateFlow<List<Community>> = communityListMutable
 
     init {
         initCommunityList()
     }
 
-    fun getCommunityListFlow() = communityList
-
     private fun initCommunityList() {
         viewModelScope.launch {
-            communityListMutable.update {
-                getAllCommunityListUSeCase().map { it.toUiCommunity() }
+            getAllCommunityListUSeCase().collectLatest { communityList ->
+                communityListMutable.update {
+                    communityList.map { it.toUiCommunity() }
+                }
             }
         }
     }
+
+    fun getCommunityListFlow() =
+        communityList
+
+
+
 }

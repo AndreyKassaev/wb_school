@@ -56,7 +56,6 @@ internal fun EventDetailScreen(
             .build(),
         contentScale = ContentScale.Crop //necessary to determine the correct dimensions to load the image at.
     )
-    val eventVisitorList by viewModel.getEventVisitorListFlow().collectAsState()
     var isFullScreen by rememberSaveable {
         mutableStateOf(false)
     }
@@ -164,7 +163,7 @@ internal fun EventDetailScreen(
                 .weight(0.25f)
         ) {
             Spacer(modifier = Modifier.weight(1f))
-            EventVisitorAvatarList(eventVisitorList = eventVisitorList)
+            EventVisitorAvatarList(eventVisitorList = event.visitorList)
         }
         when(event.isActive){
             true -> SwitchEventInviteButton(

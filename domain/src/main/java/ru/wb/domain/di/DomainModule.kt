@@ -9,16 +9,12 @@ import ru.wb.domain.usecase.community.GetAllCommunityListInteractor
 import ru.wb.domain.usecase.community.GetAllCommunityListUseCase
 import ru.wb.domain.usecase.community.GetCommunityByIdInteractor
 import ru.wb.domain.usecase.community.GetCommunityByIdUseCase
-import ru.wb.domain.usecase.community.GetCommunityEventListInteractor
-import ru.wb.domain.usecase.community.GetCommunityEventListUseCase
 import ru.wb.domain.usecase.event.AcceptEventInvitationInteractor
 import ru.wb.domain.usecase.event.AcceptEventInvitationUseCase
 import ru.wb.domain.usecase.event.GetAllEventListInteractor
 import ru.wb.domain.usecase.event.GetAllEventListUseCase
 import ru.wb.domain.usecase.event.GetEventByIdInteractor
 import ru.wb.domain.usecase.event.GetEventByIdUseCase
-import ru.wb.domain.usecase.event.GetEventVisitorListInteractor
-import ru.wb.domain.usecase.event.GetEventVisitorListUseCase
 import ru.wb.domain.usecase.event.GetPersonalEventListInteractor
 import ru.wb.domain.usecase.event.GetPersonalEventListUseCase
 import ru.wb.domain.usecase.event.RevokeEventInvitationInteractor
@@ -54,10 +50,6 @@ val domainModule = module {
         GetEventByIdInteractor(get())
     }
 
-    factory<GetEventVisitorListUseCase>{
-        GetEventVisitorListInteractor(get())
-    }
-
     factory<RevokeEventInvitationUseCase>{
         RevokeEventInvitationInteractor(get())
     }
@@ -76,10 +68,6 @@ val domainModule = module {
 
     factory<GetCommunityByIdUseCase>{
         GetCommunityByIdInteractor(get())
-    }
-
-    factory<GetCommunityEventListUseCase>{
-        GetCommunityEventListInteractor(get())
     }
 
 }

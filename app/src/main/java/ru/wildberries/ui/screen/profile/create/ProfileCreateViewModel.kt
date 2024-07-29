@@ -3,6 +3,7 @@ package ru.wildberries.ui.screen.profile.create
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.wb.domain.usecase.profile.CreateProfileUseCase
 import ru.wildberries.ui.model.Profile
@@ -27,7 +28,7 @@ internal class ProfileCreateViewModel(
                     imageUrl = null,
                     phoneNumber = savedStateHandle.get<String>("phone_number") ?: ""
                 ).toDomainProfile()
-            )
+            ).collectLatest { }
         }
     }
 
