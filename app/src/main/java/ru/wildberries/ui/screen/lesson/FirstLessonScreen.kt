@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -23,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import ru.wildberries.ui.UIKit.atom.Avatar
 import ru.wildberries.ui.UIKit.atom.GhostButton
@@ -41,7 +41,8 @@ internal fun FirstLessonScreen(
     val interactionSource = remember { MutableInteractionSource() }
     val focusManager = LocalFocusManager.current
 
-    val eventList by viewModel.getEventListFlow().collectAsState()
+    val eventList by viewModel.getEventListFlow()
+        .collectAsStateWithLifecycle()
 
     LazyColumn(
         modifier = Modifier

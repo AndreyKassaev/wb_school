@@ -14,7 +14,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -47,7 +47,8 @@ internal fun EventDetailScreen(
 ) {
 
     val navController =LocalNavController.current
-    val event by viewModel.getCurrentEventFlow().collectAsState()
+    val event by viewModel.getCurrentEventFlow()
+        .collectAsStateWithLifecycle()
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
             .data(event.imageUrl)
@@ -59,7 +60,8 @@ internal fun EventDetailScreen(
     var isFullScreen by rememberSaveable {
         mutableStateOf(false)
     }
-    val isInvitationAccepted by viewModel.getIsInvitationAcceptedFlow().collectAsState()
+    val isInvitationAccepted by viewModel.getIsInvitationAcceptedFlow()
+        .collectAsStateWithLifecycle()
 
     if (isFullScreen) {
         Dialog(

@@ -35,6 +35,4 @@ internal class CommunityListViewModel(
     fun getCommunityListFlow() =
         communityList
 
-
-
 }

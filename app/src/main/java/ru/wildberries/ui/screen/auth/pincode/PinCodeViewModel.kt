@@ -30,7 +30,6 @@ internal class PinCodeViewModel(
         return validatePinCodeUseCase(pinCode = pinCode.value)
     }
 
-
     fun setVerificationPinCode(pinCode: String){
         pinCodeMutable.update {
             pinCode
