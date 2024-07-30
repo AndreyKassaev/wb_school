@@ -1,12 +1,19 @@
 package ru.wb.domain.usecase.auth
 
+import kotlinx.coroutines.flow.Flow
 import ru.wb.domain.repository.IAuthRepository
 
-class ValidatePinCodeUseCase(
-    private val authRepository: IAuthRepository
-) {
+interface ValidatePinCodeUseCase {
 
-    suspend operator fun invoke(pinCode: String) =
+    operator fun invoke(pinCode: String): Flow<Boolean>
+
+}
+
+internal class ValidatePinCodeInteractor(
+    private val authRepository: IAuthRepository
+): ValidatePinCodeUseCase {
+
+    override operator fun invoke(pinCode: String) =
         authRepository.validatePinCode(pinCode = pinCode)
 
 }

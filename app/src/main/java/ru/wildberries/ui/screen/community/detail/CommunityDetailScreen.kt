@@ -9,11 +9,11 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import ru.wildberries.R
 import ru.wildberries.navigation.LocalNavController
@@ -23,15 +23,13 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun CommunityDetailScreen(
+internal fun CommunityDetailScreen(
     viewModel: CommunityDetailViewModel = koinViewModel(),
 ) {
 
     val navController = LocalNavController.current
-    val community by viewModel.getCurrentCommunityFlow().collectAsState()
-    val communityEventList = viewModel.getEventListFlow().collectAsState().value.filter { event ->
-        event.location == community.title
-    }
+    val community by viewModel.getCurrentCommunityFlow()
+        .collectAsStateWithLifecycle()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -61,7 +59,7 @@ fun CommunityDetailScreen(
                 color = WBTheme.colors.NeutralWeak
             )
             LazyColumn {
-                communityEventList.forEach { event ->
+                community.eventList.forEach { event ->
                     item {
                         Surface(
                             modifier = Modifier

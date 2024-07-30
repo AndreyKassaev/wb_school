@@ -21,7 +21,6 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +32,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import org.koin.androidx.compose.koinViewModel
 import ru.wildberries.R
@@ -46,12 +46,13 @@ import ru.wildberries.ui.screen.event.personal.TabItem
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun EventListScreen(
+internal fun EventListScreen(
     viewModel: EventListViewModel = koinViewModel(),
 ) {
 
     val navController = LocalNavController.current
-    val eventListFull by viewModel.getEventListFlow().collectAsState()
+    val eventListFull by viewModel.getEventListFlow()
+        .collectAsStateWithLifecycle()
     val tabItemList = listOf(
         TabItem(title = stringResource(id = R.string.events_tabitem_all)),
         TabItem(title = stringResource(id = R.string.events_tabitem_active))

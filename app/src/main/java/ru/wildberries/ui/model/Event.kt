@@ -13,7 +13,8 @@ internal data class Event(
     val imageUrl: String,
     val location: String,
     val isActive: Boolean,
-    val tagList: List<String>
+    val tagList: List<String>,
+    val visitorList: List<EventVisitor>
 ){
     companion object {
         val default = Event(
@@ -31,7 +32,10 @@ internal data class Event(
             imageUrl = "https://kassaev.com/media/night_sky.jpg",
             location = "Moscow",
             isActive = true,
-            tagList = listOf("Moscow")
+            tagList = listOf("Moscow"),
+            visitorList = listOf(
+                EventVisitor.default
+            )
         )
     }
 }
@@ -46,7 +50,8 @@ internal fun Event.toDomainEvent(): DomainEvent =
         imageUrl = this.imageUrl,
         location = this.location,
         isActive = this.isActive,
-        tagList = this.tagList
+        tagList = this.tagList,
+        visitorList = this.visitorList.map { it.toDomainEventVisitor() }
     )
 
 internal fun DomainEvent.toUiEvent() =
@@ -59,5 +64,6 @@ internal fun DomainEvent.toUiEvent() =
         imageUrl = this.imageUrl,
         location = this.location,
         isActive = this.isActive,
-        tagList = this.tagList
+        tagList = this.tagList,
+        visitorList = this.visitorList.map { it.toUiEventVisitor() }
     )

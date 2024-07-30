@@ -1,20 +1,18 @@
 package ru.wb.domain.repository
 
+import kotlinx.coroutines.flow.Flow
 import ru.wb.domain.model.Event
-import ru.wb.domain.model.EventVisitor
 
 interface IEventRepository {
 
-    suspend fun getAllEventList(): List<Event>
+    fun getAllEventList(): Flow<List<Event>>
 
-    suspend fun getEventById(eventId: String): Event
+    fun getEventById(eventId: String): Flow<Event>
 
-    suspend fun getEventVisitorList(eventId: String): List<EventVisitor>
+    fun addUserToEventVisitorList(eventId: String): Flow<Event>
 
-    suspend fun acceptEventInvitation(eventId: String): List<EventVisitor>
+    fun removeUserFromEventVisitorList(eventId: String): Flow<Event>
 
-    suspend fun revokeEventInvitation(eventId: String): List<EventVisitor>
-
-    suspend fun getPersonalEventList(): List<Event>
+    fun getPersonalEventList(): Flow<List<Event>>
 
 }

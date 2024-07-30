@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import ru.wildberries.R
 import ru.wildberries.ui.UIKit.atom.Avatar
 import ru.wildberries.ui.model.Event
+import ru.wildberries.ui.model.EventVisitor
 import ru.wildberries.ui.theme.WBTheme
 import java.util.UUID
 
@@ -44,11 +45,13 @@ internal fun EventCard(
                     color = WBTheme.colors.NeutralActive,
                     text = event.title
                 )
-                Text(
-                    style = WBTheme.typography.metadata2,
-                    color = WBTheme.colors.NeutralWeak,
-                    text = if (event.isActive) "" else stringResource(id = R.string.my_events_tabitem_finished)
-                )
+                if (!event.isActive){
+                    Text(
+                        style = WBTheme.typography.metadata2,
+                        color = WBTheme.colors.NeutralWeak,
+                        text = stringResource(id = R.string.my_events_tabitem_finished)
+                    )
+                }
             }
             Text(
                 modifier = Modifier
@@ -78,7 +81,10 @@ fun EventCardPreview(){
                 imageUrl = "",
                 location = "Moscow",
                 isActive = true,
-                tagList = listOf("Moscow")
+                tagList = listOf("Moscow"),
+                visitorList = listOf(
+                    EventVisitor.default
+                )
             )
         )
     }

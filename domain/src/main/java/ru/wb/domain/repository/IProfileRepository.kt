@@ -1,13 +1,14 @@
 package ru.wb.domain.repository
 
+import kotlinx.coroutines.flow.Flow
 import ru.wb.domain.model.Profile
 
 interface IProfileRepository {
 
-    suspend fun createProfile(profile: Profile)
+    fun createProfile(profile: Profile): Flow<Boolean>
 
-    suspend fun updateProfile(profile: Profile)
+    fun updateProfile(profile: Profile): Flow<Boolean>
 
-    suspend fun getProfileById(profileId: String): Profile
+    fun getProfileById(profileId: String): Flow<Profile>
 
 }

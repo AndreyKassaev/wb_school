@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import ru.wildberries.R
 import ru.wildberries.navigation.LocalNavController
@@ -29,12 +29,13 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun ProfileDetailScreen(
+internal fun ProfileDetailScreen(
     viewModel: ProfileDetailViewModel = koinViewModel(),
 ) {
 
     val navController = LocalNavController.current
-    val profileData by viewModel.getProfileFlow().collectAsState()
+    val profileData by viewModel.getProfileFlow()
+        .collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier

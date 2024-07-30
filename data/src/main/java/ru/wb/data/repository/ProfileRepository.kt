@@ -1,21 +1,34 @@
 package ru.wb.data.repository
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import ru.wb.data.datasource.IDataSource
 import ru.wb.domain.model.Profile
 import ru.wb.domain.repository.IProfileRepository
 
-internal class ProfileRepository: IProfileRepository {
+internal class ProfileRepository(
+    private val dataSource: IDataSource
+): IProfileRepository {
 
-    private var profile = Profile.default
+    override fun createProfile(profile: Profile): Flow<Boolean> =
+        flow {
+            emit(
+                dataSource.setProfile(profile = profile)
+            )
+        }
 
-    override suspend fun createProfile(profile: Profile) {
-        this.profile = profile
-    }
+    override fun updateProfile(profile: Profile): Flow<Boolean> =
+        flow {
+            emit(
+                dataSource.setProfile(profile = profile)
+            )
+        }
 
-    override suspend fun updateProfile(profile: Profile) {
-        this.profile = profile
-    }
-
-    override suspend fun getProfileById(profileId: String) =
-        this.profile
+    override fun getProfileById(profileId: String): Flow<Profile> =
+        flow {
+            emit(
+                dataSource.getProfile()
+            )
+        }
 
 }

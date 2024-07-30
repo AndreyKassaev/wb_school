@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -17,6 +16,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import ru.wildberries.R
 import ru.wildberries.navigation.LocalNavController
@@ -27,12 +27,13 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun CommunityListScreen(
+internal fun CommunityListScreen(
     viewModel: CommunityListViewModel = koinViewModel(),
 ) {
 
     val navController = LocalNavController.current
-    val communityList by viewModel.getCommunityListFlow().collectAsState()
+    val communityList by viewModel.getCommunityListFlow()
+        .collectAsStateWithLifecycle()
     val interactionSource = remember { MutableInteractionSource() }
     val focusManager = LocalFocusManager.current
 
@@ -52,7 +53,7 @@ fun CommunityListScreen(
             modifier = Modifier.padding(top=16.dp, bottom = 13.dp)
         )
         SearchBar()
-        LazyColumn() {
+        LazyColumn {
             communityList.forEachIndexed { index, community ->
                 item {
                     Surface(

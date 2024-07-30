@@ -7,7 +7,8 @@ data class Community(
     val title: String,
     val description: String,
     val imageUrl: String,
-    val size: Int
+    val size: Int,
+    val eventList: List<Event>
 ){
     companion object {
         val default = Community(
@@ -21,7 +22,10 @@ data class Community(
                 Malesuada egestas enim purus cras diam eget vel. Massa ante sit scelerisque scelerisque hac. Consequat tempor non pretium convallis. Interdum iaculis sit interdum interdum magna. Gravida urna et cursus donec consectetur nulla. Aliquet egestas nulla arcu aliquam facilisi duis maecenas viverra. Egestas consectetur mauris orci sit. Bibendum orci at viverra pharetra tortor nulla amet erat vehicula. Mauris volutpat amet in sit rhoncus. Imperdiet feugiat id fames gravida.
             """.trimIndent(),
             imageUrl = "https://kassaev.com/media/night_sky.jpg",
-            size = 10000
+            size = 10000,
+            eventList = listOf(
+                Event.default
+            )
         )
     }
 }

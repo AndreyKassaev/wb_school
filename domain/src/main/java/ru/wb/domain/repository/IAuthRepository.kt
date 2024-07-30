@@ -1,9 +1,11 @@
 package ru.wb.domain.repository
 
+import kotlinx.coroutines.flow.Flow
+
 interface IAuthRepository {
 
-    suspend fun requestPinCode(): String
+    fun requestPinCode(): Flow<String>
 
-    suspend fun validatePinCode(pinCode: String): Boolean
+    fun validatePinCode(pinCode: String): Flow<Boolean>
 
 }

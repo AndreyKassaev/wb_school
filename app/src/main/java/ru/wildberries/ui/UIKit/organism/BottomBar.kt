@@ -75,7 +75,9 @@ fun BottomBar() {
     when (currentDestination) {
         Router.Splash.route,
         Router.VerificationPinCode.route,
-        Router.VerificationPhoneNumber.route -> {}
+        Router.VerificationPhoneNumber.route,
+        Router.ProfileCreate.route -> {
+        }
 
         else -> Row(
             modifier = Modifier

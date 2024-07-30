@@ -14,7 +14,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -42,12 +42,13 @@ import ru.wildberries.ui.UIKit.organism.TopBar
 import ru.wildberries.ui.theme.WBTheme
 
 @Composable
-fun EventDetailScreen(
+internal fun EventDetailScreen(
     viewModel: EventDetailViewModel = koinViewModel()
 ) {
 
     val navController =LocalNavController.current
-    val event by viewModel.getCurrentEventFlow().collectAsState()
+    val event by viewModel.getCurrentEventFlow()
+        .collectAsStateWithLifecycle()
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(LocalContext.current)
             .data(event.imageUrl)
@@ -56,13 +57,12 @@ fun EventDetailScreen(
             .build(),
         contentScale = ContentScale.Crop //necessary to determine the correct dimensions to load the image at.
     )
-    val eventVisitorList by viewModel.getEventVisitorListFlow().collectAsState()
     var isFullScreen by rememberSaveable {
         mutableStateOf(false)
     }
-    var isInvitationAccepted by rememberSaveable {
-        mutableStateOf(false)
-    }
+    val isInvitationAccepted by viewModel.getIsInvitationAcceptedFlow()
+        .collectAsStateWithLifecycle()
+
     if (isFullScreen) {
         Dialog(
             onDismissRequest = {
@@ -165,48 +165,80 @@ fun EventDetailScreen(
                 .weight(0.25f)
         ) {
             Spacer(modifier = Modifier.weight(1f))
-            EventVisitorAvatarList(eventVisitorList = eventVisitorList)
-            when (isInvitationAccepted) {
-                true -> SecondaryButton(
-                    content = {
-                        Text(
-                            modifier = Modifier
-                                .padding(vertical = 12.dp),
-                            text = stringResource(R.string.ill_go_next_time),
-                        )
-                    },
-                    onClick = {
-                        viewModel.revokeEventInvitation()
-                        isInvitationAccepted = !isInvitationAccepted
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = 12.dp,
-                            bottom = 20.dp
-                        )
-                )
-
-                false -> PrimaryButton(
-                    content = {
-                        Text(
-                            modifier = Modifier
-                                .padding(vertical = 12.dp),
-                            text = stringResource(R.string.ill_go),
-                        )
-                    },
-                    onClick = {
-                        viewModel.acceptEventInvitation()
-                        isInvitationAccepted = !isInvitationAccepted
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            top = 12.dp,
-                            bottom = 20.dp
-                        )
-                )
-            }
+            EventVisitorAvatarList(eventVisitorList = event.visitorList)
+        }
+        when(event.isActive){
+            true -> SwitchEventInviteButton(
+                isInvitationAccepted = isInvitationAccepted,
+                acceptEventInvitation = viewModel::acceptEventInvitation,
+                revokeEventInvitation = viewModel::revokeEventInvitation
+            )
+            false -> PrimaryButton(
+                content = {
+                    Text(
+                        modifier = Modifier
+                            .padding(vertical = 12.dp),
+                        text = stringResource(id = R.string.my_events_tabitem_finished)
+                    )
+                },
+                onClick = {},
+                isEnabled = false,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = 12.dp,
+                        bottom = 20.dp
+                    )
+            )
         }
     }
+}
+
+@Composable
+internal fun SwitchEventInviteButton(
+    isInvitationAccepted: Boolean,
+    acceptEventInvitation: () -> Unit,
+    revokeEventInvitation: () -> Unit,
+) {
+
+    when (isInvitationAccepted) {
+        true -> SecondaryButton(
+            content = {
+                Text(
+                    modifier = Modifier
+                        .padding(vertical = 12.dp),
+                    text = stringResource(R.string.ill_go_next_time),
+                )
+            },
+            onClick = {
+                revokeEventInvitation()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = 12.dp,
+                    bottom = 20.dp
+                )
+        )
+
+        false -> PrimaryButton(
+            content = {
+                Text(
+                    modifier = Modifier
+                        .padding(vertical = 12.dp),
+                    text = stringResource(R.string.ill_go),
+                )
+            },
+            onClick = {
+                acceptEventInvitation()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    top = 12.dp,
+                    bottom = 20.dp
+                )
+        )
+    }
+
 }

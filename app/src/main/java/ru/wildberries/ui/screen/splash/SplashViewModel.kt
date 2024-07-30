@@ -1,20 +1,17 @@
 package ru.wildberries.ui.screen.splash
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SplashViewModel(
-    private val savedStateHandle: SavedStateHandle
-): ViewModel() {
+internal class SplashViewModel(): ViewModel() {
 
     private var isAppReadyMutable = MutableStateFlow(false)
-    private val isAppReady = isAppReadyMutable.asStateFlow()
+    private val isAppReady: StateFlow<Boolean> = isAppReadyMutable
 
     fun getIsAppReadyFlow() = isAppReady
 
