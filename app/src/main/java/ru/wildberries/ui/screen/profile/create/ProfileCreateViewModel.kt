@@ -23,7 +23,8 @@ internal class ProfileCreateViewModel(
 
     fun createProfile(
         firstName: String,
-        lastName: String = ""
+        imageUrl: String,
+        lastName: String = "",
     ) {
         viewModelScope.launch {
             createProfileUseCase(
@@ -31,7 +32,7 @@ internal class ProfileCreateViewModel(
                     id = UUID.randomUUID().toString(),
                     firstName = firstName,
                     lastName = lastName,
-                    imageUrl = null,
+                    imageUrl = imageUrl,
                     phoneNumber = savedStateHandle.get<String>("phone_number") ?: ""
                 ).toDomainProfile()
             ).collectLatest { }

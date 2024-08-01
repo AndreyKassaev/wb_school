@@ -74,7 +74,7 @@ fun ProfileImage (
                 is AsyncImagePainter.State.Success -> {
                     Image(
                         modifier = Modifier
-                            .fillMaxSize(if (profileState == ProfileState.None) 1f else 0.56f)
+                            .fillMaxSize(1f)
                             .align(Alignment.Center),
                         painter = painter,
                         contentDescription = "Profile",
