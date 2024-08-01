@@ -1,6 +1,9 @@
 package ru.wildberries.ui.screen.profile.create
 
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,7 +43,10 @@ import ru.wildberries.ui.theme.WBTheme
 internal fun ProfileCreateScreen(
     viewModel: ProfileCreateViewModel = koinViewModel(),
 ) {
-
+    var result by remember { mutableStateOf<String?>(null) }
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) {
+        result = it.toString()
+    }
     val navController = LocalNavController.current
     var firstName by rememberSaveable {
         mutableStateOf("")
@@ -82,10 +88,12 @@ internal fun ProfileCreateScreen(
             }
         )
         ProfileImage(
-            imageUrl = null,
+            imageUrl = result,
             profileState = ProfileState.Add,
             size = 100.dp,
-            onClick = {}
+            onClick = {
+                launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+            }
         )
         BasicTextField(
             modifier = Modifier
@@ -170,7 +178,8 @@ internal fun ProfileCreateScreen(
             onClick = {
                 viewModel.createProfile(
                     firstName = firstName,
-                    lastName = lastName
+                    lastName = lastName,
+                    imageUrl = result ?: ""
                 )
                 navController.navigate(Router.Base.Event.route){
                     popUpTo(Router.Base.Auth.route){
