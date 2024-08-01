@@ -37,6 +37,8 @@ internal fun PinCodeScreen(
     val isPinCodeValid by viewModel.getIsPinCodeValidFlow()
         .collectAsStateWithLifecycle(false)
 
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -93,6 +95,7 @@ internal fun PinCodeScreen(
                 .padding(top = 69.dp),
             onClick = {
                 viewModel.setVerificationPinCode("")
+                viewModel.requestPinCode()
             },
         )
     }

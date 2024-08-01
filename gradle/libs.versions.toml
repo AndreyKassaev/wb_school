@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.0"
+agp = "8.7.0-alpha03"
 coilCompose = "2.6.0"
 coreSplashscreen = "1.2.0-alpha01"
 hamcrest = "3.0-rc1"

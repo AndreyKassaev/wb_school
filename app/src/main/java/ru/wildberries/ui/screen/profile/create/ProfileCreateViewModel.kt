@@ -8,12 +8,18 @@ import kotlinx.coroutines.launch
 import ru.wb.domain.usecase.profile.CreateProfileUseCase
 import ru.wildberries.ui.model.Profile
 import ru.wildberries.ui.model.toDomainProfile
+import ru.wildberries.util.VerifyPinCodeNotificationService
 import java.util.UUID
 
 internal class ProfileCreateViewModel(
     private val savedStateHandle: SavedStateHandle,
-    private val createProfileUseCase: CreateProfileUseCase
+    private val createProfileUseCase: CreateProfileUseCase,
+    private val verifyPinCodeNotificationService: VerifyPinCodeNotificationService
 ): ViewModel() {
+
+    init {
+        verifyPinCodeNotificationService.cancelAllNotifications()
+    }
 
     fun createProfile(
         firstName: String,
