@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
-import ru.wb.domain.usecase.auth.RequestPinCodeUseCase
 import ru.wildberries.R
 import ru.wildberries.ui.model.CountryCode
 import ru.wildberries.ui.model.PhoneNumber
@@ -15,7 +14,6 @@ const val PHONE_NUMBER_REQUIRED_LENGTH = 10
 
 internal class PhoneNumberViewModel(
     private val savedStateHandle: SavedStateHandle,
-    private val requestPinCodeUseCase: RequestPinCodeUseCase
 ): ViewModel() {
 
     internal val countryCodeLists = listOf(
@@ -57,10 +55,5 @@ internal class PhoneNumberViewModel(
                 countryCode = countryCode
             )
         }
-    }
-
-    fun requestPinCode(){
-        //TODO("local push")
-        requestPinCodeUseCase()
     }
 }

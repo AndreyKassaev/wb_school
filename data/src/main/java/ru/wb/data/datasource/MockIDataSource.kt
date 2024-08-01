@@ -11,11 +11,7 @@ internal class MockIDataSource: IDataSource {
 
     private var profile = Profile.default
 
-    private val pinCode = Random.nextInt(
-        from = 1000,
-        until = 9999
-    )
-        .toString()
+    private var pinCode = ""
 
     private val loremIpsum = """
                         Lorem ipsum dolor sit amet consectetur. Libero duis cum egestas amet mollis massa. Convallis sit lacus tortor interdum auctor viverra vitae. Egestas aliquam odio aenean eget facilisi ipsum vitae. Risus lectus quam urna condimentum id massa magna id mattis. Sit tempor volutpat ac eget dignissim nibh sagittis vitae duis. Vivamus quis fusce egestas vel sodales arcu praesent non. Ullamcorper elit sit eros egestas euismod amet. Nec molestie a sit sed. At neque diam turpis cursus tincidunt nisi quam sed non. Tempor tortor ultricies ultrices maecenas lectus in nunc sapien dapibus.
@@ -126,9 +122,10 @@ internal class MockIDataSource: IDataSource {
         ),
     )
 
-    override suspend fun validatePinCode(pinCode: String): Boolean {
-        return pinCode.matches(Regex("""\d{4}"""))
-    }
+    override suspend fun validatePinCode(pinCode: String): Boolean =
+//        return pinCode.matches(Regex("""\d{4}"""))
+        this.pinCode == pinCode
+
 
     override suspend fun setProfile(profile: Profile): Boolean {
         this.profile = profile
@@ -143,8 +140,14 @@ internal class MockIDataSource: IDataSource {
         return this.eventList[_index]
     }
 
-    override suspend fun getPinCode(): String =
-        this.pinCode
+    override suspend fun getPinCode(): String {
+        this.pinCode = Random.nextInt(
+            from = 1000,
+            until = 9999
+        ).toString()
+
+        return this.pinCode
+    }
 
     override suspend fun getCommunityList(): List<Community> =
         this.communityList

@@ -33,4 +33,5 @@
     <string name="firstName_required">Имя (обязательно)</string>
     <string name="lastName_required">Фамилия (опционально)</string>
     <string name="my_events_tabitem_finished">Закончилась</string>
+    <string name="verify_pincode">Пин-код</string>
 </resources>

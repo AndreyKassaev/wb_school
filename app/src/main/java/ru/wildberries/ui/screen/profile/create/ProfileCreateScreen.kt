@@ -1,5 +1,6 @@
 package ru.wildberries.ui.screen.profile.create
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -51,6 +52,13 @@ internal fun ProfileCreateScreen(
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
+    BackHandler {
+        navController.navigate(Router.Base.Auth.route) {
+            popUpTo(Router.Base.Auth.route) {
+                inclusive = true
+            }
+        }
+    }
     Column(
         modifier = Modifier
             .padding(horizontal = 24.dp),
@@ -65,7 +73,13 @@ internal fun ProfileCreateScreen(
                     bottom = 46.dp
                 )
                 .offset(x = (-12).dp),
-            navigationIconOnClick = { navController.popBackStack() }
+            navigationIconOnClick = {
+                navController.navigate(Router.Base.Auth.route) {
+                    popUpTo(Router.Base.Auth.route) {
+                        inclusive = true
+                    }
+                }
+            }
         )
         ProfileImage(
             imageUrl = null,

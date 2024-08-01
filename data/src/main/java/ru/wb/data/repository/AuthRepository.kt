@@ -9,6 +9,8 @@ internal class AuthRepository(
     private val dataSource: IDataSource
 ): IAuthRepository {
 
+    val PIN_CODE_LENGTH = 4
+
     override fun requestPinCode(): Flow<String> =
         flow {
             emit(
@@ -19,7 +21,11 @@ internal class AuthRepository(
     override fun validatePinCode(pinCode: String): Flow<Boolean> =
         flow {
             emit(
-                dataSource.validatePinCode(pinCode = pinCode)
+                if (pinCode.length == PIN_CODE_LENGTH) {
+                    dataSource.validatePinCode(pinCode = pinCode)
+                } else {
+                    false
+                }
             )
         }
 

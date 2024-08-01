@@ -1,6 +1,7 @@
 package ru.wildberries.di
 
 import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import ru.wildberries.ui.screen.auth.phone.PhoneNumberViewModel
 import ru.wildberries.ui.screen.auth.pincode.PinCodeViewModel
@@ -14,6 +15,7 @@ import ru.wildberries.ui.screen.more.MoreViewModel
 import ru.wildberries.ui.screen.profile.create.ProfileCreateViewModel
 import ru.wildberries.ui.screen.profile.detail.ProfileDetailViewModel
 import ru.wildberries.ui.screen.splash.SplashViewModel
+import ru.wildberries.util.VerifyPinCodeNotificationService
 
 val appModule = module {
 
@@ -40,5 +42,7 @@ val appModule = module {
     viewModelOf(::CommunityDetailViewModel)
 
     viewModelOf(::CommunityListViewModel)
+
+    singleOf(::VerifyPinCodeNotificationService)
 
 }

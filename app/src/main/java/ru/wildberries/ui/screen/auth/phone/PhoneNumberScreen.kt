@@ -69,7 +69,6 @@ internal fun PhoneNumberScreen(
             setPhoneCountryCode = viewModel::setPhoneCountryCode,
             setPhoneNumber = viewModel::setPhoneNumber,
             navigateToPinCodeScreen = {
-                viewModel.requestPinCode()
                 navController.navigate(Router.VerificationPinCode.withArg(phoneNumber = "${phoneNumber.countryCode.code}${phoneNumber.number}"))
             },
         )
@@ -85,7 +84,6 @@ internal fun PhoneNumberScreen(
                 .fillMaxWidth()
                 .padding(top = 69.dp),
             onClick = {
-                viewModel.requestPinCode()
                 navController.navigate(Router.VerificationPinCode.withArg(phoneNumber = "${phoneNumber.countryCode.code}${phoneNumber.number}"))
             },
             isEnabled = isPhoneNumberValid
