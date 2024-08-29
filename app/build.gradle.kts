@@ -85,7 +85,16 @@ dependencies {
 
     implementation(libs.androidx.core.splashscreen)
 
+    implementation(libs.androidx.datastore.preferences)
+
+    val cameraxVersion = "1.3.0"
+    implementation("androidx.camera:camera-core:${cameraxVersion}")
+    implementation("androidx.camera:camera-camera2:${cameraxVersion}")
+    implementation("androidx.camera:camera-view:${cameraxVersion}")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+
     implementation(project(path = ":domain"))
     implementation(project(":data"))
+    implementation(kotlin("script-runtime"))
 
 }

@@ -1,8 +1,13 @@
 package ru.wb.data.di
 
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import ru.wb.data.datasource.IDataSource
 import ru.wb.data.datasource.MockIDataSource
+import ru.wb.data.jwt.CryptoManager
+import ru.wb.data.jwt.DataStore
+import ru.wb.data.jwt.EncryptedDataStore
+import ru.wb.data.jwt.JwtSerializer
 import ru.wb.data.repository.AuthRepository
 import ru.wb.data.repository.CommunityRepository
 import ru.wb.data.repository.EventRepository
@@ -23,7 +28,11 @@ val dataModule = module {
     }
 
     single<IProfileRepository> {
-        ProfileRepository(get())
+        ProfileRepository(
+            dataSource = get(),
+            encryptedDataStore = get(),
+            dataStore = get()
+        )
     }
 
     single<IEventRepository> {
@@ -33,5 +42,10 @@ val dataModule = module {
     single<ICommunityRepository> {
         CommunityRepository(get())
     }
+
+    singleOf(::CryptoManager)
+    singleOf(::JwtSerializer)
+    singleOf(::EncryptedDataStore)
+    singleOf(::DataStore)
 
 }

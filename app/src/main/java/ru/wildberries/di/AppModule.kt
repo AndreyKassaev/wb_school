@@ -14,6 +14,7 @@ import ru.wildberries.ui.screen.lesson.LessonViewModel
 import ru.wildberries.ui.screen.more.MoreViewModel
 import ru.wildberries.ui.screen.profile.create.ProfileCreateViewModel
 import ru.wildberries.ui.screen.profile.detail.ProfileDetailViewModel
+import ru.wildberries.ui.screen.profile.edit.ProfileEditViewModel
 import ru.wildberries.ui.screen.splash.SplashViewModel
 import ru.wildberries.util.VerifyPinCodeNotificationService
 
@@ -42,6 +43,8 @@ val appModule = module {
     viewModelOf(::CommunityDetailViewModel)
 
     viewModelOf(::CommunityListViewModel)
+
+    viewModelOf(::ProfileEditViewModel)
 
     singleOf(::VerifyPinCodeNotificationService)
 

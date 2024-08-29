@@ -36,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import org.koin.androidx.compose.koinViewModel
 import ru.wildberries.R
+import ru.wildberries.navigation.LocalAuthController
 import ru.wildberries.navigation.LocalNavController
 import ru.wildberries.navigation.Router
 import ru.wildberries.ui.UIKit.atom.SearchBar
@@ -51,6 +52,10 @@ internal fun EventListScreen(
 ) {
 
     val navController = LocalNavController.current
+    val authController = LocalAuthController.current
+    if (authController.permission == "") {
+
+    }
     val eventListFull by viewModel.getEventListFlow()
         .collectAsStateWithLifecycle()
     val tabItemList = listOf(

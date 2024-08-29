@@ -1,7 +1,8 @@
 [versions]
-agp = "8.7.0-alpha03"
+agp = "8.5.1"
 coilCompose = "2.6.0"
 coreSplashscreen = "1.2.0-alpha01"
+datastorePreferences = "1.1.1"
 hamcrest = "3.0-rc1"
 junitJupiter = "5.11.0-M2"
 koinAndroidxCompose = "3.6.0-wasm-alpha2"
@@ -34,6 +35,7 @@ uiToolingPreviewAndroid = "1.6.8"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 hamcrest = { module = "org.hamcrest:hamcrest", version.ref = "hamcrest" }
 insert-koin-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }

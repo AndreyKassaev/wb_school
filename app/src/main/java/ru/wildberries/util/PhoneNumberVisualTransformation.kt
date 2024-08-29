@@ -25,7 +25,7 @@ internal class PhoneNumberVisualTransformation: VisualTransformation {
                     offset <= 5 -> offset + 1
                     offset <= 7 -> offset + 2
                     offset <= 9 -> offset + 3
-                    else -> 9
+                    else -> 13
                 }
             //999 999-99-99
             override fun transformedToOriginal(offset: Int) =
@@ -34,7 +34,7 @@ internal class PhoneNumberVisualTransformation: VisualTransformation {
                     offset <= 7 -> offset - 1
                     offset <= 10 -> offset - 2
                     offset <= 13 -> offset - 3
-                    else -> 10
+                    else -> 13
                 }
 
         }

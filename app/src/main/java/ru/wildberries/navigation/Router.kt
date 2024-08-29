@@ -18,6 +18,16 @@ sealed class Router(
 
     }
 
+    data object MainScreen : Router("main_screen")
+
+    data object ProfileEditScreen : Router("profile_edit")
+
+    object CameraScreen : Router("camera")
+
+    object PhotoScreen : Router("photo/{photo}") {
+        fun withArgs(photo: String): String = "photo/$photo"
+    }
+
     data object Profile : Router("profile")
 
     data object More : Router("more")

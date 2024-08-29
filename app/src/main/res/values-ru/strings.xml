@@ -34,4 +34,22 @@
     <string name="lastName_required">Фамилия (опционально)</string>
     <string name="my_events_tabitem_finished">Закончилась</string>
     <string name="verify_pincode">Пин-код</string>
+    <string name="search_bar">Найти встречи и сообщества</string>
+    <string name="cancel">Отмена</string>
+    <string name="profile_edit_name">Имя Фамилия</string>
+    <string name="profile_phone_number_mask">+7 000 000-00-00</string>
+    <string name="profile_city">Город</string>
+    <string name="profile_about">Расскажите о себе</string>
+    <string name="profile_interests">Интересы</string>
+    <string name="profile_interests_add">+ Добавить</string>
+    <string name="profile_social_networks">Социальные сети</string>
+    <string name="habr">Хабр</string>
+    <string name="telegram">Телеграм</string>
+    <string name="profile_prefs_show_community_list">Показывать мои сообщества</string>
+    <string name="profile_prefs_show_events">Показывать мои встречи</string>
+    <string name="profile_prefs_enable_notifications">Включить уведомления</string>
+    <string name="profile_delete">Удалить профиль</string>
+    <string name="profile_change_photo">Изменить фото</string>
+    <string name="profile_take_photo">Сделать фото</string>
+    <string name="profile_select_image">Выбрать изображение</string>
 </resources>

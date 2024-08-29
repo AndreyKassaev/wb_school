@@ -1,16 +1,18 @@
-package ru.wildberries.ui.model
+package ru.wb.data.model
 
+import kotlinx.serialization.Serializable
 import java.util.UUID
 
 typealias DomainProfile = ru.wb.domain.model.Profile
 
-internal data class Profile(
+@Serializable
+data class Profile(
     val id: String,
     val firstName: String,
     val lastName: String?,
     val imageUrl: String?,
     val phoneNumber: String
-){
+) {
     companion object {
         val default = Profile(
             id = UUID.randomUUID().toString(),
@@ -22,8 +24,8 @@ internal data class Profile(
     }
 }
 
-internal fun Profile.toDomainProfile(): DomainProfile =
-    DomainProfile(
+fun DomainProfile.toDataProfile(): Profile =
+    Profile(
         id = this.id,
         firstName = this.firstName,
         lastName = this.lastName,
@@ -31,8 +33,8 @@ internal fun Profile.toDomainProfile(): DomainProfile =
         phoneNumber = this.phoneNumber
     )
 
-internal fun DomainProfile.toUiProfile(): Profile =
-    Profile(
+fun Profile.toDomainProfile(): DomainProfile =
+    DomainProfile(
         id = this.id,
         firstName = this.firstName,
         lastName = this.lastName,

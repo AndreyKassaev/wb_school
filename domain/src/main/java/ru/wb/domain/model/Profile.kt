@@ -5,7 +5,7 @@ import java.util.UUID
 data class Profile(
     val id: String,
     val firstName: String,
-    val lastName: String,
+    val lastName: String?,
     val imageUrl: String?,
     val phoneNumber: String
 ){

@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.wb.domain.usecase.event.GetAllEventListUseCase
+import ru.wildberries.navigation.LocalAuthController
 import ru.wildberries.ui.model.Event
 import ru.wildberries.ui.model.toUiEvent
 

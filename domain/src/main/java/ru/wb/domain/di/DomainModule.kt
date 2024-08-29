@@ -1,5 +1,6 @@
 package ru.wb.domain.di
 
+import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import ru.wb.domain.usecase.auth.RequestPinCodeInteractor
 import ru.wb.domain.usecase.auth.RequestPinCodeUseCase
@@ -23,6 +24,10 @@ import ru.wb.domain.usecase.profile.CreateProfileInteractor
 import ru.wb.domain.usecase.profile.CreateProfileUseCase
 import ru.wb.domain.usecase.profile.GetProfileByIdInteractor
 import ru.wb.domain.usecase.profile.GetProfileByIdUseCase
+import ru.wb.domain.usecase.profile.GetProfileImageUseCase
+import ru.wb.domain.usecase.profile.GetProfileImageUseCaseImpl
+import ru.wb.domain.usecase.profile.SaveProfileImageUseCase
+import ru.wb.domain.usecase.profile.SaveProfileImageUseCaseImpl
 
 val domainModule = module {
 
@@ -68,6 +73,14 @@ val domainModule = module {
 
     factory<GetCommunityByIdUseCase>{
         GetCommunityByIdInteractor(get())
+    }
+
+    factory<GetProfileImageUseCase> {
+        GetProfileImageUseCaseImpl(get())
+    }
+
+    factory<SaveProfileImageUseCase> {
+        SaveProfileImageUseCaseImpl(get())
     }
 
 }

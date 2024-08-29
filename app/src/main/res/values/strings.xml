@@ -33,4 +33,22 @@
     <string name="firstName_required">First name (required)</string>
     <string name="lastName_required">Last name (optional)</string>
     <string name="verify_pincode">Pin code</string>
+    <string name="search_bar">Find events and communities</string>
+    <string name="cancel">cancel</string>
+    <string name="profile_edit_name">FirstName LastName</string>
+    <string name="profile_phone_number_mask">+7 000 000-00-00</string>
+    <string name="profile_city">City</string>
+    <string name="profile_about">About</string>
+    <string name="profile_interests">Interests</string>
+    <string name="profile_interests_add">+ Add</string>
+    <string name="profile_social_networks">Social networks</string>
+    <string name="habr">Habr</string>
+    <string name="telegram">Telegram</string>
+    <string name="profile_prefs_show_community_list">Show my communities</string>
+    <string name="profile_prefs_show_events">Show my events</string>
+    <string name="profile_prefs_enable_notifications">Enable notifications</string>
+    <string name="profile_delete">Delete profile</string>
+    <string name="profile_change_photo">Change photo</string>
+    <string name="profile_take_photo">Take a photo</string>
+    <string name="profile_select_image">Select image</string>
 </resources>

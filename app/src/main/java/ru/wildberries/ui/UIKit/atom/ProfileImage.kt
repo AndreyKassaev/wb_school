@@ -1,5 +1,7 @@
 package ru.wildberries.ui.UIKit.atom
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -28,6 +30,7 @@ import coil.request.ImageRequest
 import ru.wildberries.R
 import ru.wildberries.ui.model.Profile
 import ru.wildberries.ui.theme.WBTheme
+import java.io.File
 
 enum class ProfileState {
     None,
@@ -42,10 +45,15 @@ fun ProfileImage (
     size: Dp,
     onClick: ()->Unit
 ) {
-
+    val context = LocalContext.current
+    val imgFile = File(context.filesDir.path, "profile.jpg")
+    var imgBitmap: Bitmap? = null
+    if (imgFile.exists()) {
+        imgBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+    }
     val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(imageUrl)
+        model = ImageRequest.Builder(context)
+            .data(imgBitmap)
             .size(coil.size.Size.ORIGINAL) //necessary to specify the size, otherwise the state is always loading
             .crossfade(true)
             .build(),
